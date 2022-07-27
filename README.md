@@ -46,3 +46,12 @@ npm run transpile
 npm run test
 ```
 
+MoDe
+====
+
+The `MoDe` package is used in conjunction with the `ADe` package to define top-level parameters
+present in Subworkflow units in the `WoDe` package ecosystem. The entities provided by `MoDe` are:
+
+- `Method` - See [Method Overview](https://docs.mat3ra.com/models/overview/) for more details
+- `Model` - See [Model Overview](https://docs.mat3ra.com/methods/overview/) for more details
+
