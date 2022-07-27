@@ -1,97 +1,109 @@
+import {
+    JSONSchemaFormDataProvider,
+    MaterialContextMixinBuilder,
+} from "@exabyte-io/code.js/dist/context";
+import { Made } from "@exabyte-io/made.js";
 import lodash from "lodash";
 import { mix } from "mixwith";
-import { Made } from "@exabyte-io/made.js";
-import { MaterialContextMixinBuilder } from "@exabyte-io/code.js/dist/context";
-import { JSONSchemaFormDataProvider } from "/imports/core_cove/providers";
-import { appSettings } from "/imports/app_settings/exports";
+// TODO : pass appSettings to use defaultKPPRA
 
 export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
     MaterialContextMixinBuilder(Made.Material),
 ) {
-
     constructor(config) {
-
         super(config);
-        this._divisor = config.divisor || 1;  // KPPRA will be divided by this number
+        this._divisor = config.divisor || 1; // KPPRA will be divided by this number
 
-        this.dimensions = lodash.get(this.data, 'dimensions') || this._defaultDimensions;
-        this.shifts = lodash.get(this.data, 'shifts') || this._defaultShifts;
+        this.dimensions = lodash.get(this.data, "dimensions") || this._defaultDimensions;
+        this.shifts = lodash.get(this.data, "shifts") || this._defaultShifts;
 
         // init class fields from data (as constructed from context in parent)
-        this.KPPRA = lodash.get(this.data, 'KPPRA') || this._defaultKPPRA;
-        this.preferKPPRA = lodash.get(this.data, 'preferKPPRA', false);
+        this.KPPRA = lodash.get(this.data, "KPPRA") || this._defaultKPPRA;
+        this.preferKPPRA = lodash.get(this.data, "preferKPPRA", false);
     }
 
-    getDefaultDimension() {return this._getGridFromKPPRA(this._defaultKPPRA).dimensions[0]}
+    getDefaultDimension() {
+        return this._getGridFromKPPRA(this._defaultKPPRA).dimensions[0];
+    }
 
-    getDefaultShift() {return 0}
+    // eslint-disable-next-line class-methods-use-this
+    getDefaultShift() {
+        return 0;
+    }
 
-    get _defaultDimensions() {return Array(3).fill(this.getDefaultDimension())}
+    // eslint-disable-next-line class-methods-use-this
+    get _defaultDimensions() {
+        return Array(3).fill(this.getDefaultDimension());
+    }
 
-    get _defaultShifts() {return Array(3).fill(this.getDefaultShift())}
+    // eslint-disable-next-line class-methods-use-this
+    get _defaultShifts() {
+        return Array(3).fill(this.getDefaultShift());
+    }
 
-    get _defaultKPPRA() {return Math.floor(appSettings().defaultKPPRA / this._divisor)}
+    get _defaultKPPRA() {
+        return Math.floor(10 / this._divisor);
+    }
 
     get jsonSchema() {
         const kOrQ = this.name[0];
         const vector = {
-            "type": "array",
-            "items": {
-                "type": "number"
+            type: "array",
+            items: {
+                type: "number",
             },
-            "minItems": 3,
-            "maxItems": 3
+            minItems: 3,
+            maxItems: 3,
         };
 
         const vector_ = (defaultValue) => {
-            return Object.assign({}, vector, {
-                "items": {
-                    "type": "number",
-                    "default": defaultValue
-                }
-            })
+            return {
+                ...vector,
+                items: {
+                    type: "number",
+                    default: defaultValue,
+                },
+            };
         };
 
         return {
-            "$schema": "http://json-schema.org/draft-04/schema#",
-            "description": `3D grid with shifts. Default min value for ${kOrQ.toUpperCase()}PPRA (${kOrQ}pt per reciprocal atom) is ${this._defaultKPPRA}.`,
-            "type": "object",
-            "properties": {
-                "dimensions": vector_(this.getDefaultDimension()),
-                "shifts": vector_(this.getDefaultShift()),
-                "KPPRA": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "default": this.KPPRA,
+            $schema: "http://json-schema.org/draft-04/schema#",
+            description: `3D grid with shifts. Default min value for ${kOrQ.toUpperCase()}PPRA (${kOrQ}pt per reciprocal atom) is ${
+                this._defaultKPPRA
+            }.`,
+            type: "object",
+            properties: {
+                dimensions: vector_(this.getDefaultDimension()),
+                shifts: vector_(this.getDefaultShift()),
+                KPPRA: {
+                    type: "integer",
+                    minimum: 1,
+                    default: this.KPPRA,
                 },
-                "preferKPPRA": {
-                    "type": "boolean",
-                    "default": this.preferKPPRA,
-                }
+                preferKPPRA: {
+                    type: "boolean",
+                    default: this.preferKPPRA,
+                },
             },
-            "required": [
-                "dimensions",
-                "shifts"
-            ]
-        }
-
+            required: ["dimensions", "shifts"],
+        };
     }
 
     _arraySubStyle(emptyValue = 0) {
         return {
             "ui:options": {
-                "addable": false,
-                "orderable": false,
-                "removable": false
+                addable: false,
+                orderable: false,
+                removable: false,
             },
-            "items": {
+            items: {
                 "ui:disabled": this.preferKPPRA,
                 // TODO: extract the actual current values from context
                 "ui:placeholder": "1",
                 "ui:emptyValue": emptyValue,
-            }
-        }
-    };
+            },
+        };
+    }
 
     get uiSchema() {
         return {
@@ -100,13 +112,13 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
             KPPRA: {
                 "ui:disabled": !this.preferKPPRA,
                 "ui:emptyValue": this.KPPRA,
-                "ui:placeholder": this.KPPRA.toString(),  // make string to prevent prop type error
+                "ui:placeholder": this.KPPRA.toString(), // make string to prevent prop type error
             },
             preferKPPRA: {
                 ...this.fieldStyles("p-t-20"), // add padding top to level with other elements
                 "ui:emptyValue": true,
-            }
-        }
+            },
+        };
     }
 
     get _defaultData() {
@@ -120,7 +132,9 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
 
     get _defaultDataWithMaterial() {
         // if `data` is present and material is updated, prioritize `data` when `preferKPPRA` is not set
-        return this.preferKPPRA ? this._getGridFromKPPRA(this.KPPRA) : this.data || this._defaultData;
+        return this.preferKPPRA
+            ? this._getGridFromKPPRA(this.KPPRA)
+            : this.data || this._defaultData;
     }
 
     get defaultData() {
@@ -129,7 +143,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
 
     _getGridFromKPPRA(KPPRA) {
         const nAtoms = this.material ? this.material.Basis.nAtoms : 1;
-        const dimension = Math.ceil(Math.pow(KPPRA / nAtoms, 1 / 3));
+        const dimension = Math.ceil((KPPRA / nAtoms) ** (1 / 3));
         return {
             dimensions: Array(3).fill(dimension),
             shifts: this._defaultShifts,
@@ -152,5 +166,4 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
         }
         return data;
     }
-
 }

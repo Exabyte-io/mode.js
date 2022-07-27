@@ -1,11 +1,14 @@
+/* eslint-disable max-classes-per-file */
+import { Application } from "@exabyte-io/ade.js";
+import {
+    ApplicationContextMixinBuilder,
+    JSONSchemaFormDataProvider,
+    MaterialContextMixinBuilder,
+} from "@exabyte-io/code.js/dist/context";
+import { math as codeJSMath } from "@exabyte-io/code.js/dist/math";
+import { Made } from "@exabyte-io/made.js";
 import { mix } from "mixwith";
 import s from "underscore.string";
-import { Made } from "@exabyte-io/made.js";
-import { Application } from "@exabyte-io/ade.js";
-import { math as codeJSMath } from "@exabyte-io/code.js/dist/math";
-import { ApplicationContextMixinBuilder, MaterialContextMixinBuilder } from "@exabyte-io/code.js/dist/context"
-
-import { JSONSchemaFormDataProvider } from "/imports/core_cove/providers";
 
 const defaultPoint = "Г";
 const defaultSteps = 10;
@@ -14,7 +17,6 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
     ApplicationContextMixinBuilder(Application),
     MaterialContextMixinBuilder(Made.Material),
 ) {
-
     constructor(config) {
         super(config);
         this.reciprocalLattice = new Made.ReciprocalLattice(this.material.lattice);
@@ -22,7 +24,7 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
     }
 
     get isEditedIsSetToFalseOnMaterialUpdate() {
-        return this.isMaterialUpdated || this.isMaterialCreatedDefault
+        return this.isMaterialUpdated || this.isMaterialCreatedDefault;
     }
 
     get defaultData() {
@@ -35,106 +37,120 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
 
     get jsonSchema() {
         // no need to pass context to get symmetry points on client
-        const points = [].concat(this.symmetryPoints).map(x => x.point);
+        const points = [].concat(this.symmetryPoints).map((x) => x.point);
         return {
-            "$schema": "http://json-schema.org/draft-04/schema#",
-            "title": " ",
-            "description": "path in reciprocal space",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "point": {
-                        "type": "string",
-                        "default": defaultPoint,
-                        "enum": points,
+            $schema: "http://json-schema.org/draft-04/schema#",
+            title: " ",
+            description: "path in reciprocal space",
+            type: "array",
+            items: {
+                type: "object",
+                properties: {
+                    point: {
+                        type: "string",
+                        default: defaultPoint,
+                        enum: points,
                     },
-                    "steps": {
-                        "type": "integer",
-                        "default": defaultSteps,
-                    }
-                }
+                    steps: {
+                        type: "integer",
+                        default: defaultSteps,
+                    },
+                },
             },
-            "minItems": 1
-        }
+            minItems: 1,
+        };
     }
 
+    // eslint-disable-next-line class-methods-use-this
     get uiSchema() {
         return {
-            items: {}
-        }
+            items: {},
+        };
     }
 
     get uiSchemaStyled() {
         return {
             items: {
                 point: this.defaultFieldStyles,
-                steps: this.defaultFieldStyles
-            }
-        }
+                steps: this.defaultFieldStyles,
+            },
+        };
     }
 
     get fields() {
         return {
-            TitleField: ({
-                             title,
-                             required
-                         }) => this.material.getBrillouinZoneImageComponent(title)
-        }
+            // eslint-disable-next-line no-unused-vars
+            TitleField: ({ title, required }) =>
+                this.material.getBrillouinZoneImageComponent(title),
+        };
     }
 
-    get useExplicitPath() {return this.application.name === "vasp"}
+    get useExplicitPath() {
+        return this.application.name === "vasp";
+    }
 
     // override yieldData to avoid storing explicit path in saved context
-    yieldDataForRendering() {return this.yieldData(this.useExplicitPath)}
+    yieldDataForRendering() {
+        return this.yieldData(this.useExplicitPath);
+    }
 
     transformData(path = [], useExplicitPath = false) {
-        const rawData = path.map(p => {
-            const point = this.symmetryPoints.find(sp => sp.point === p.point);
-            return Object.assign({}, p, {coordinates: point.coordinates});
+        const rawData = path.map((p) => {
+            const point = this.symmetryPoints.find((sp) => sp.point === p.point);
+            return { ...p, coordinates: point.coordinates };
         });
         const processedData = useExplicitPath ? this._convertToExplicitPath(rawData) : rawData;
         // make coordinates into string and add formatting
-        return processedData.map(p => {
-            const coordinates = this.is2PIBA ? this.get2PIBACoordinates(p.coordinates) : p.coordinates;
-            p.coordinates = coordinates.map(c => s.sprintf("%14.9f", c));
+        return processedData.map((p) => {
+            const coordinates = this.is2PIBA
+                ? this.get2PIBACoordinates(p.coordinates)
+                : p.coordinates;
+            p.coordinates = coordinates.map((c) => s.sprintf("%14.9f", c));
             return p;
-        })
+        });
     }
 
-    get2PIBACoordinates(point) {return this.reciprocalLattice.getCartesianCoordinates(point)}
+    get2PIBACoordinates(point) {
+        return this.reciprocalLattice.getCartesianCoordinates(point);
+    }
 
     // Initially, path contains symmetry points with steps counts.
     // This function explicitly calculates each point between symmetry points by step counts.
+    // eslint-disable-next-line class-methods-use-this
     _convertToExplicitPath(path) {
         const points = [];
         for (let i = 0; i < path.length - 1; i++) {
             const startPoint = path[i];
             const endPoint = path[i + 1];
-            const middlePoints = codeJSMath.calculateSegmentsBetweenPoints3D(startPoint.coordinates, endPoint.coordinates, startPoint.steps);
+            const middlePoints = codeJSMath.calculateSegmentsBetweenPoints3D(
+                startPoint.coordinates,
+                endPoint.coordinates,
+                startPoint.steps,
+            );
             points.push(startPoint.coordinates);
             points.push(...middlePoints);
             // Include endPoint into path for the last section, otherwise it will be included by next loop iteration
             if (path.length - 2 === i) points.push(endPoint.coordinates);
         }
-        return points.map(x => {
+        return points.map((x) => {
             return {
                 coordinates: x,
-                steps: 1
-            }
+                steps: 1,
+            };
         });
     }
-
 }
 
 export class ExplicitPointsPathFormDataProvider extends PointsPathFormDataProvider {
-
-    get useExplicitPath() {return true}
-
+    // eslint-disable-next-line class-methods-use-this
+    get useExplicitPath() {
+        return true;
+    }
 }
 
 export class ExplicitPointsPath2PIBAFormDataProvider extends ExplicitPointsPathFormDataProvider {
-
-    get is2PIBA() {return true}
-
+    // eslint-disable-next-line class-methods-use-this
+    get is2PIBA() {
+        return true;
+    }
 }
