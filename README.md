@@ -3,7 +3,7 @@
 
 # mode.js
 
-mode.js houses entity definitions for use in the Mat3ra platform.
+MOdel DEfinitions in JS - mode.js - houses model entity definitions for use in the Mat3ra platform.
 
 
 ### Installation
@@ -52,6 +52,6 @@ MoDe
 The `MoDe` package is used in conjunction with the `ADe` package to define top-level parameters
 present in Subworkflow units in the `WoDe` package ecosystem. The entities provided by `MoDe` are:
 
-- `Method` - See [Method Overview](https://docs.mat3ra.com/models/overview/) for more details
-- `Model` - See [Model Overview](https://docs.mat3ra.com/methods/overview/) for more details
+- `Method` - See [Method Overview](https://docs.mat3ra.com/methods/overview/) for more details
+- `Model` - See [Model Overview](https://docs.mat3ra.com/models/overview/) for more details
 
