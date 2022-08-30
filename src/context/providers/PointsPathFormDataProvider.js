@@ -83,7 +83,13 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
 
     get fields() {
         const hasRequiredFn = typeof this.material.getBrillouinZoneImageComponent === "function";
-        if (!hasRequiredFn) return {};
+        if (!hasRequiredFn) {
+            console.log(
+                "PointsPathFormDataProvider: Material class has no function" +
+                    " 'getBrillouinZoneImageComponent'! Returning empty Object instead.",
+            );
+            return {};
+        }
         return {
             // eslint-disable-next-line no-unused-vars
             TitleField: ({ title, required }) =>
