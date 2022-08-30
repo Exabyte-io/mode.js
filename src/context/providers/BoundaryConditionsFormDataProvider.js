@@ -1,14 +1,13 @@
-import {
-    JSONSchemaFormDataProvider,
-    MaterialContextMixinBuilder,
-} from "@exabyte-io/code.js/dist/context";
+import { JSONSchemaFormDataProvider, MaterialContextMixin } from "@exabyte-io/code.js/dist/context";
 import { deepClone } from "@exabyte-io/code.js/dist/utils";
 import { Made } from "@exabyte-io/made.js";
 import { mix } from "mixwith";
 
 export class BoundaryConditionsFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
-    MaterialContextMixinBuilder(Made.Material),
+    MaterialContextMixin,
 ) {
+    static materialCls = Made.Material;
+
     get boundaryConditions() {
         return this.material.metadata.boundaryConditions || {};
     }

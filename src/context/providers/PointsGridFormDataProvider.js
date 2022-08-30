@@ -1,15 +1,14 @@
-import {
-    JSONSchemaFormDataProvider,
-    MaterialContextMixinBuilder,
-} from "@exabyte-io/code.js/dist/context";
+import { JSONSchemaFormDataProvider, MaterialContextMixin } from "@exabyte-io/code.js/dist/context";
 import { Made } from "@exabyte-io/made.js";
 import lodash from "lodash";
 import { mix } from "mixwith";
 // TODO : pass appSettings to use defaultKPPRA
 
 export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
-    MaterialContextMixinBuilder(Made.Material),
+    MaterialContextMixin,
 ) {
+    static materialCls = Made.Material;
+
     constructor(config) {
         super(config);
         this._divisor = config.divisor || 1; // KPPRA will be divided by this number
