@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
 import { Application } from "@exabyte-io/ade.js";
 import {
-    ApplicationContextMixinBuilder,
+    ApplicationContextMixin,
     JSONSchemaFormDataProvider,
-    MaterialContextMixinBuilder,
+    MaterialContextMixin,
 } from "@exabyte-io/code.js/dist/context";
 import { math as codeJSMath } from "@exabyte-io/code.js/dist/math";
 import { Made } from "@exabyte-io/made.js";
@@ -14,9 +14,13 @@ const defaultPoint = "Г";
 const defaultSteps = 10;
 
 export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
-    ApplicationContextMixinBuilder(Application),
-    MaterialContextMixinBuilder(Made.Material),
+    ApplicationContextMixin,
+    MaterialContextMixin,
 ) {
+    static materialCls = Made.Material;
+
+    static applicationCls = Application;
+
     constructor(config) {
         super(config);
         this.reciprocalLattice = new Made.ReciprocalLattice(this.material.lattice);
@@ -78,6 +82,8 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
     }
 
     get fields() {
+        const hasRequiredFn = typeof this.material.getBrillouinZoneImageComponent === "function";
+        if (!hasRequiredFn) return {};
         return {
             // eslint-disable-next-line no-unused-vars
             TitleField: ({ title, required }) =>

@@ -37,7 +37,7 @@
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
         "@exabyte-io/ade.js": "2022.7.27-0",
-        "@exabyte-io/code.js": "2022.7.28-1",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#48b44acff18b56d8df47e1daa5457fbb65135cd7",
         "@exabyte-io/made.js": "2022.6.15-0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
