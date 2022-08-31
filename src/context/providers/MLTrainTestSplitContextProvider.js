@@ -5,7 +5,7 @@ import { mix } from "mixwith";
 export class MLTrainTestSplitContextProvider extends mix(ContextProvider).with(
     ApplicationContextMixin,
 ) {
-    static applicationCls = Application;
+    static Application = Application;
 
     // eslint-disable-next-line class-methods-use-this
     get uiSchema() {

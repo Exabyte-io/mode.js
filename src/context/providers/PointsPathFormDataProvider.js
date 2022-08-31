@@ -17,9 +17,9 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
     ApplicationContextMixin,
     MaterialContextMixin,
 ) {
-    static materialCls = Made.Material;
+    static Material = Made.Material;
 
-    static applicationCls = Application;
+    static Application = Application;
 
     constructor(config) {
         super(config);
