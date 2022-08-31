@@ -14,7 +14,7 @@ const cutoffConfig = {
 export class PlanewaveCutoffsContextProvider extends mix(ContextProvider).with(
     ApplicationContextMixin,
 ) {
-    static applicationCls = Application;
+    static Application = Application;
 
     // eslint-disable-next-line class-methods-use-this
     get uiSchema() {

@@ -7,7 +7,7 @@ import { mix } from "mixwith";
 export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
     MaterialContextMixin,
 ) {
-    static materialCls = Made.Material;
+    static Material = Made.Material;
 
     constructor(config) {
         super(config);
