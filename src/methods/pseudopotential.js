@@ -69,7 +69,7 @@ export class PseudopotentialMethod extends Method {
         // sort by alphabetical order to ensure elements order consistency in VASP POSCAR/POTCAR
         this.setData({
             ...this.data,
-            pseudo: _.sortBy(pseudopotentials, "element").map((x) => x.asEmbedded()),
+            pseudo: _.sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
         });
     }
 
@@ -80,7 +80,7 @@ export class PseudopotentialMethod extends Method {
         // sort by alphabetical order to ensure elements order consistency in VASP POSCAR/POTCAR
         this.setData({
             ...this.data,
-            allPseudo: _.sortBy(pseudopotentials, "element").map((x) => x.asEmbedded()),
+            allPseudo: _.sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
         });
     }
 
