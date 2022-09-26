@@ -59,7 +59,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
             return {
                 ...vector,
                 items: {
-                    type: "number",
+                    type: this.usesJinjaVariable ? "string" : "number",
                     default: defaultValue,
                 },
             };
@@ -75,7 +75,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
                 dimensions: vector_(this.getDefaultDimension()),
                 shifts: vector_(this.getDefaultShift()),
                 KPPRA: {
-                    type: "integer",
+                    type: this.usesJinjaVariable ? "string" : "integer",
                     minimum: 1,
                     default: this.KPPRA,
                 },
