@@ -30,6 +30,10 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
         return 0;
     }
 
+    static dimensionsHaveNumbers(dimensions) {
+        return dimensions.every((d) => typeof d === "number");
+    }
+
     // eslint-disable-next-line class-methods-use-this
     get _defaultDimensions() {
         return Array(3).fill(this.getDefaultDimension());
@@ -154,7 +158,17 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
         return grid.dimensions.reduce((a, b) => a * b) * nAtoms;
     }
 
+    static _canTransform(data) {
+        return (
+            (data.preferKPPRA && data.KPPRA) ||
+            (!data.preferKPPRA && this.dimensionsHaveNumbers(data.dimensions))
+        );
+    }
+
     transformData(data) {
+        if (!PointsGridFormDataProvider._canTransform(data)) {
+            return data;
+        }
         // 1. check if KPPRA is preferred
         if (data.preferKPPRA) {
             // 2. KPPRA is preferred => recalculate grid; NOTE: `data.KPPRA` is undefined at first
