@@ -79,7 +79,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
                 dimensions: vector_(this.getDefaultDimension()),
                 shifts: vector_(this.getDefaultShift()),
                 KPPRA: {
-                    type: this.usesJinjaVariable ? "string" : "integer",
+                    type: "integer",
                     minimum: 1,
                     default: this.KPPRA,
                 },
