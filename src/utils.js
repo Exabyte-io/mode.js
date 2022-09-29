@@ -1,8 +1,13 @@
 import path from "path";
 
+export const REGEX = {
+    unitModel: /^um:(?<path>(\/\w+){3,5})(?<query>\?(\w+=\w+&?){0,})$/,
+};
+
 export function buildUnitModelPath({ tier1, tier2, tier3, type, subtype, extra = {} }) {
     const extraAttributes = new URLSearchParams(extra).toString();
-    const modelPath = path.join(tier1, tier2, tier3, type, subtype);
+    const pathElements = [tier1, tier2, tier3, type, subtype].filter((e) => e);
+    const modelPath = path.join(...pathElements);
     return `um:/${modelPath}?${extraAttributes}`;
 }
 
@@ -12,6 +17,9 @@ export function basename(unitModelPath) {
 }
 
 export function buildModelPath(unitModels) {
+    if (!unitModels.length) {
+        return "";
+    }
     const [first, ...tail] = unitModels;
     let modelPath = `m:${first.modelPath}`;
     if (tail.length > 0) {
