@@ -76,6 +76,17 @@ export class UnitModel extends InMemoryEntity {
         });
     }
 
+    /**
+     *  Create group slug (used in `property.save()`)
+     */
+    get groupSlug() {
+        let groupSlug = `${this._application.shortName}:${this.type}`;
+        if (this.subtype) {
+            groupSlug = `${groupSlug}:${this.subtype}`;
+        }
+        return groupSlug;
+    }
+
     toJSON() {
         return {
             ...super.toJSON(),
