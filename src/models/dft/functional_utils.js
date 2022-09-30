@@ -76,6 +76,12 @@ export function findFunctionalConfig(slug) {
             return FUNCTIONALS[rung][slug];
         }
     }
+    return {};
+}
+
+export function isValidFunctionalSlug(slug) {
+    const allSlugs = Object.keys(FUNCTIONALS).flatMap((r) => Object.keys(FUNCTIONALS[r]));
+    return allSlugs.includes(slug);
 }
 
 export function rungFromSlug(slug) {
