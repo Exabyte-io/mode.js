@@ -31,7 +31,7 @@ export class UnitModel extends InMemoryEntity {
     get method() {
         if (!this._method) {
             const methodConfig = this.prop("method");
-            this._method = this.constructor._MethodFactory.create(methodConfig);
+            this._method = this.constructor.MethodFactory.create(methodConfig);
         }
         return this._method;
     }
