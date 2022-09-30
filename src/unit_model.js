@@ -5,11 +5,12 @@ import { MethodFactory } from "./methods/factory";
 import { buildUnitModelPath } from "./utils";
 
 export class UnitModel extends InMemoryEntity {
+    static MethodFactory = MethodFactory;
+
     constructor({ application, ...config }) {
         const defaults = { flowchartId: UnitModel.defaultFlowchartId() };
         super({ ...defaults, ...config });
         this._application = application;
-        this._MethodFactory = MethodFactory;
     }
 
     get categories() {
@@ -30,7 +31,7 @@ export class UnitModel extends InMemoryEntity {
     get method() {
         if (!this._method) {
             const methodConfig = this.prop("method");
-            this._method = this._MethodFactory.create(methodConfig);
+            this._method = this.constructor._MethodFactory.create(methodConfig);
         }
         return this._method;
     }
