@@ -1,13 +1,13 @@
-import _ from "underscore";
-import { treeSlugToNamedObject } from "../tree";
-import { Model } from "../model";
 import { MethodFactory } from "../methods/factory";
+import { UnitModel } from "../unit_model";
+import { Functional } from "./dft/functional";
+import { FUNCTIONALS } from "./dft/functional_lookup_table";
 
-export class DFTModel extends Model {
-
+export class DFTModel extends UnitModel {
     constructor(config) {
         super(config);
         this._MethodFactory = config.MethodFactory || MethodFactory;
+        this._functional = Functional.create({ slug: config.functional });
     }
 
     /**
@@ -15,93 +15,64 @@ export class DFTModel extends Model {
      * @returns {string}
      */
     get groupSlug() {
-        return [
-            this._application.shortName,
-            this.type,
-            this.subtype,
-            this.functional.slug,
-            this.refiners.map(o => o.slug).join("+"),
-            this.modifiers.map(o => o.slug).join("+"),
-        ].join(":").replace("::", ":").replace(/:$/, "");
+        return [this._application.shortName, this.type, this.subtype, this.functional]
+            .join(":")
+            .replace("::", ":")
+            .replace(/:$/, "");
     }
-
-    get defaultFunctional() {
-        return treeSlugToNamedObject(this.treeBranchForSubType.functionals[0])
-    }
-
-    get defaultRefiners() {return []}
-
-    get defaultModifiers() {return []}
 
     get functional() {
-        return this.prop("functional", this.defaultFunctional);
+        return this.prop("functional");
     }
 
-    get refiners() {
-        return this.prop("refiners", this.defaultRefiners);
+    set functional(functionalSlug) {
+        this.setProp("functional", functionalSlug);
+        this._functional.slug = functionalSlug;
     }
 
-    get modifiers() {
-        return this.prop("modifiers", this.defaultModifiers);
+    defaultFunctional() {
+        // TODO: get from tree once new tree is finalized
+        return this.allFunctionals[0];
     }
 
     setSubtype(subtype) {
-        this.setProp('subtype', subtype);
+        this.setProp("subtype", subtype);
         this.setFunctional(this.defaultFunctional);
+        return this;
     }
 
-    setFunctional(functional) {
-        this.setProp('functional', this._stringToSlugifiedObject(functional));
-        this.setMethod(this._MethodFactory.create(this.defaultMethodConfig));
-    }
+    setFunctional(functionalSlug) {
+        this.functional = functionalSlug;
 
-    _setArrayProp(name, data) {
-        data = safeMakeArray(data).map(r => this._stringToSlugifiedObject(r));
-        this.setProp(name, data);
-        this[`_${name}`] = data;
-    }
-
-    setRefiners(refiners) {
-        this._setArrayProp('refiners', refiners)
-    }
-
-    setModifiers(modifiers) {
-        this._setArrayProp('modifiers', modifiers)
+        // TODO: reactivate once new tree is finalized
+        // this.setMethod(this._MethodFactory.create(this.defaultMethodConfig));
+        return this;
     }
 
     toJSON() {
-        const pickSlugFromObject = o => _.pick(o, 'slug');
-        return Object.assign({}, super.toJSON(),
-            {
-                functional: pickSlugFromObject(this.functional),  // only store slug for `functional`
-                refiners: this.refiners,
-                modifiers: this.modifiers,
-            }
-        );
+        return {
+            ...super.toJSON(),
+            functional: this._functional.slug,
+        };
     }
 
     /**
-     * Get all functionals in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of functional objects
+     * Get all functionals slugs for the current model subtype (lda, gga, ...)
+     * @returns {string[]} - List of functional slugs
      */
     get allFunctionals() {
-        return this.treeBranchForSubType.functionals.map(x => treeSlugToNamedObject(x))
+        return Object.keys(FUNCTIONALS[this.subtype]);
     }
 
-    /**
-     * Get all refiners in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of refiner objects
-     */
-    get allRefiners() {
-        return this.treeBranchForSubType.refiners.map(x => treeSlugToNamedObject(x))
+    get hasCustomFunctional() {
+        return this._functional.isCustom;
     }
 
-    /**
-     * Get all modifiers in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of modifier objects
-     */
-    get allModifiers() {
-        return this.treeBranchForSubType.modifiers.map(x => treeSlugToNamedObject(x))
+    get hasRangeSeparation() {
+        return this._functional.hasRangeSeparation;
     }
 
+    get hasNonLocalCorrelation() {
+        return this._functional.hasNonLocalCorrelation;
+    }
 }
