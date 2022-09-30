@@ -7,11 +7,12 @@ import {
     hasRangeSeparation,
     isGGAfromComponents,
     isLDAfromComponents,
+    isValidFunctionalSlug,
 } from "./functional_utils";
 
 export class Functional {
     constructor({ slug, components, attenuation } = {}) {
-        this.slug = slug || "custom";
+        this._slug = slug || "custom";
         this.components = components || [];
         this.attenuation = attenuation || 0;
     }
@@ -22,6 +23,17 @@ export class Functional {
             return new Functional({ slug, ..._config });
         }
         return new Functional({ ...config });
+    }
+
+    get slug() {
+        return this._slug;
+    }
+
+    set slug(functionalSlug) {
+        this._slug = functionalSlug;
+        const { components, attenuation } = findFunctionalConfig(functionalSlug);
+        this.components = components;
+        this.attenuation = attenuation || 0;
     }
 
     findComponent({ slug, range, subtype }) {
@@ -61,6 +73,10 @@ export class Functional {
 
     get hasNonLocalCorrelation() {
         return hasNonLocalCorrelation(this.components);
+    }
+
+    get isCustom() {
+        return !isValidFunctionalSlug(this._slug);
     }
 
     get isLDA() {
