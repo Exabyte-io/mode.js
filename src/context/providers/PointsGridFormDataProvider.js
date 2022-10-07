@@ -30,10 +30,6 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
         return 0;
     }
 
-    static dimensionsHaveNumbers(dimensions) {
-        return dimensions.every((d) => typeof d === "number");
-    }
-
     // eslint-disable-next-line class-methods-use-this
     get _defaultDimensions() {
         return Array(3).fill(this.getDefaultDimension());
@@ -63,7 +59,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
             return {
                 ...vector,
                 items: {
-                    type: this.usesJinjaVariable ? "string" : "number",
+                    type: this.isUsingJinjaVariables ? "string" : "number",
                     default: defaultValue,
                 },
             };
@@ -161,7 +157,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
     static _canTransform(data) {
         return (
             (data.preferKPPRA && data.KPPRA) ||
-            (!data.preferKPPRA && this.dimensionsHaveNumbers(data.dimensions))
+            (!data.preferKPPRA && data.dimensions.every((d) => typeof d === "number"))
         );
     }
 

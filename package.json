@@ -43,7 +43,7 @@
     },
     "devDependencies": {
         "@exabyte-io/ade.js": "2022.8.31-0",
-        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#a14e86838e9aa017415d13c6412cb5f6f35cd0d9      ",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#94fdaacfa1d9a185f7d50afc40cd1cff2bb6d717",
         "@exabyte-io/made.js": "2022.6.15-0",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
