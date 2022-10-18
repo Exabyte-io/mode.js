@@ -20,10 +20,6 @@ export class Model extends InMemoryEntity {
         return this.prop("name");
     }
 
-    get slug() {
-        return this.prop("slug");
-    }
-
     static isUnitModelArray(unitInstances) {
         return (
             Array.isArray(unitInstances) &&
