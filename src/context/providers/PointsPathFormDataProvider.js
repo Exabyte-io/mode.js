@@ -85,15 +85,18 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
         const hasRequiredFn = typeof this.material.getBrillouinZoneImageComponent === "function";
         if (!hasRequiredFn) {
             console.log(
-                "PointsPathFormDataProvider: Material class has no function" +
-                    " 'getBrillouinZoneImageComponent'! Returning empty Object instead.",
+                "PointsPathFormDataProvider: Material class has no function"
+                    + " 'getBrillouinZoneImageComponent'! Returning empty Object instead.",
             );
             return {};
         }
         return {
             // eslint-disable-next-line no-unused-vars
-            TitleField: ({ title, required }) =>
-                this.material.getBrillouinZoneImageComponent(title),
+            TitleField: ({
+                title,
+                // eslint-disable-next-line no-unused-vars
+                required,
+            }) => this.material.getBrillouinZoneImageComponent(title),
         };
     }
 

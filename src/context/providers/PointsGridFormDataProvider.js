@@ -156,8 +156,8 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
 
     static _canTransform(data) {
         return (
-            (data.preferKPPRA && data.KPPRA) ||
-            (!data.preferKPPRA && data.dimensions.every((d) => typeof d === "number"))
+            (data.preferKPPRA && data.KPPRA)
+            || (!data.preferKPPRA && data.dimensions.every((d) => typeof d === "number"))
         );
     }
 
