@@ -88,9 +88,11 @@ export class PseudopotentialMethod extends Method {
     // override default `toJSONWithCleanData` method to avoid saving `allPseudo` inside the workflow
     // TODO: revise after implementing Pseudopotential Sets
     toJSONWithCleanData(exclude = []) {
-        return super.toJSONWithCleanData(exclude.concat([
-            "allPseudo",
-            // 'pseudo' - not cleaning the field to save it in `Job.workflow`
-        ]));
+        return super.toJSONWithCleanData(
+            exclude.concat([
+                "allPseudo",
+                // 'pseudo' - not cleaning the field to save it in `Job.workflow`
+            ]),
+        );
     }
 }

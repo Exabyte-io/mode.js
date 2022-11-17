@@ -22,7 +22,10 @@ export class DFTModel extends Model {
             this.functional.slug,
             this.refiners.map((o) => o.slug).join("+"),
             this.modifiers.map((o) => o.slug).join("+"),
-        ].join(":").replace("::", ":").replace(/:$/, "");
+        ]
+            .join(":")
+            .replace("::", ":")
+            .replace(/:$/, "");
     }
 
     get defaultFunctional() {
@@ -30,10 +33,14 @@ export class DFTModel extends Model {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    get defaultRefiners() { return []; }
+    get defaultRefiners() {
+        return [];
+    }
 
     // eslint-disable-next-line class-methods-use-this
-    get defaultModifiers() { return []; }
+    get defaultModifiers() {
+        return [];
+    }
 
     get functional() {
         return this.prop("functional", this.defaultFunctional);

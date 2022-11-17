@@ -95,14 +95,8 @@ const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
     ].methods.pseudopotential.splice(0, 1);
 
     // assert "us" is the first option
-    ESPRESSO_MODELS_TREE
-        .dft[approximation]
-        .methods
-        .pseudopotential = ESPRESSO_MODELS_TREE
-            .dft[approximation]
-            .methods
-            .pseudopotential
-            .reverse();
+    ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential =
+        ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential.reverse();
 
     // NWCHEM_MODELS_TREE.dft[approximation].methods.localorbital =
     //     NWCHEM_MODELS_TREE.dft[approximation].methods.localorbital;

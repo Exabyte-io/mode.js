@@ -18,12 +18,14 @@ export const UnknownMethodConfig = {
 };
 
 export function allowedTypes(model) {
-    return lodash.keys(lodash.get(MODEL_TREE, `${model.type}.${model.subtype}.methods`, [])).map((x) => {
-        return {
-            slug: x,
-            name: lodash.get(MODEL_NAMES, x, x),
-        };
-    });
+    return lodash
+        .keys(lodash.get(MODEL_TREE, `${model.type}.${model.subtype}.methods`, []))
+        .map((x) => {
+            return {
+                slug: x,
+                name: lodash.get(MODEL_NAMES, x, x),
+            };
+        });
 }
 
 export function allowedSubtypes(model, type) {
