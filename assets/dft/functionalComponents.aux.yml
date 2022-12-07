@@ -2,9 +2,12 @@ lda:
   slater:
     name: Slater
     type: exchange
+    libxcId: 1
   pz81:
     name: Perdew-Zunger 1981
     type: correlation
+    libxcId: 9
   pw92:
     name: Perdew-Wang 1992
     type: correlation
+    libxcId: 12
