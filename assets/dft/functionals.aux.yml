@@ -6,9 +6,22 @@ lda:
         fraction: 1.0
       - slug: pw92
         fraction: 1.0
+    applications:
+      vasp:
+        - version: ">=6.3.0"
+          executable: vasp
+          build: all
   spz:
     components:
       - slug: slater
         fraction: 1.0
       - slug: pz81
         fraction: 1.0
+    applications:
+      espresso:
+        - version: ">=5.0"
+      vasp:
+        - version: ">=6.3.0"
+          executable: vasp
+          build: all
+
