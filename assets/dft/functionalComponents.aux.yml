@@ -1,0 +1,10 @@
+lda:
+  slater:
+    name: Slater
+    type: exchange
+  pz81:
+    name: Perdew-Zunger 1981
+    type: correlation
+  pw92:
+    name: Perdew-Wang 1992
+    type: correlation

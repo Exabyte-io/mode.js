@@ -1,0 +1,7 @@
+assetType: model
+assetOptions:
+  - functional
+name: Local Density Approximation
+functional:
+  - spz
+  - spw92

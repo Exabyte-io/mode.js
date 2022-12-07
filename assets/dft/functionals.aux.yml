@@ -1,0 +1,14 @@
+assetType: modelOption
+lda:
+  spw92:
+    components:
+      - slug: slater
+        fraction: 1.0
+      - slug: pw92
+        fraction: 1.0
+  spz:
+    components:
+      - slug: slater
+        fraction: 1.0
+      - slug: pz81
+        fraction: 1.0
