@@ -11,3 +11,31 @@ lda:
     name: Perdew-Wang 1992
     type: correlation
     libxcId: 12
+gga:
+  pbe-x:
+    name: PBE exchange
+    type: exchange
+    libxcId: 101
+  pbe-c:
+    name: PBE correlation
+    type: correlation
+    libxcId: 130
+  pbesol-x:
+    name: PBEsol exchange
+    type: exchange
+    libxcId: 116
+  pbesol-c:
+    name: PBEsol correlation
+    type: correlation
+    libxcId: 133
+  pw91-x:
+    name: PW91 exchange
+    type: exchange
+    libxcId: 109
+  pw91-c:
+    name: PW91 correlation
+    type: correlation
+    libxcId: 134
+
+
+
