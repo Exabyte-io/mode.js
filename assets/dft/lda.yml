@@ -3,5 +3,6 @@ assetOptions:
   - functional
 name: Local Density Approximation
 functional:
-  - spz
-  - spw92
+  include: functionals.aux.yml#lda
+# modifier:
+#   - vdWCorrection
