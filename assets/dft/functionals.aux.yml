@@ -1,27 +1,38 @@
 assetType: modelOption
 lda:
   spw92:
+    name: Slater-PW92
     components:
       - slug: slater
         fraction: 1.0
       - slug: pw92
         fraction: 1.0
-    applications:
-      vasp:
-        - version: ">=6.3.0"
-          executable: vasp
-          build: all
   spz:
+    name: Slater-PZ
     components:
       - slug: slater
         fraction: 1.0
       - slug: pz81
         fraction: 1.0
-    applications:
-      espresso:
-        - version: ">=5.0"
-      vasp:
-        - version: ">=6.3.0"
-          executable: vasp
-          build: all
-
+gga:
+  pbe:
+    name: PBE
+    components:
+      - slug: pbe-x
+        fraction: 1.0
+      - slug: pbe-c
+        fraction: 1.0
+  pbesol:
+    name: PBEsol
+    components:
+      - slug: pbesol-x
+        fraction: 1.0
+      - slug: pbesol-c
+        fraction: 1.0
+  pw91:
+    name: PW91
+    components:
+      - slug: pw91-x
+        fraction: 1.0
+      - slug: pw91-c
+        fraction: 1.0
