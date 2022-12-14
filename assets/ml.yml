@@ -1,0 +1,4 @@
+type:
+  name: Machine Learning
+  slug: ml
+  default: ml
