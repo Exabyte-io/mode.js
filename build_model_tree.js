@@ -1,80 +1,20 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const _ = require("lodash");
 
 const ASSET_PATH = path.resolve(__dirname, "assets");
-const MODEL_DATA = {};
-
-/**
- * Search recursively for a key name in an object.
- * @param {string} key
- * @param {Object} object
- * @returns {String[]} - List of object paths (usable with _.set / _.get)
- */
-const findKeys = (key, object) => {
-    const foundKeys = [];
-    const iterate = (obj, level) => {
-        Object.keys(obj).forEach((k) => {
-            const objPath = !level ? k : [level, k].join(".");
-            if (k === key) {
-                foundKeys.push(objPath);
-            } else if (typeof obj[k] === "object" && obj[k] !== null) {
-                iterate(obj[k], objPath);
-            }
-        });
-    };
-    iterate(object);
-    return foundKeys;
-};
-
-/**
- * Load file and resolve references recursively.
- * NOTE: The `include` key is used to designate a reference.
- * With a separator present, the reference may refer to a key in the object.
- * Please use with caution in order to avoid circular references!
- * @param filePath
- * @param separator
- * @returns {Object}
- */
-const loadYAMLWithReferences = (filePath, separator = "#") => {
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const currentDir = path.dirname(filePath);
-    const yamlObj = yaml.load(fileContent);
-    findKeys("include", yamlObj).forEach((objPath) => {
-        const reference = _.get(yamlObj, objPath);
-        const parentObjPath = objPath.replace(".include", "");
-        if (typeof reference === "string") {
-            const [fileName, key = ""] = reference.split(separator);
-            let resolved = loadYAMLWithReferences(path.resolve(currentDir, fileName));
-            resolved = !key ? resolved : _.get(resolved, key);
-            _.set(yamlObj, parentObjPath, resolved);
-            _.set(yamlObj, objPath, undefined);
-        }
-        return null;
-    });
-    return yamlObj;
-};
 
 /**
  * Load YAML asset files and insert asset data into the MODEL_DATA object.
- * @param {string} dir - folder containing asset file
- * @param {string} fileName - asset file name
- * @param {string} assetExtension - file extension for asset
+ * @todo expand functionality of this function if more sophisticated file loading is needed,
+ *       e.g. loading and following references
+ * @param {string} pathToAsset - asset file path
  */
-const loadAssetFile = (dir, fileName, assetExtension = ".yml") => {
-    const yamlObj = loadYAMLWithReferences(path.resolve(dir, fileName));
-    const key = path.basename(fileName, assetExtension);
-    let objectPath = path.relative(ASSET_PATH, dir).split(path.sep).join(".");
-    if (path.extname(key)) {
-        objectPath = ["definitions", objectPath, path.basename(key, ".aux")]
-            .filter(Boolean)
-            .join(".");
-    } else {
-        objectPath = ["model", objectPath, key].filter(Boolean).join(".");
-    }
-    _.set(MODEL_DATA, objectPath, yamlObj);
-    console.log(`setting model data of [${fileName}] at path [${objectPath}]`);
+const loadAssetFile = (pathToAsset) => {
+    const fileContent = fs.readFileSync(pathToAsset, "utf8");
+    const yamlObj = yaml.load(fileContent);
+    // process data
+    return yamlObj;
 };
 
 const getDirectories = (currentPath) => {
@@ -91,29 +31,91 @@ const getAssetFiles = (currentPath, assetExtension = ".yml") => {
 };
 
 /**
- * Traverse asset folder recursively and load asset files.
- * @param currPath {string} - path to asset directory
+ * Check whether asset file is an auxiliary file.
+ * @param {string} fileName - asset file name
+ * @param {string} extension - asset file extension
+ * @returns {boolean}
  */
-const getAssetData = (currPath) => {
-    const branches = getDirectories(currPath);
-    const assetFiles = getAssetFiles(currPath);
-    console.log(`current directory: ${currPath}`);
-    console.log("contains assets: ");
-    assetFiles.forEach((a) => console.log(a));
-    console.log("-----");
-
-    assetFiles.forEach((asset) => {
-        try {
-            loadAssetFile(currPath, asset);
-        } catch (e) {
-            console.log(e);
-        }
-    });
-    branches.forEach((b) => {
-        getAssetData(path.resolve(currPath, b));
-    });
+const isAuxiliaryFile = (fileName, extension = ".yml") => {
+    return Boolean(path.extname(path.basename(fileName, extension)));
 };
 
-getAssetData(ASSET_PATH);
+/**
+ * Check whether asset file contains data of several nodes.
+ * @param {string} fileName - asset file name
+ * @param {string} extension - asset file extension
+ * @returns {boolean}
+ */
+const isNodeDataFile = (fileName, extension = ".yml") => {
+    return path.extname(path.basename(fileName, extension)) === ".nodes";
+};
 
-fs.writeFileSync("./model_data.js", `module.exports = ${JSON.stringify(MODEL_DATA)}`, "utf8");
+const createNodesFromDataFile = (filePath, parent) => {
+    const nodeData = loadAssetFile(filePath);
+    return Object.entries(nodeData).map(([label, data]) => ({ label, data, parent }));
+};
+
+/**
+ * @summary Create nodes recursively by traversing the file tree.
+ * In general, the following information is used to generate the nodes:
+ *   - node label -> asset file base name
+ *   - node children -> directory with same name as label
+ *   - node data -> contents of asset file
+ * Note, that nodes may also be defined via a single file (`*.nodes.yml`).
+ * @param pathToAsset
+ * @param parent
+ * @param assetExtension
+ * @returns {{parent, data: *, children: *[], label: *}}
+ */
+const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
+    const currPath = path.dirname(pathToAsset);
+    const label = path.basename(pathToAsset, assetExtension);
+    console.log(`creating node [${label}]`);
+    const childrenDir = getDirectories(currPath).find((dirName) => dirName === label);
+    const data = loadAssetFile(pathToAsset);
+    let children = [];
+
+    // set children
+    if (childrenDir) {
+        const childrenPath = path.resolve(currPath, label);
+        const childrenAssetFiles = getAssetFiles(childrenPath);
+        const dataFiles = childrenAssetFiles.filter((asset) => isNodeDataFile(asset));
+        children = childrenAssetFiles
+            .filter((asset) => !isAuxiliaryFile(asset))
+            .map((asset) => createNode(path.resolve(childrenPath, asset), label));
+        children = children.concat(
+            dataFiles.map((dataFile) =>
+                createNodesFromDataFile(path.resolve(childrenPath, dataFile), parent),
+            ),
+        );
+    }
+    return {
+        parent,
+        label,
+        data,
+        children,
+    };
+};
+
+/**
+ * Build tree from a directory containing assets.
+ * @param {string} rootPath - path to tree root directory
+ * @param {string} rootLabel - label of root node
+ * @returns {{parent: undefined, data: undefined, children: *, label: string}}
+ */
+const build_tree = (rootPath, rootLabel = "root") => {
+    const assetFiles = getAssetFiles(rootPath);
+    const children = assetFiles.map((asset) =>
+        createNode(path.resolve(rootPath, asset), rootLabel),
+    );
+    return {
+        parent: undefined,
+        label: rootLabel,
+        data: undefined,
+        children,
+    };
+};
+
+const modelTree = build_tree(ASSET_PATH);
+
+fs.writeFileSync("./model_tree.js", `module.exports = ${JSON.stringify(modelTree)}`, "utf8");
