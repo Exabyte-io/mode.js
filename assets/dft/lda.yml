@@ -1,8 +1,3 @@
-assetType: model
-assetOptions:
-  - functional
-name: Local Density Approximation
-functional:
-  include: functionals.aux.yml#lda
-# modifier:
-#   - vdWCorrection
+subtype:
+  slug: lda
+  name: Local Density Approximation

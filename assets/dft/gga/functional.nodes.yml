@@ -1,36 +1,26 @@
-assetType: modelOption
-lda:
-  spw92:
-    name: Slater-PW92
-    components:
-      - slug: slater
-        fraction: 1.0
-      - slug: pw92
-        fraction: 1.0
-  spz:
-    name: Slater-PZ
-    components:
-      - slug: slater
-        fraction: 1.0
-      - slug: pz81
-        fraction: 1.0
-gga:
-  pbe:
+pbe:
+  default: true
+  functional:
     name: PBE
+    slug: pbe
     components:
       - slug: pbe-x
         fraction: 1.0
       - slug: pbe-c
         fraction: 1.0
-  pbesol:
+pbesol:
+  functional:
     name: PBEsol
+    slug: pbesol
     components:
       - slug: pbesol-x
         fraction: 1.0
       - slug: pbesol-c
         fraction: 1.0
-  pw91:
+pw91:
+  functional:
     name: PW91
+    slug: pw91
     components:
       - slug: pw91-x
         fraction: 1.0
