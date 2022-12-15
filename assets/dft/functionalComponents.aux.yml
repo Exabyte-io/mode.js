@@ -11,31 +11,144 @@ lda:
     name: Perdew-Wang 1992
     type: correlation
     libxcId: 12
+  pw92rpa:
+    name: Perdew-Wang 1992 RPA
+    type: correlation
+    libxcId: 25
+  vwn5:
+    name: Vosko, Wilk & Nusair (VWN5)
+    type: correlation
+    libxcId: 7
+  vwn5rpa:
+    name: Vosko, Wilk & Nusair (VWN5_RPA)
+    type: correlation
+    libxcId: 8
+  vwn1:
+    name: Vosko, Wilk & Nusair (VWN1)
+    type: correlation
+    libxcId: 28
+  vwn2:
+    name: Vosko, Wilk & Nusair (VWN2)
+    type: correlation
+    libxcId: 29
+  vwn3:
+    name: Vosko, Wilk & Nusair (VWN3)
+    type: correlation
+    libxcId: 30
+  vwn4:
+    name: Vosko, Wilk & Nusair (VWN4)
+    type: correlation
+    libxcId: 31
+  liu-parr:
+    name: Liu-Parr 1996
+    type: correlation
+    libxcId: 289
+  pk09:
+    name: Proynov-Kong 2009
+    type: correlation
+    libxcId: 554
+  wigner:
+    name: Wigner
+    type: correlation
+    libxcId: 2
 gga:
   pbe-x:
-    name: PBE exchange
+    name: PBE
     type: exchange
     libxcId: 101
-  pbe-c:
-    name: PBE correlation
-    type: correlation
-    libxcId: 130
   pbesol-x:
-    name: PBEsol exchange
+    name: PBEsol
     type: exchange
     libxcId: 116
-  pbesol-c:
-    name: PBEsol correlation
-    type: correlation
-    libxcId: 133
+  revpbe-x:
+    name: revPBE
+    type: exchange
+    libxcId: 102
+  mupbe-x:
+    name: muPBE
+    type: exchange
+    libxcId: 623
+  wpbe-x:
+    name: HJS screened exchange PBE version
+    type: exchange
+    libxcId: 525
+  rpbe-x:
+    name: rPBE (Hammer, Hansen & Norskov)
+    type: exchange
+    libxcId: 117
+  b86:
+    name: Becke 86
+    type: exchange
+    libxcId: 103
+  mb86:
+    name: mod. Becke 86
+    type: exchange
+    libxcId: 105
+  b88:
+    name: Becke 88
+    type: exchange
+    libxcId: 106
+  optb88:
+    name: optB88
+    type: exchange
+    libxcId: 139
+  ak13:
+    name: AK13
+    type: exchange
+    libxcId: 56
+  pw86:
+    name: Perdew-Wang 86
+    type: exchange
+    libxcId: 108
+  rpw86:
+    name: refitted PW86
+    type: exchange
+    libxcId: 144
   pw91-x:
-    name: PW91 exchange
+    name: PW91
     type: exchange
     libxcId: 109
+  mpw91:
+    name: modified PW91 (Adamo & Barone)
+    type: exchange
+    libxcId: 119
+  g96:
+    name: Gill 96
+    type: exchange
+    libxcId: 107
+  optx:
+    name: OPTX
+    type: exchange
+    libxcId: 110
+  sogga:
+    name: SOGGA
+    type: exchange
+    libxcId: 150
+  pbe-c:
+    name: PBE
+    type: correlation
+    libxcId: 130
+  pbesol-c:
+    name: PBEsol
+    type: correlation
+    libxcId: 133
+  pbeloc:
+    name: PBEloc
+    type: correlation
+    libxcId: 246
   pw91-c:
-    name: PW91 correlation
+    name: PW91
     type: correlation
     libxcId: 134
-
-
-
+  lyp:
+    name: LYP
+    type: correlation
+    libxcId: 131
+  p86:
+    name: Perdew 86
+    type: correlation
+    libxcId: 132
+  p86vwn5:
+    name: P86 based on VWN5
+    type: correlation
+    libxcId: 252
