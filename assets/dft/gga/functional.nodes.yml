@@ -1,3 +1,6 @@
+# This is a shortcut for setting several nodes at once
+# without creating the corresponding files.
+# See `createNodesFromDataFile()`.
 pbe:
   default: true
   functional:

@@ -42,6 +42,7 @@ const isAuxiliaryFile = (fileName, extension = ".yml") => {
 
 /**
  * Check whether asset file contains data of several nodes.
+ * Note: File names of form `*.nodes.yml` are expected.
  * @param {string} fileName - asset file name
  * @param {string} extension - asset file extension
  * @returns {boolean}
