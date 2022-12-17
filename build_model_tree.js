@@ -52,7 +52,11 @@ const isNodeDataFile = (fileName, extension = ".yml") => {
 
 const createNodesFromDataFile = (filePath, parent) => {
     const nodeData = loadAssetFile(filePath);
-    return Object.entries(nodeData).map(([label, data]) => ({ label, data, parent }));
+    return Object.entries(nodeData).map(([label, data]) => ({
+        label: [parent, label].join("/"),
+        data,
+        parent,
+    }));
 };
 
 /**
@@ -69,15 +73,16 @@ const createNodesFromDataFile = (filePath, parent) => {
  */
 const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
     const currPath = path.dirname(pathToAsset);
-    const label = path.basename(pathToAsset, assetExtension);
+    const basename = path.basename(pathToAsset, assetExtension);
+    const label = [parent, basename].join("/");
     console.log(`creating node [${label}]`);
-    const childrenDir = getDirectories(currPath).find((dirName) => dirName === label);
+    const childrenDir = getDirectories(currPath).find((dirName) => dirName === basename);
     const data = loadAssetFile(pathToAsset);
     let children = [];
 
     // set children
     if (childrenDir) {
-        const childrenPath = path.resolve(currPath, label);
+        const childrenPath = path.resolve(currPath, basename);
         const childrenAssetFiles = getAssetFiles(childrenPath);
         const dataFiles = childrenAssetFiles.filter((asset) => isNodeDataFile(asset));
         children = childrenAssetFiles
@@ -116,6 +121,6 @@ const build_tree = (rootPath, rootLabel = "root") => {
     };
 };
 
-const modelTree = build_tree(ASSET_PATH);
+const modelTree = build_tree(ASSET_PATH, "");
 
 fs.writeFileSync("./model_tree.js", `module.exports = ${JSON.stringify(modelTree)}`, "utf8");

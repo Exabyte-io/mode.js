@@ -1,14 +1,14 @@
 module.exports = {
-    label: "root",
+    label: "",
     children: [
         {
-            parent: "root",
-            label: "dft",
+            parent: "",
+            label: "/dft",
             data: { type: { slug: "dft", name: "Density Functional Theory", default: "dft" } },
             children: [
                 {
-                    parent: "dft",
-                    label: "gga",
+                    parent: "/dft",
+                    label: "/dft/gga",
                     data: {
                         default: true,
                         subtype: {
@@ -20,7 +20,7 @@ module.exports = {
                     children: [
                         [
                             {
-                                label: "pbe",
+                                label: "/dft/pbe",
                                 data: {
                                     default: true,
                                     functional: {
@@ -32,10 +32,10 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "dft",
+                                parent: "/dft",
                             },
                             {
-                                label: "pbesol",
+                                label: "/dft/pbesol",
                                 data: {
                                     functional: {
                                         name: "PBEsol",
@@ -46,10 +46,10 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "dft",
+                                parent: "/dft",
                             },
                             {
-                                label: "pw91",
+                                label: "/dft/pw91",
                                 data: {
                                     functional: {
                                         name: "PW91",
@@ -60,19 +60,19 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "dft",
+                                parent: "/dft",
                             },
                         ],
                     ],
                 },
                 {
-                    parent: "dft",
-                    label: "lda",
+                    parent: "/dft",
+                    label: "/dft/lda",
                     data: { subtype: { slug: "lda", name: "Local Density Approximation" } },
                     children: [
                         [
                             {
-                                label: "spw92",
+                                label: "/dft/spw92",
                                 data: {
                                     name: "Slater-PW92",
                                     slug: "spw92",
@@ -81,10 +81,10 @@ module.exports = {
                                         { slug: "pw92", fraction: 1 },
                                     ],
                                 },
-                                parent: "dft",
+                                parent: "/dft",
                             },
                             {
-                                label: "spz",
+                                label: "/dft/spz",
                                 data: {
                                     name: "Slater-PZ",
                                     slug: "spz",
@@ -93,10 +93,10 @@ module.exports = {
                                         { slug: "pz81", fraction: 1 },
                                     ],
                                 },
-                                parent: "dft",
+                                parent: "/dft",
                             },
                             {
-                                label: "svwn",
+                                label: "/dft/svwn",
                                 data: {
                                     name: "Slater-VWN",
                                     slug: "svwn",
@@ -105,7 +105,7 @@ module.exports = {
                                         { slug: "vwn5", fraction: 1 },
                                     ],
                                 },
-                                parent: "dft",
+                                parent: "/dft",
                             },
                         ],
                     ],
@@ -113,13 +113,13 @@ module.exports = {
             ],
         },
         {
-            parent: "root",
-            label: "ml",
+            parent: "",
+            label: "/ml",
             data: { type: { name: "Machine Learning", slug: "ml", default: "ml" } },
             children: [
                 {
-                    parent: "ml",
-                    label: "re",
+                    parent: "/ml",
+                    label: "/ml/re",
                     data: { subtype: { name: "Regression", slug: "re", default: "re" } },
                     children: [],
                 },
