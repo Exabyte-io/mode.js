@@ -2,7 +2,7 @@
 # without creating the corresponding files.
 # See `createNodesFromDataFile()`.
 pbe:
-  default: true
+  isDefault: true
   functional:
     name: PBE
     slug: pbe
