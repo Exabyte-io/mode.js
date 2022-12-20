@@ -1,16 +1,16 @@
 module.exports = {
-    label: "",
+    path: "",
     children: [
         {
             parent: "",
-            label: "/dft",
+            path: "/dft",
             data: { type: { slug: "dft", name: "Density Functional Theory", default: "dft" } },
             children: [
                 {
                     parent: "/dft",
-                    label: "/dft/gga",
+                    path: "/dft/gga",
                     data: {
-                        default: true,
+                        isDefault: true,
                         subtype: {
                             slug: "gga",
                             name: "Generalized Gradient Approximation",
@@ -20,9 +20,9 @@ module.exports = {
                     children: [
                         [
                             {
-                                label: "/dft/gga/pbe",
+                                path: "/dft/gga/pbe",
                                 data: {
-                                    default: true,
+                                    isDefault: true,
                                     functional: {
                                         name: "PBE",
                                         slug: "pbe",
@@ -35,7 +35,7 @@ module.exports = {
                                 parent: "/dft/gga",
                             },
                             {
-                                label: "/dft/gga/pbesol",
+                                path: "/dft/gga/pbesol",
                                 data: {
                                     functional: {
                                         name: "PBEsol",
@@ -49,7 +49,7 @@ module.exports = {
                                 parent: "/dft/gga",
                             },
                             {
-                                label: "/dft/gga/pw91",
+                                path: "/dft/gga/pw91",
                                 data: {
                                     functional: {
                                         name: "PW91",
@@ -67,12 +67,12 @@ module.exports = {
                 },
                 {
                     parent: "/dft",
-                    label: "/dft/lda",
+                    path: "/dft/lda",
                     data: { subtype: { slug: "lda", name: "Local Density Approximation" } },
                     children: [
                         [
                             {
-                                label: "/dft/lda/spw92",
+                                path: "/dft/lda/spw92",
                                 data: {
                                     name: "Slater-PW92",
                                     slug: "spw92",
@@ -84,7 +84,7 @@ module.exports = {
                                 parent: "/dft/lda",
                             },
                             {
-                                label: "/dft/lda/spz",
+                                path: "/dft/lda/spz",
                                 data: {
                                     name: "Slater-PZ",
                                     slug: "spz",
@@ -96,7 +96,7 @@ module.exports = {
                                 parent: "/dft/lda",
                             },
                             {
-                                label: "/dft/lda/svwn",
+                                path: "/dft/lda/svwn",
                                 data: {
                                     name: "Slater-VWN",
                                     slug: "svwn",
@@ -114,12 +114,12 @@ module.exports = {
         },
         {
             parent: "",
-            label: "/ml",
+            path: "/ml",
             data: { type: { name: "Machine Learning", slug: "ml", default: "ml" } },
             children: [
                 {
                     parent: "/ml",
-                    label: "/ml/re",
+                    path: "/ml/re",
                     data: { subtype: { name: "Regression", slug: "re", default: "re" } },
                     children: [],
                 },

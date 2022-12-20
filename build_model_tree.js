@@ -43,8 +43,8 @@ const isNodeDataFile = (fileName, extension = ".yml") => {
 
 const createNodesFromDataFile = (filePath, parent) => {
     const nodeData = loadAssetFile(filePath);
-    return Object.entries(nodeData).map(([label, data]) => ({
-        label: [parent, label].join("/"),
+    return Object.entries(nodeData).map(([name, data]) => ({
+        path: [parent, name].join("/"),
         data,
         parent,
     }));
@@ -60,13 +60,13 @@ const createNodesFromDataFile = (filePath, parent) => {
  * @param pathToAsset
  * @param parent
  * @param assetExtension
- * @returns {{parent, data: *, children: *[], label: *}}
+ * @returns {{parent, data: *, children: *[], path: *}}
  */
 const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
     const currPath = path.dirname(pathToAsset);
     const basename = path.basename(pathToAsset, assetExtension);
-    const label = [parent, basename].join("/");
-    console.log(`creating node [${label}]`);
+    const nodePath = [parent, basename].join("/");
+    console.log(`creating node [${nodePath}]`);
     const childrenDir = getDirectories(currPath).find((dirName) => dirName === basename);
     const data = loadAssetFile(pathToAsset);
     let children = [];
@@ -78,16 +78,16 @@ const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
         const dataFiles = childrenAssetFiles.filter((asset) => isNodeDataFile(asset));
         children = childrenAssetFiles
             .filter((asset) => !isNodeDataFile(asset))
-            .map((asset) => createNode(path.resolve(childrenPath, asset), label));
+            .map((asset) => createNode(path.resolve(childrenPath, asset), nodePath));
         children = children.concat(
             dataFiles.map((dataFile) =>
-                createNodesFromDataFile(path.resolve(childrenPath, dataFile), label),
+                createNodesFromDataFile(path.resolve(childrenPath, dataFile), nodePath),
             ),
         );
     }
     return {
         parent,
-        label,
+        path: nodePath,
         data,
         children,
     };
@@ -95,18 +95,18 @@ const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
 
 /**
  * Build tree from a directory containing assets.
- * @param {string} rootPath - path to tree root directory
- * @param {string} rootLabel - label of root node
- * @returns {{parent: undefined, data: undefined, children: *, label: string}}
+ * @param {string} rootDirPath - path to tree root directory
+ * @param {string} rootNodePath - name of root node
+ * @returns {{parent: undefined, data: undefined, children: *, path: string}}
  */
-const buildTree = (rootPath, rootLabel = "root") => {
-    const assetFiles = getAssetFiles(rootPath);
+const buildTree = (rootDirPath, rootNodePath = "root") => {
+    const assetFiles = getAssetFiles(rootDirPath);
     const children = assetFiles.map((asset) =>
-        createNode(path.resolve(rootPath, asset), rootLabel),
+        createNode(path.resolve(rootDirPath, asset), rootNodePath),
     );
     return {
         parent: undefined,
-        label: rootLabel,
+        path: rootNodePath,
         data: undefined,
         children,
     };
