@@ -99,7 +99,7 @@ const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
  * @param {string} rootLabel - label of root node
  * @returns {{parent: undefined, data: undefined, children: *, label: string}}
  */
-const build_tree = (rootPath, rootLabel = "root") => {
+const buildTree = (rootPath, rootLabel = "root") => {
     const assetFiles = getAssetFiles(rootPath);
     const children = assetFiles.map((asset) =>
         createNode(path.resolve(rootPath, asset), rootLabel),
@@ -112,6 +112,6 @@ const build_tree = (rootPath, rootLabel = "root") => {
     };
 };
 
-const modelTree = build_tree(ASSET_PATH, "");
+const modelTree = buildTree(ASSET_PATH, "");
 
 fs.writeFileSync("./model_tree.js", `module.exports = ${JSON.stringify(modelTree)}`, "utf8");
