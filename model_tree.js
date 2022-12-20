@@ -2,12 +2,12 @@ module.exports = {
     path: "",
     children: [
         {
-            parent: "",
+            parentPath: "",
             path: "/dft",
             data: { type: { slug: "dft", name: "Density Functional Theory", default: "dft" } },
             children: [
                 {
-                    parent: "/dft",
+                    parentPath: "/dft",
                     path: "/dft/gga",
                     data: {
                         isDefault: true,
@@ -32,7 +32,7 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "/dft/gga",
+                                parentPath: "/dft/gga",
                             },
                             {
                                 path: "/dft/gga/pbesol",
@@ -46,7 +46,7 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "/dft/gga",
+                                parentPath: "/dft/gga",
                             },
                             {
                                 path: "/dft/gga/pw91",
@@ -60,13 +60,13 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "/dft/gga",
+                                parentPath: "/dft/gga",
                             },
                         ],
                     ],
                 },
                 {
-                    parent: "/dft",
+                    parentPath: "/dft",
                     path: "/dft/lda",
                     data: { subtype: { slug: "lda", name: "Local Density Approximation" } },
                     children: [
@@ -81,7 +81,7 @@ module.exports = {
                                         { slug: "pw92", fraction: 1 },
                                     ],
                                 },
-                                parent: "/dft/lda",
+                                parentPath: "/dft/lda",
                             },
                             {
                                 path: "/dft/lda/spz",
@@ -93,7 +93,7 @@ module.exports = {
                                         { slug: "pz81", fraction: 1 },
                                     ],
                                 },
-                                parent: "/dft/lda",
+                                parentPath: "/dft/lda",
                             },
                             {
                                 path: "/dft/lda/svwn",
@@ -105,7 +105,7 @@ module.exports = {
                                         { slug: "vwn5", fraction: 1 },
                                     ],
                                 },
-                                parent: "/dft/lda",
+                                parentPath: "/dft/lda",
                             },
                         ],
                     ],
@@ -113,12 +113,12 @@ module.exports = {
             ],
         },
         {
-            parent: "",
+            parentPath: "",
             path: "/ml",
             data: { type: { name: "Machine Learning", slug: "ml", default: "ml" } },
             children: [
                 {
-                    parent: "/ml",
+                    parentPath: "/ml",
                     path: "/ml/re",
                     data: { subtype: { name: "Regression", slug: "re", default: "re" } },
                     children: [],

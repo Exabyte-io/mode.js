@@ -46,7 +46,7 @@ const createNodesFromDataFile = (filePath, parent) => {
     return Object.entries(nodeData).map(([name, data]) => ({
         path: [parent, name].join("/"),
         data,
-        parent,
+        parentPath: parent,
     }));
 };
 
@@ -86,7 +86,7 @@ const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
         );
     }
     return {
-        parent,
+        parentPath: parent,
         path: nodePath,
         data,
         children,
@@ -105,7 +105,7 @@ const buildTree = (rootDirPath, rootNodePath = "root") => {
         createNode(path.resolve(rootDirPath, asset), rootNodePath),
     );
     return {
-        parent: undefined,
+        parentPath: undefined,
         path: rootNodePath,
         data: undefined,
         children,
