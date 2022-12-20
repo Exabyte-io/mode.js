@@ -31,16 +31,6 @@ const getAssetFiles = (currentPath, assetExtension = ".yml") => {
 };
 
 /**
- * Check whether asset file is an auxiliary file.
- * @param {string} fileName - asset file name
- * @param {string} extension - asset file extension
- * @returns {boolean}
- */
-const isAuxiliaryFile = (fileName, extension = ".yml") => {
-    return Boolean(path.extname(path.basename(fileName, extension)));
-};
-
-/**
  * Check whether asset file contains data of several nodes.
  * Note: File names of form `*.nodes.yml` are expected.
  * @param {string} fileName - asset file name
@@ -87,11 +77,11 @@ const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
         const childrenAssetFiles = getAssetFiles(childrenPath);
         const dataFiles = childrenAssetFiles.filter((asset) => isNodeDataFile(asset));
         children = childrenAssetFiles
-            .filter((asset) => !isAuxiliaryFile(asset))
+            .filter((asset) => !isNodeDataFile(asset))
             .map((asset) => createNode(path.resolve(childrenPath, asset), label));
         children = children.concat(
             dataFiles.map((dataFile) =>
-                createNodesFromDataFile(path.resolve(childrenPath, dataFile), parent),
+                createNodesFromDataFile(path.resolve(childrenPath, dataFile), label),
             ),
         );
     }

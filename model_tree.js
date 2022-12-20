@@ -20,7 +20,7 @@ module.exports = {
                     children: [
                         [
                             {
-                                label: "/dft/pbe",
+                                label: "/dft/gga/pbe",
                                 data: {
                                     default: true,
                                     functional: {
@@ -32,10 +32,10 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "/dft",
+                                parent: "/dft/gga",
                             },
                             {
-                                label: "/dft/pbesol",
+                                label: "/dft/gga/pbesol",
                                 data: {
                                     functional: {
                                         name: "PBEsol",
@@ -46,10 +46,10 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "/dft",
+                                parent: "/dft/gga",
                             },
                             {
-                                label: "/dft/pw91",
+                                label: "/dft/gga/pw91",
                                 data: {
                                     functional: {
                                         name: "PW91",
@@ -60,7 +60,7 @@ module.exports = {
                                         ],
                                     },
                                 },
-                                parent: "/dft",
+                                parent: "/dft/gga",
                             },
                         ],
                     ],
@@ -72,7 +72,7 @@ module.exports = {
                     children: [
                         [
                             {
-                                label: "/dft/spw92",
+                                label: "/dft/lda/spw92",
                                 data: {
                                     name: "Slater-PW92",
                                     slug: "spw92",
@@ -81,10 +81,10 @@ module.exports = {
                                         { slug: "pw92", fraction: 1 },
                                     ],
                                 },
-                                parent: "/dft",
+                                parent: "/dft/lda",
                             },
                             {
-                                label: "/dft/spz",
+                                label: "/dft/lda/spz",
                                 data: {
                                     name: "Slater-PZ",
                                     slug: "spz",
@@ -93,10 +93,10 @@ module.exports = {
                                         { slug: "pz81", fraction: 1 },
                                     ],
                                 },
-                                parent: "/dft",
+                                parent: "/dft/lda",
                             },
                             {
-                                label: "/dft/svwn",
+                                label: "/dft/lda/svwn",
                                 data: {
                                     name: "Slater-VWN",
                                     slug: "svwn",
@@ -105,7 +105,7 @@ module.exports = {
                                         { slug: "vwn5", fraction: 1 },
                                     ],
                                 },
-                                parent: "/dft",
+                                parent: "/dft/lda",
                             },
                         ],
                     ],
