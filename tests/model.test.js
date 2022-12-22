@@ -9,7 +9,9 @@ const MODEL_CONFIG_BARE = {
 };
 
 const UNIT_MODEL_CONFIG = {
-    categories: { tier1: "pb", tier2: "qm", tier3: "dft" },
+    tier1: "pb",
+    tier2: "qm",
+    tier3: "dft",
     type: "ksdft",
     subtype: "lda",
     functional: "svwn",
@@ -22,7 +24,9 @@ const UNIT_MODEL_CONFIG = {
 };
 
 const UNIT_MODEL_CONFIG_2 = {
-    categories: { tier1: "pb", tier2: "qm", tier3: "abin" },
+    tier1: "pb",
+    tier2: "qm",
+    tier3: "abin",
     type: "gw",
     method: {
         type: "unknown",
@@ -60,15 +64,15 @@ describe("Model", () => {
         const unitModel = new UnitModel(UNIT_MODEL_CONFIG);
 
         // add first unit model
-        model.addUnitModel(unitModel);
+        model.addUnit(unitModel);
         expect(model.units).to.be.an("array").that.has.lengthOf(1);
         expect(model.units[0].head).to.be.true;
 
         // add second unit model
-        model.addUnitModel(new UnitModel(UNIT_MODEL_CONFIG_2));
+        model.addUnit(new UnitModel(UNIT_MODEL_CONFIG_2));
         expect(model.units).to.be.an("array").that.has.lengthOf(2);
         expect(model.units[0].next).to.be.equal(model.units[1].flowchartId);
-        expect(model.units[1].head).to.be.false;
+        expect(model.units[1].head).to.be.not.true;
     });
 
     it("can remove unit models by flowchartId", () => {
@@ -76,17 +80,7 @@ describe("Model", () => {
         const lengthBefore = MODEL_CONFIG_MULTI.units.length;
         expect(model.units).to.be.an("array").that.has.lengthOf(lengthBefore);
         const { flowchartId } = model.units[0];
-        model.removeUnitModelById(flowchartId);
-        expect(model.units).to.have.lengthOf(lengthBefore - 1);
-        expect(model.units[0].head).to.be.true;
-    });
-
-    it("can remove unit models by index", () => {
-        const model = new Model(MODEL_CONFIG_MULTI);
-        const lengthBefore = MODEL_CONFIG_MULTI.units.length;
-        expect(model.units).to.be.an("array").that.has.lengthOf(lengthBefore);
-        const index = 0;
-        model.removeUnitModelByIndex(index);
+        model.removeUnit(flowchartId);
         expect(model.units).to.have.lengthOf(lengthBefore - 1);
         expect(model.units[0].head).to.be.true;
     });
@@ -101,5 +95,5 @@ describe("Model", () => {
         expect(graph[0].next).to.be.equal(graph[1].flowchartId);
     });
 
-    // TODO: tests for updateUnitModel, syncToProps
+    // TODO: test for remove unit by index
 });
