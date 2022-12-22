@@ -1,12 +1,22 @@
 import path from "path";
 
-export const REGEX = {
-    unitModel: /^um:(?<path>(\/\w+){3,5})(?<query>\?(\w+=\w+&?){0,})$/,
+export const REGEX_UNIT_MODEL = {
+    unitModel: /^um:(?<path>(\/\w+){3,5})(?<query>\?(\w+=\w+&?)*)$/,
 };
 
+/**
+ * Build unit model path based on categories.
+ * @param {string} tier1 - Tier 1 slug
+ * @param {string} tier2 - Tier 2 slug
+ * @param {string} tier3 - Tier 3 slug
+ * @param {string} type - Type slug
+ * @param {string} subtype - Subtype slug
+ * @param {Object} extra - Extra parameters
+ * @returns {string}
+ */
 export function buildUnitModelPath({ tier1, tier2, tier3, type, subtype, extra = {} }) {
     const extraAttributes = new URLSearchParams(extra).toString();
-    const pathElements = [tier1, tier2, tier3, type, subtype].filter((e) => e);
+    const pathElements = [tier1, tier2, tier3, type, subtype].filter(Boolean);
     const modelPath = path.join(...pathElements);
     return `um:/${modelPath}?${extraAttributes}`;
 }
@@ -16,6 +26,12 @@ export function basename(unitModelPath) {
     return path.basename(splitPath);
 }
 
+/**
+ * Build model path based on unit models.
+ * @param {UnitModel[]} unitModels - Array of unit models
+ * @returns {string}
+ * @todo Add functionality for measuring "distances" between unit models.
+ */
 export function buildModelPath(unitModels) {
     if (!unitModels.length) {
         return "";
