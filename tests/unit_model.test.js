@@ -2,10 +2,12 @@ import { expect } from "chai";
 
 import { Method } from "../src/method";
 import { UnitModel } from "../src/unit_model";
-import { REGEX } from "../src/utils";
+import { REGEX_UNIT_MODEL } from "../src/utils";
 
 const SVWN_CONFIG = {
-    categories: { tier1: "pb", tier2: "qm", tier3: "dft" },
+    tier1: "pb",
+    tier2: "qm",
+    tier3: "dft",
     type: "ksdft",
     subtype: "lda",
     functional: "svwn",
@@ -42,7 +44,7 @@ describe("Unit model", () => {
     });
 
     it("creates model path", () => {
-        expect(unitModel.modelPath).to.match(REGEX.unitModel);
+        expect(unitModel.modelPath).to.match(REGEX_UNIT_MODEL.unitModel);
     });
     // TODO: test toJSON with schema
 });

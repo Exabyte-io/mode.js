@@ -1,7 +1,8 @@
+import lodash from "lodash";
 import path from "path";
 
 export const REGEX_UNIT_MODEL = {
-    unitModel: /^um:(?<path>(\/\w+){3,5})(?<query>\?(\w+=\w+&?)*)$/,
+    unitModel: /^um:(?<path>(\/\w+){3,5})(?<query>\?(\w+=\w+&?)*)?$/,
 };
 
 /**
@@ -17,8 +18,12 @@ export const REGEX_UNIT_MODEL = {
 export function buildUnitModelPath({ tier1, tier2, tier3, type, subtype, extra = {} }) {
     const extraAttributes = new URLSearchParams(extra).toString();
     const pathElements = [tier1, tier2, tier3, type, subtype].filter(Boolean);
-    const modelPath = path.join(...pathElements);
-    return `um:/${modelPath}?${extraAttributes}`;
+    let modelPath = path.join(...pathElements);
+    modelPath = `um:/${modelPath}`;
+    if (!lodash.isEmpty(extra)) {
+        modelPath = `${modelPath}?${extraAttributes}`;
+    }
+    return modelPath;
 }
 
 export function basename(unitModelPath) {
