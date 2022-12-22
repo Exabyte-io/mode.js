@@ -12,8 +12,16 @@ export class UnitModel extends InMemoryEntity {
         super({ ...defaults, ...config });
     }
 
-    get categories() {
-        return this.prop("categories");
+    get tier1() {
+        return this.prop("tier1");
+    }
+
+    get tier2() {
+        return this.prop("tier2");
+    }
+
+    get tier3() {
+        return this.prop("tier3");
     }
 
     get type() {
@@ -65,12 +73,12 @@ export class UnitModel extends InMemoryEntity {
     }
 
     get modelPath() {
-        const { tier1, tier2, tier3 } = this.categories;
+        const { tier1, tier2, tier3, type } = this;
         return buildUnitModelPath({
             tier1,
             tier2,
             tier3,
-            type: this.type,
+            type,
             ...(this.subtype ? { subtype: this.subtype } : {}),
             extra: this._extraPropsForModelPath(),
         });
