@@ -1,14 +1,15 @@
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import { FlowchartItemMixin, InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import { getUUID } from "@exabyte-io/code.js/dist/utils";
+import { mix } from "mixwith";
 
 import { MethodFactory } from "./methods/factory";
 import { buildUnitModelPath } from "./utils";
 
-export class UnitModel extends InMemoryEntity {
+export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
     static MethodFactory = MethodFactory;
 
     constructor({ application, ...config }) {
-        const defaults = { flowchartId: UnitModel.defaultFlowchartId() };
+        const defaults = { flowchartId: getUUID() };
         super({ ...defaults, ...config });
     }
 
@@ -49,14 +50,6 @@ export class UnitModel extends InMemoryEntity {
 
     get methodConfig() {
         return this.prop("method");
-    }
-
-    get flowchartId() {
-        return this.prop("flowchartId");
-    }
-
-    static defaultFlowchartId() {
-        return getUUID();
     }
 
     get references() {
