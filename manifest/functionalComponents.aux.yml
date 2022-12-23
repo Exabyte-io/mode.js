@@ -27,6 +27,9 @@ lda:
     name: Vosko, Wilk & Nusair (VWN1)
     type: correlation
     libxcId: 28
+  vwn1rpa:
+    name: Vosko, Wilk & Nusair (VWN1_RPA)
+    type: correlation
   vwn2:
     name: Vosko, Wilk & Nusair (VWN2)
     type: correlation
@@ -152,3 +155,33 @@ gga:
     name: P86 based on VWN5
     type: correlation
     libxcId: 252
+mgga:
+  m06-l-x:
+    name: M06-L exchange
+    type: exchange
+    libxcId: 203
+  scan-x:
+    name: SCAN exchange
+    type: exchange
+    libxcId: 263
+  tpss-x:
+    name: TPSS exchange
+    type: exchange
+    libxcId: 202
+  m06-l-c:
+    name: M06-L correlation
+    type: correlation
+    libxcId: 233
+  scan-c:
+    name: SCAN correlation
+    type: correlation
+    libxcId: 267
+  tpss-c:
+    name: TPSS correlation
+    type: correlation
+    libxcId: 231
+other:
+  exact-exchange:
+    name: exact Exchange
+    slug: exact-exchange
+

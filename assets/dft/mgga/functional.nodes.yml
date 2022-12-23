@@ -1,0 +1,27 @@
+# This is a shortcut for setting several nodes at once
+# without creating the corresponding files.
+# See `createNodesFromDataFile()`.
+scan:
+  name: SCAN
+  slug: scan
+  components:
+    - slug: scan-x
+      fraction: 1.0
+    - slug: scan-c
+      fraction: 1.0
+tpss:
+  name: TPSS
+  slug: tpss
+  components:
+    - slug: tpss-x
+      fraction: 1.0
+    - slug: tpss-c
+      fraction: 1.0
+m06l:
+  name: M06-L
+  slug: m06-l
+  components:
+    - slug: m06-l-x
+      fraction: 1.0
+    - slug: m06-l-c
+      fraction: 1.0
