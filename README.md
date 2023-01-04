@@ -55,3 +55,14 @@ present in Subworkflow units in the `WoDe` package ecosystem. The entities provi
 - `Method` - See [Method Overview](https://docs.mat3ra.com/methods/overview/) for more details
 - `Model` - See [Model Overview](https://docs.mat3ra.com/models/overview/) for more details
 
+## Model Tree
+The `MoDe` package contains asset files defining a _model tree_, whereby each file
+defines a parts of the resulting model data. During `postinstall`, these files are processed
+by the `build_model_tree.js` script and a single model tree is created.
+The file path to a given asset file also determines its position in the tree using
+the following rules:
+- The asset folder `assets` represents the root node.
+- Asset files are expected to have the `.yml` file extension.
+- Each asset file defines a node.
+- Each directory having the same basename as an asset file defines the children of the corresponding node.
+- Asset file names ending in `.nodes.yml` define multiple children at once.
