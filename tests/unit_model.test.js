@@ -30,8 +30,8 @@ describe("Unit model", () => {
     it("has attributes", () => {
         expect(unitModel.type).to.be.equal(SVWN_CONFIG.type);
         expect(unitModel.subtype).to.be.equal(SVWN_CONFIG.subtype);
-        expect(unitModel.method).to.be.instanceof(Method);
-        expect(unitModel.methodConfig).to.have.keys("type", "subtype");
+        expect(unitModel.Method).to.be.instanceof(Method);
+        expect(unitModel.method).to.have.keys("type", "subtype");
         expect(unitModel.flowchartId).to.be.equal(SVWN_CONFIG.flowchartId);
         expect(unitModel.references).to.be.an("array");
         expect(unitModel.tags).to.be.an("array");

@@ -36,7 +36,7 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
     /**
      *  Returns instance of a Method class.
      */
-    get method() {
+    get Method() {
         if (!this._method) {
             const methodConfig = this.prop("method");
             this._method = this.constructor.MethodFactory.create(methodConfig);
@@ -44,11 +44,11 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
         return this._method;
     }
 
-    set method(method) {
+    set Method(method) {
         this._method = method;
     }
 
-    get methodConfig() {
+    get method() {
         return this.prop("method");
     }
 
@@ -78,7 +78,10 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
     }
 
     /**
-     *  Create group slug (used in `property.save()`)
+     *  Create group slug
+     * @todo adjust usage of `groupSlug` in:
+     *   - `property.save()` (property.js)
+     *   - `getPropertiesHeaders()` (MaterialsExplorerData.js)
      */
     buildGroupSlug(application) {
         let groupSlug = `${application.shortName}:${this.type}`;
