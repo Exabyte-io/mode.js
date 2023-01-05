@@ -6,15 +6,15 @@ import { MethodFactory } from "./methods/factory";
 import { PseudopotentialMethod } from "./methods/pseudopotential";
 import { Model } from "./model";
 import { DFTModel } from "./models/dft";
-import { ModelFactory } from "./models/factory";
 // TODO : can replace these with subpackages in exports in package.json
 import * as tree from "./tree";
+import { UnitModelFactory } from "./unit_model_factory";
 
 export {
     Method,
     Model,
     MethodFactory,
-    ModelFactory,
+    UnitModelFactory,
     PseudopotentialMethod,
     DFTModel,
     context,
