@@ -52,6 +52,14 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
         return this.units.map((unit) => unit.method);
     }
 
+    get Methods() {
+        return this.units.map((unit) => unit.Method);
+    }
+
+    buildGroupSlug(application) {
+        return this.units.map((unit) => unit.buildGroupSlug(application)).join(":");
+    }
+
     toJSON() {
         return {
             ...super.toJSON(),
