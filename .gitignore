@@ -5,3 +5,5 @@ node_modules/
 .nyc_output/
 .idea/
 
+# ignore postinstall generated model tree
+model_tree.js
