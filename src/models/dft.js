@@ -1,12 +1,6 @@
-import { MethodFactory } from "../methods/factory";
 import { UnitModel } from "../unit_model";
 
 export class DFTModel extends UnitModel {
-    constructor(config) {
-        super(config);
-        this._MethodFactory = config.MethodFactory || MethodFactory;
-    }
-
     /**
      * @summary Build slug string based on model information
      * @returns {string}
