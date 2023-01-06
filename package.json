@@ -7,8 +7,8 @@
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "build:modelTree": "node ./build_model_tree.js",
-        "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile && npm run build:modelTree",
+        "transpile": "babel --out-dir dist src; npm run build:modelTree",
+        "postinstall": "npm run transpile",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
     },
@@ -20,7 +20,8 @@
     "files": [
         "/dist",
         "/src",
-        ".babelrc"
+        ".babelrc",
+        "build_model_tree.js"
     ],
     "author": "Exabyte Inc.",
     "bugs": {
