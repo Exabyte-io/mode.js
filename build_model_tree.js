@@ -80,7 +80,7 @@ const createNode = (pathToAsset, parent, assetExtension = ".yml") => {
             .filter((asset) => !isNodeDataFile(asset))
             .map((asset) => createNode(path.resolve(childrenPath, asset), nodePath));
         children = children.concat(
-            dataFiles.map((dataFile) =>
+            dataFiles.flatMap((dataFile) =>
                 createNodesFromDataFile(path.resolve(childrenPath, dataFile), nodePath),
             ),
         );
