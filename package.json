@@ -42,7 +42,7 @@
         "underscore.string": "^3.3.4"
     },
     "devDependencies": {
-        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#d17edb2260877038e7d1d9e48bf53dcf950220ca",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#b6944d5ff47a8b486b730507b9a692c10971f975",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
         "eslint-config-airbnb": "19.0.2",

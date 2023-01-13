@@ -1,5 +1,4 @@
 import { FlowchartItemMixin, InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
-import { getUUID } from "@exabyte-io/code.js/dist/utils";
 import { mix } from "mixwith";
 
 import { MethodFactory } from "./methods/factory";
@@ -7,11 +6,6 @@ import { buildUnitModelPath } from "./utils";
 
 export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
     static MethodFactory = MethodFactory;
-
-    constructor({ application, ...config }) {
-        const defaults = { flowchartId: getUUID() };
-        super({ ...defaults, ...config });
-    }
 
     get tier1() {
         return this.prop("tier1");
