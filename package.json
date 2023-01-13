@@ -42,9 +42,7 @@
         "underscore.string": "^3.3.4"
     },
     "devDependencies": {
-        "@exabyte-io/ade.js": "2022.8.31-0",
         "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#d17edb2260877038e7d1d9e48bf53dcf950220ca",
-        "@exabyte-io/made.js": "2022.6.15-0",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
         "eslint-config-airbnb": "19.0.2",
@@ -63,9 +61,7 @@
         "prettier": "^2.7.1"
     },
     "peerDependencies": {
-        "@exabyte-io/ade.js": "*",
-        "@exabyte-io/code.js": "*",
-        "@exabyte-io/made.js": "*"
+        "@exabyte-io/code.js": "*"
     },
     "engines": {
         "node": ">=12.0.0"

@@ -1,4 +1,3 @@
-import * as context from "./context";
 import * as default_methods from "./default_methods";
 import * as default_models from "./default_models";
 import { Method } from "./method";
@@ -17,7 +16,6 @@ export {
     UnitModelFactory,
     PseudopotentialMethod,
     DFTModel,
-    context,
     tree,
     default_models,
     default_methods,
