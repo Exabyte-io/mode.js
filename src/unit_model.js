@@ -73,9 +73,6 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
 
     /**
      *  Create group slug
-     * @todo adjust usage of `groupSlug` in:
-     *   - `property.save()` (property.js)
-     *   - `getPropertiesHeaders()` (MaterialsExplorerData.js)
      */
     buildGroupSlug(application) {
         let groupSlug = `${application.shortName}:${this.type}`;
