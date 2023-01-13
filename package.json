@@ -18,6 +18,7 @@
     },
     "main": "dist/index.js",
     "files": [
+        "/assets",
         "/dist",
         "/src",
         ".babelrc",
