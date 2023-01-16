@@ -56,8 +56,17 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
         return this.units.map((unit) => unit.Method);
     }
 
+    /**
+     * Group slugs are used in the MaterialsExplorerData to show columns with model data.
+     * The model data is not taken directly from the model or method, but encoded in the group slug string and accessed
+     * via the property object.
+     *
+     * @summary Concatenate group slugs of units.
+     * @param {Object|Application} application - Application config or instance.
+     * @returns {string}
+     */
     buildGroupSlug(application) {
-        return this.units.map((unit) => unit.buildGroupSlug(application)).join(":");
+        return this.units.map((unit) => unit.buildGroupSlug(application)).join("#");
     }
 
     toJSON() {
