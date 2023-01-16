@@ -59,6 +59,11 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
         return {}; // overwrite in derived classes
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    get _extraSlugContent() {
+        return []; // overwrite in derived classes
+    }
+
     get modelPath() {
         const { tier1, tier2, tier3, type } = this;
         return buildUnitModelPath({
@@ -73,13 +78,14 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
 
     /**
      *  Create group slug
+     *  @param {Object|Application} application - Application instance or object
      */
     buildGroupSlug(application) {
-        let groupSlug = `${application.shortName}:${this.type}`;
-        if (this.subtype) {
-            groupSlug = `${groupSlug}:${this.subtype}`;
-        }
-        return groupSlug;
+        return [application.shortName, this.type, this.subtype, ...this._extraSlugContent]
+            .filter(Boolean)
+            .join(":")
+            .replace("::", ":")
+            .replace(/:$/, "");
     }
 
     toJSON() {
