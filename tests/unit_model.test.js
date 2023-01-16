@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
 import { Method } from "../src/method";
+import { DFTModel } from "../src/models/dft";
 import { UnitModel } from "../src/unit_model";
 import { REGEX_UNIT_MODEL } from "../src/utils";
 
@@ -46,5 +47,13 @@ describe("Unit model", () => {
     it("creates model path", () => {
         expect(unitModel.modelPath).to.match(REGEX_UNIT_MODEL.unitModel);
     });
+
+    it("build slug includes extraSlugContent", () => {
+        const unit = new DFTModel(SVWN_CONFIG);
+        const application = { name: "espresso", shortName: "qe" };
+        const groupSlug = unit.buildGroupSlug(application);
+        expect(groupSlug).to.include(SVWN_CONFIG.functional);
+    });
+
     // TODO: test toJSON with schema
 });
