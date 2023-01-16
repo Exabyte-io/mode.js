@@ -95,5 +95,12 @@ describe("Model", () => {
         expect(graph[0].next).to.be.equal(graph[1].flowchartId);
     });
 
+    it("builds group slug", () => {
+        const model = new Model(MODEL_CONFIG_MULTI);
+        const application = { name: "espresso", shortName: "qe" };
+        const groupSlug = model.buildGroupSlug(application);
+        expect(groupSlug).to.be.a("string");
+    });
+
     // TODO: test for remove unit by index
 });
