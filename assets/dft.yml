@@ -1,0 +1,4 @@
+type:
+  slug: dft
+  name: Density Functional Theory
+  default: dft

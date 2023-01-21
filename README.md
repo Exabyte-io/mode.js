@@ -5,6 +5,12 @@
 
 MOdel DEfinitions in JS - mode.js - houses model entity definitions for use in the Mat3ra platform.
 
+The `MoDe` package is used in conjunction with the `ADe` package to define top-level parameters
+present in Subworkflow units in the `WoDe` package ecosystem. The entities provided by `MoDe` are:
+
+- `Method` - See [Method Overview](https://docs.mat3ra.com/methods/overview/) for more details
+- `Model` - See [Model Overview](https://docs.mat3ra.com/models/overview/) for more details
+
 
 ### Installation
 
@@ -46,12 +52,19 @@ npm run transpile
 npm run test
 ```
 
-MoDe
-====
 
-The `MoDe` package is used in conjunction with the `ADe` package to define top-level parameters
-present in Subworkflow units in the `WoDe` package ecosystem. The entities provided by `MoDe` are:
+### Model Tree
+The `MoDe` package contains asset files that define model data in a hierarchical and reusable manner.
+During `postinstall`, these files are processed by the `build_model_tree.js` script.
+The result takes the form of a _model tree_, whereby each file
+defines parts of the model data.
+The file path to a given asset file also determines its position in the tree using
+the following rules:
+- The asset folder `assets` represents the root node.
+- Asset files are expected to have the `.yml` file extension.
+- Each asset file defines a node.
+- Each directory having the same basename as an asset file defines the children of the corresponding node.
+- Asset file names ending in `.nodes.yml` define multiple children at once.
 
-- `Method` - See [Method Overview](https://docs.mat3ra.com/methods/overview/) for more details
-- `Model` - See [Model Overview](https://docs.mat3ra.com/models/overview/) for more details
-
+For more details on the hierarchical organization of model data, see 
+[A. Zech and T. Bazhirov, *J. Chem. Inf. Model.* **62**, 1268 (2022)](https://doi.org/10.1021/acs.jcim.2c00112).

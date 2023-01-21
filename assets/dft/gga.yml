@@ -1,0 +1,4 @@
+isDefault: true
+subtype:
+  slug: gga
+  name: Generalized Gradient Approximation

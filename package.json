@@ -6,7 +6,8 @@
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
-        "transpile": "babel --out-dir dist src",
+        "build:modelTree": "node ./build_model_tree.js",
+        "transpile": "babel --out-dir dist src && npm run build:modelTree",
         "postinstall": "npm run transpile",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
@@ -17,9 +18,11 @@
     },
     "main": "dist/index.js",
     "files": [
+        "/assets",
         "/dist",
         "/src",
-        ".babelrc"
+        ".babelrc",
+        "build_model_tree.js"
     ],
     "author": "Exabyte Inc.",
     "bugs": {
@@ -36,8 +39,10 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
+        "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
+        "t": "^0.5.1",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4"
     },
