@@ -2,7 +2,7 @@
 # without creating the corresponding files.
 # See `createNodesFromDataFile()`.
 spw92:
-  name: Slater-PW92
+  title: Slater-PW92
   slug: spw92
   components:
     - slug: slater
@@ -10,7 +10,7 @@ spw92:
     - slug: pw92
       fraction: 1.0
 spz:
-  name: Slater-PZ
+  title: Slater-PZ
   slug: spz
   components:
     - slug: slater
@@ -18,7 +18,7 @@ spz:
     - slug: pz81
       fraction: 1.0
 svwn:
-  name: Slater-VWN
+  title: Slater-VWN
   slug: svwn
   components:
     - slug: slater

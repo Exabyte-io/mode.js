@@ -1,4 +1,4 @@
 type:
-  slug: dft
-  name: Density Functional Theory
-  default: dft
+  enum:
+    - dft
+  title: Density Functional Theory

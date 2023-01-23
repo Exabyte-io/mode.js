@@ -4,7 +4,7 @@
 pbe:
   isDefault: true
   functional:
-    name: PBE
+    title: PBE
     slug: pbe
     components:
       - slug: pbe-x
@@ -13,7 +13,7 @@ pbe:
         fraction: 1.0
 pbesol:
   functional:
-    name: PBEsol
+    title: PBEsol
     slug: pbesol
     components:
       - slug: pbesol-x
@@ -22,7 +22,7 @@ pbesol:
         fraction: 1.0
 pw91:
   functional:
-    name: PW91
+    title: PW91
     slug: pw91
     components:
       - slug: pw91-x

@@ -1,3 +1,4 @@
 subtype:
-  slug: lda
-  name: Local Density Approximation
+  enum:
+    - lda
+  title: Local Density Approximation

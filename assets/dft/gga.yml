@@ -1,4 +1,5 @@
 isDefault: true
 subtype:
-  slug: gga
-  name: Generalized Gradient Approximation
+  enum:
+    - gga
+  title: Generalized Gradient Approximation

@@ -1,4 +1,4 @@
 type:
-  name: Machine Learning
-  slug: ml
-  default: ml
+  title: Machine Learning
+  enum:
+    - ml

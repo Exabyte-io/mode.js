@@ -2,7 +2,7 @@
 # without creating the corresponding files.
 # See `createNodesFromDataFile()`.
 b3lyp:
-  name: B3LYP
+  title: B3LYP
   slug: b3lyp
   components:
     - slug: exact-exchange
@@ -16,7 +16,7 @@ b3lyp:
     - slug: lyp
       fraction: 0.81
 pbe0:
-  name: PBE0
+  title: PBE0
   slug: pbe0
   components:
     - slug: exact-exchange
@@ -26,7 +26,7 @@ pbe0:
     - slug: pbe-c
       fraction: 1.0
 hse06:
-  name: HSE06
+  title: HSE06
   slug: hse06
   attenuation: 0.11
   components:
