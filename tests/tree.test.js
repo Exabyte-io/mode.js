@@ -5,14 +5,14 @@ import MODEL_TREE from "../model_tree";
 import { filterTree } from "../src/tree";
 
 describe("Model tree", () => {
-    const paths = ["/dft", "/dft/lda"];
+    const paths = ["/pb", "/pb/qm", "/pb/qm/dft"];
     const pathData = [
         {
-            path: "/dft/lda",
+            path: "/pb/qm/dft",
             data: {
                 additionalAttribute: "test",
-                subtype: {
-                    slug: "lda-modified",
+                tier3: {
+                    title: "DFT modified",
                 },
             },
         },
@@ -23,8 +23,8 @@ describe("Model tree", () => {
     });
     it("can be filtered and modified", () => {
         const tree = filterTree([MODEL_TREE], paths, pathData);
-        const modified = t.find(tree, (node) => node.path === "/dft/lda");
+        const modified = t.find(tree, (node) => node.path === "/pb/qm/dft");
         expect(modified.data).to.have.property("additionalAttribute", "test");
-        expect(modified.data.subtype.slug).to.be.equal("lda-modified");
+        expect(modified.data.tier3.title).to.be.equal("DFT modified");
     });
 });
