@@ -158,7 +158,6 @@ export const getDefaultModelTypeForApplication = (application) => {
  * ```
  * {
  *     path: "/dft/gga",
- *     parentPath: "/dft",
  *     data: {
  *         subtype: {
  *             slug: "gga",
