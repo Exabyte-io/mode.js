@@ -1,4 +1,4 @@
-type:
+tier3:
   enum:
     - dft
   title: Density Functional Theory
