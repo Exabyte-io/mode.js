@@ -1,0 +1,28 @@
+# This is a shortcut for setting several nodes at once
+# without creating the corresponding files.
+# See `createNodesFromDataFile()`.
+eht:
+  type:
+    title: Extended Hueckel Theory
+    enum:
+      - eht
+pm7:
+  type:
+    title: Parametric Method 7
+    enum:
+      - pm7
+dftb1:
+  type:
+    title: First-order Tight-binding DFT
+    enum:
+      - dftb1
+dftb2:
+  type:
+    title: Second-order Tight-binding DFT
+    enum:
+      - dftb2
+dftb3:
+  type:
+    title: Third-order Tight-binding DFT
+    enum:
+      - dftb3

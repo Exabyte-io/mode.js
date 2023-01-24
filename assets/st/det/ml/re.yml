@@ -1,4 +1,4 @@
-subtype:
+type:
   title: Regression
   enum:
     - re

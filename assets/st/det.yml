@@ -1,0 +1,4 @@
+tier2:
+  title: Deterministic
+  enum:
+    - det
