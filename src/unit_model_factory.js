@@ -1,18 +1,18 @@
-import { Model } from "../model";
-import { getDefaultModelTypeForApplication } from "../tree";
-import { DFTModel } from "./dft";
+import { DFTModel } from "./models/dft";
+import { getDefaultModelTypeForApplication } from "./tree";
+import { UnitModel } from "./unit_model";
 
-export class ModelFactory {
+export class UnitModelFactory {
     static DFTModel = DFTModel;
 
-    static Model = Model;
+    static UnitModel = UnitModel;
 
     static create(config) {
         switch (config.type) {
-            case "dft":
+            case "ksdft":
                 return new this.DFTModel(config);
             default:
-                return new this.Model(config);
+                return new this.UnitModel(config);
         }
     }
 
