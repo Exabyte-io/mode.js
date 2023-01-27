@@ -9,10 +9,13 @@ describe("Model tree", () => {
     const pathData = [
         {
             path: "/pb/qm/dft",
-            data: {
-                additionalAttribute: "test",
-                tier3: {
-                    title: "DFT modified",
+            config: {
+                isDefault: true,
+                data: {
+                    additionalAttribute: "test",
+                    tier3: {
+                        title: "DFT modified",
+                    },
                 },
             },
         },
@@ -24,6 +27,7 @@ describe("Model tree", () => {
     it("can be filtered and modified", () => {
         const tree = filterTree([MODEL_TREE], paths, pathData);
         const modified = t.find(tree, (node) => node.path === "/pb/qm/dft");
+        expect(modified).to.have.property("isDefault", true);
         expect(modified.data).to.have.property("additionalAttribute", "test");
         expect(modified.data.tier3.title).to.be.equal("DFT modified");
     });

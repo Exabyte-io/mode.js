@@ -171,17 +171,16 @@ export const getDefaultModelTypeForApplication = (application) => {
  * ```
  * @param {Array} nodes - Array of nodes to be filtered.
  * @param {string[]} paths - Array of node paths
- * @param {Object[]} pathData - Array of objects containing path and node data.
+ * @param {Object[]} pathData - Array of objects containing path and node config.
  * @returns {Object[]} - The filtered tree (with possibly modified data).
  */
 export function filterTree(nodes, paths, pathData = null) {
     return nodes.reduce((accumulator, node) => {
         if (paths.includes(node.path) || node.path === "") {
             let modified = {};
-            let data = pathData && pathData.find((item) => item.path === node.path)?.data;
-            if (data) {
-                data = lodash.merge({}, node.data, data);
-                modified = { ...node, data };
+            const config = pathData && pathData.find((item) => item.path === node.path)?.config;
+            if (config) {
+                modified = lodash.merge({}, node, config);
             }
             if (node.children?.length) {
                 const children = filterTree(node.children, paths, pathData);
