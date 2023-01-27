@@ -56,9 +56,43 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
         return this.units.map((unit) => unit.Method);
     }
 
+    /**
+     * Legacy function to support `model.method` getter.
+     * @todo remove this function
+     * @returns {Method}
+     */
     get method() {
         const [firstUnit] = this.units;
-        return firstUnit ? firstUnit?.method : {};
+        return firstUnit ? firstUnit?.Method : {};
+    }
+
+    /**
+     * Legacy setter to support `model.method` setter.
+     * @todo remove this function
+     * @param {Method} method
+     */
+    set method(method) {
+        const [firstUnit] = this.units;
+        if (firstUnit) {
+            firstUnit.Method = method;
+        }
+    }
+
+    /**
+     * Legacy function to support `model.setMethod` calls.
+     * @todo remove this function
+     * @param {Method} method
+     */
+    setMethod(method) {
+        this.method = method;
+    }
+
+    /**
+     * Legacy function to support `model.isUnknown`.
+     * @returns {Boolean}
+     */
+    get isUnknown() {
+        return !this.units.length || this.units.every((u) => u.type === "unknown");
     }
 
     /**
