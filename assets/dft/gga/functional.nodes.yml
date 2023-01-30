@@ -1,0 +1,31 @@
+# This is a shortcut for setting several nodes at once
+# without creating the corresponding files.
+# See `createNodesFromDataFile()`.
+pbe:
+  isDefault: true
+  functional:
+    name: PBE
+    slug: pbe
+    components:
+      - slug: pbe-x
+        fraction: 1.0
+      - slug: pbe-c
+        fraction: 1.0
+pbesol:
+  functional:
+    name: PBEsol
+    slug: pbesol
+    components:
+      - slug: pbesol-x
+        fraction: 1.0
+      - slug: pbesol-c
+        fraction: 1.0
+pw91:
+  functional:
+    name: PW91
+    slug: pw91
+    components:
+      - slug: pw91-x
+        fraction: 1.0
+      - slug: pw91-c
+        fraction: 1.0

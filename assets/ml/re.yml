@@ -1,0 +1,4 @@
+subtype:
+  name: Regression
+  slug: re
+  default: re

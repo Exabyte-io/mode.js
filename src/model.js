@@ -1,10 +1,9 @@
+import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
 
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
-
+import { DFTModelConfig } from "./default_models";
 import { Method } from "./method";
 import { MethodFactory } from "./methods/factory";
-import { DFTModelConfig } from "./default_models";
 import { getTreeByApplicationNameAndVersion, MODEL_TREE, treeSlugToNamedObject } from "./tree";
 
 export class Model extends InMemoryEntity {
@@ -28,11 +27,11 @@ export class Model extends InMemoryEntity {
     }
 
     get allowedTypes() {
-        return Object.keys(this.tree).map(modelSlug => treeSlugToNamedObject(modelSlug));
+        return Object.keys(this.tree).map((modelSlug) => treeSlugToNamedObject(modelSlug));
     }
 
     get allowedSubtypes() {
-        return Object.keys(this.treeBranchForType).map(slug => treeSlugToNamedObject(slug));
+        return Object.keys(this.treeBranchForType).map((slug) => treeSlugToNamedObject(slug));
     }
 
     get defaultType() {
@@ -78,15 +77,15 @@ export class Model extends InMemoryEntity {
 
     // Consider moving the below to `Method`
     get methodsFromTree() {
-        return this.treeBranchForSubType.methods
+        return this.treeBranchForSubType.methods;
     }
 
     get methodTypes() {
-        return Object.keys(this.methodsFromTree).map(m => treeSlugToNamedObject(m));
+        return Object.keys(this.methodsFromTree).map((m) => treeSlugToNamedObject(m));
     }
 
     get methodSubtypes() {
-        return this.methodsFromTree[this.method.type].map(m => treeSlugToNamedObject(m)) || [];
+        return this.methodsFromTree[this.method.type].map((m) => treeSlugToNamedObject(m)) || [];
     }
 
     get defaultMethodConfig() {
@@ -98,8 +97,8 @@ export class Model extends InMemoryEntity {
     static get defaultConfig() {
         return {
             ...DFTModelConfig,
-            method: Method.defaultConfig
-        }
+            method: Method.defaultConfig,
+        };
     }
 
     // TODO : are these necessary if non-statics default to statics
@@ -108,28 +107,26 @@ export class Model extends InMemoryEntity {
     }
 
     static get allTypes() {
-        return Object.keys(this.tree).map(modelSlug => treeSlugToNamedObject(modelSlug));
+        return Object.keys(this.tree).map((modelSlug) => treeSlugToNamedObject(modelSlug));
     }
 
     toJSON() {
-        return Object.assign({}, super.toJSON(), {
-                type: this.type,
-                subtype: this.subtype,
-            },
-            {
-                // TODO: use schema-based cleaning instead
-                method: this.method.toJSONWithCleanData()
-            }
-        );
+        return {
+            ...super.toJSON(),
+            type: this.type,
+            subtype: this.subtype,
+            // TODO: use schema-based cleaning instead
+            method: this.method.toJSONWithCleanData(),
+        };
     }
 
     // to be used with extra properties
+    // eslint-disable-next-line class-methods-use-this
     _stringToSlugifiedObject(slug) {
-        return lodash.isString(slug) ? {slug} : slug;
+        return lodash.isString(slug) ? { slug } : slug;
     }
 
     get isUnknown() {
-        return this.type === 'unknown';
+        return this.type === "unknown";
     }
-
 }

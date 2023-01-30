@@ -6,7 +6,8 @@
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
-        "transpile": "babel --out-dir dist src",
+        "build:modelTree": "node ./build_model_tree.js",
+        "transpile": "babel --out-dir dist src && npm run build:modelTree",
         "postinstall": "npm run transpile",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
@@ -17,9 +18,11 @@
     },
     "main": "dist/index.js",
     "files": [
+        "/assets",
         "/dist",
         "/src",
-        ".babelrc"
+        ".babelrc",
+        "build_model_tree.js"
     ],
     "author": "Exabyte Inc.",
     "bugs": {
@@ -36,22 +39,25 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
+        "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
+        "t": "^0.5.1",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4"
     },
     "devDependencies": {
         "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#b6944d5ff47a8b486b730507b9a692c10971f975",
+        "@exabyte-io/eslint-config": "^2022.11.17-0",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
         "eslint-config-airbnb": "19.0.2",
-        "eslint-config-prettier": "8.3.0",
+        "eslint-config-prettier": "^8.5.0",
         "eslint-import-resolver-exports": "^1.0.0-beta.2",
         "eslint-plugin-import": "2.25.3",
         "eslint-plugin-jsdoc": "37.1.0",
         "eslint-plugin-jsx-a11y": "6.5.1",
-        "eslint-plugin-prettier": "4.2.1",
+        "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-react": "7.30.0",
         "eslint-plugin-simple-import-sort": "7.0.0",
         "husky": "^7.0.4",
