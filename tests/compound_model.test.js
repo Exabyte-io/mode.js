@@ -99,7 +99,7 @@ describe("Model", () => {
 
     it("has model graph", () => {
         const model = new Model(MODEL_CONFIG_MULTI);
-        const graph = model.buildGraph();
+        const graph = model.generateGraph();
         expect(graph).to.be.an("array");
         graph.forEach((g) => {
             expect(g).to.include.all.keys("head", "name", "flowchartId");
@@ -107,10 +107,10 @@ describe("Model", () => {
         expect(graph[0].next).to.be.equal(graph[1].flowchartId);
     });
 
-    it("builds group slug", () => {
+    it("generates group slug", () => {
         const model = new Model(MODEL_CONFIG_MULTI);
         const application = { name: "espresso", shortName: "qe" };
-        const groupSlug = model.buildGroupSlug(application);
+        const groupSlug = model.generateGroupSlug(application);
         expect(groupSlug).to.be.a("string");
     });
 

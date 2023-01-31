@@ -15,7 +15,7 @@ export const REGEX_UNIT_MODEL = {
  * @param {Object} extra - Extra parameters
  * @returns {string}
  */
-export function buildUnitModelPath({ tier1, tier2, tier3, type, subtype, extra = {} }) {
+export function generateUnitModelPath({ tier1, tier2, tier3, type, subtype, extra = {} }) {
     const extraAttributes = new URLSearchParams(extra).toString();
     const pathElements = [tier1, tier2, tier3, type, subtype].filter(Boolean);
     let modelPath = path.join(...pathElements);
@@ -37,7 +37,7 @@ export function basename(unitModelPath) {
  * @returns {string}
  * @todo Add functionality for measuring "distances" between unit models.
  */
-export function buildModelPath(unitModels) {
+export function generateModelPath(unitModels) {
     if (!unitModels.length) {
         return "";
     }

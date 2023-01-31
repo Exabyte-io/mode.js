@@ -2,7 +2,7 @@ import { FlowchartItemMixin, InMemoryEntity } from "@exabyte-io/code.js/dist/ent
 import { mix } from "mixwith";
 
 import { MethodFactory } from "./methods/factory";
-import { buildUnitModelPath } from "./utils";
+import { generateUnitModelPath } from "./utils";
 
 export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
     static MethodFactory = MethodFactory;
@@ -66,7 +66,7 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
 
     get modelPath() {
         const { tier1, tier2, tier3, type } = this;
-        return buildUnitModelPath({
+        return generateUnitModelPath({
             tier1,
             tier2,
             tier3,
@@ -80,7 +80,7 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
      *  Create group slug
      *  @param {Object|Application} application - Application instance or object
      */
-    buildGroupSlug(application) {
+    generateGroupSlug(application) {
         return [application.shortName, this.type, this.subtype, ...this._extraSlugContent]
             .filter(Boolean)
             .join(":")

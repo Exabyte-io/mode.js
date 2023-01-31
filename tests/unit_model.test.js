@@ -51,7 +51,7 @@ describe("Unit model", () => {
     it("build slug includes extraSlugContent", () => {
         const unit = new DFTModel(SVWN_CONFIG);
         const application = { name: "espresso", shortName: "qe" };
-        const groupSlug = unit.buildGroupSlug(application);
+        const groupSlug = unit.generateGroupSlug(application);
         expect(groupSlug).to.include(SVWN_CONFIG.functional);
     });
 

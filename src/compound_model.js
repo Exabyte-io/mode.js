@@ -8,7 +8,7 @@ import { mix } from "mixwith";
 
 import { UnitModel } from "./unit_model";
 import { UnitModelFactory } from "./unit_model_factory";
-import { buildModelPath } from "./utils";
+import { generateModelPath } from "./utils";
 
 export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartEntityMixin) {
     static UnitModelFactory = UnitModelFactory;
@@ -34,11 +34,11 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
         return setNextLinks(setUnitsHead(units));
     }
 
-    buildModelPath() {
-        return buildModelPath(this.units);
+    generateModelPath() {
+        return generateModelPath(this.units);
     }
 
-    buildGraph() {
+    generateGraph() {
         return this.units.map((um) => ({
             name: um.name,
             head: um.head,
@@ -77,8 +77,8 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
      * @param {Object|Application} application - Application config or instance.
      * @returns {string}
      */
-    buildGroupSlug(application) {
-        return this.units.map((unit) => unit.buildGroupSlug(application)).join("#");
+    generateGroupSlug(application) {
+        return this.units.map((unit) => unit.generateGroupSlug(application)).join("#");
     }
 
     toJSON() {
@@ -87,7 +87,7 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
             name: this.name,
             graph: this.graph,
             units: this.units.map((u) => u.toJSON()),
-            modelPath: buildModelPath(this.units),
+            modelPath: this.generateModelPath(),
         };
     }
 }
