@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
 import { Model } from "../src/compound_model";
+import { Method } from "../src/method";
 import { UnitModel } from "../src/unit_model";
 
 const MODEL_CONFIG_BARE = {
@@ -16,8 +17,8 @@ const UNIT_MODEL_CONFIG = {
     subtype: "lda",
     functional: "svwn",
     method: {
-        type: "unknown",
-        subtype: "unknown",
+        type: "pseudopotential",
+        subtype: "us",
     },
     references: [{ doi: "10.0000/0000" }],
     tags: ["generic"],
@@ -57,6 +58,17 @@ describe("Model", () => {
         model.units.forEach((m) => {
             expect(m).to.be.an.instanceof(UnitModel);
         });
+    });
+
+    it("has attributes", () => {
+        const model = new Model(MODEL_CONFIG_MULTI);
+        expect(model.methods).to.be.an("array");
+        expect(model.methods[0]).not.to.be.instanceof(Method);
+        expect(model.Methods).to.be.an("array");
+        expect(model.Methods[0]).to.be.instanceof(Method);
+        expect(model.types).to.have.members(["ksdft", "gw"]);
+        expect(model.methodTypes).to.have.members(["pseudopotential", "unknown"]);
+        expect(model.methodSubtypes).to.have.members(["us", "unknown"]);
     });
 
     it("can add a unit model", () => {

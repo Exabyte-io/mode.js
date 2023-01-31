@@ -48,12 +48,24 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
         }));
     }
 
+    get types() {
+        return this.units.map((unit) => unit.type);
+    }
+
     get methods() {
         return this.units.map((unit) => unit.method);
     }
 
     get Methods() {
         return this.units.map((unit) => unit.Method);
+    }
+
+    get methodTypes() {
+        return this.methods.map((method) => method.type);
+    }
+
+    get methodSubtypes() {
+        return this.methods.map((method) => method.subtype);
     }
 
     /**
