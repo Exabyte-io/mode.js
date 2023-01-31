@@ -1,4 +1,3 @@
-isDefault: true
 subtype:
   enum:
     - gga
