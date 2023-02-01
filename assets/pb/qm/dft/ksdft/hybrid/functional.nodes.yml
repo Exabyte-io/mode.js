@@ -3,7 +3,7 @@
 # See `createNodesFromDataFile()`.
 b3lyp:
   functional:
-    title: B3LYP
+    name: B3LYP
     slug: b3lyp
     components:
       - slug: exact-exchange
@@ -18,7 +18,7 @@ b3lyp:
         fraction: 0.81
 pbe0:
   functional:
-    title: PBE0
+    name: PBE0
     slug: pbe0
     components:
       - slug: exact-exchange
@@ -29,7 +29,7 @@ pbe0:
         fraction: 1.0
 hse06:
   functional:
-    title: HSE06
+    name: HSE06
     slug: hse06
     attenuation: 0.11
     components:

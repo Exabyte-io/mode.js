@@ -1,4 +1,3 @@
 subtype:
-  enum:
-    - hybrid
-  title: Hybrid Functional
+  name: Hybrid Functional
+  slug: hybrid

@@ -1,4 +1,3 @@
 subtype:
-  enum:
-    - mgga
-  title: Meta Generalized Gradient Approximation
+  name: Meta Generalized Gradient Approximation
+  slug: mgga

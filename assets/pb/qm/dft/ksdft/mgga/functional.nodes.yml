@@ -3,7 +3,7 @@
 # See `createNodesFromDataFile()`.
 scan:
   functional:
-    title: SCAN
+    name: SCAN
     slug: scan
     components:
       - slug: scan-x
@@ -12,7 +12,7 @@ scan:
         fraction: 1.0
 tpss:
   functional:
-    title: TPSS
+    name: TPSS
     slug: tpss
     components:
       - slug: tpss-x
@@ -21,7 +21,7 @@ tpss:
         fraction: 1.0
 m06l:
   functional:
-    title: M06-L
+    name: M06-L
     slug: m06-l
     components:
       - slug: m06-l-x

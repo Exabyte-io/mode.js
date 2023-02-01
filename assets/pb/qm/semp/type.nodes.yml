@@ -3,26 +3,21 @@
 # See `createNodesFromDataFile()`.
 eht:
   type:
-    title: Extended Hueckel Theory
-    enum:
-      - eht
+    name: Extended Hueckel Theory
+    slug: eht
 pm7:
   type:
-    title: Parametric Method 7
-    enum:
-      - pm7
+    name: Parametric Method 7
+    slug: pm7
 dftb1:
   type:
-    title: First-order Tight-binding DFT
-    enum:
-      - dftb1
+    name: First-order Tight-binding DFT
+    slug: dftb1
 dftb2:
   type:
-    title: Second-order Tight-binding DFT
-    enum:
-      - dftb2
+    name: Second-order Tight-binding DFT
+    slug: dftb2
 dftb3:
   type:
-    title: Third-order Tight-binding DFT
-    enum:
-      - dftb3
+    name: Third-order Tight-binding DFT
+    slug: dftb3

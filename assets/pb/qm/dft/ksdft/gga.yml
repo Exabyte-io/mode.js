@@ -1,4 +1,3 @@
 subtype:
-  enum:
-    - gga
-  title: Generalized Gradient Approximation
+  name: Generalized Gradient Approximation
+  slug: gga

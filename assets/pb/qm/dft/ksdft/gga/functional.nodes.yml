@@ -3,7 +3,7 @@
 # See `createNodesFromDataFile()`.
 pbe:
   functional:
-    title: PBE
+    name: PBE
     slug: pbe
     components:
       - slug: pbe-x
@@ -12,7 +12,7 @@ pbe:
         fraction: 1.0
 pbesol:
   functional:
-    title: PBEsol
+    name: PBEsol
     slug: pbesol
     components:
       - slug: pbesol-x
@@ -21,7 +21,7 @@ pbesol:
         fraction: 1.0
 pw91:
   functional:
-    title: PW91
+    name: PW91
     slug: pw91
     components:
       - slug: pw91-x

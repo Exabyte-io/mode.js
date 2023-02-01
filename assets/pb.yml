@@ -1,4 +1,3 @@
 tier1:
-  title: Physics-based
-  enum:
-    - pb
+  name: Physics-based
+  slug: pb

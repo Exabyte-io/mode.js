@@ -1,4 +1,3 @@
 tier1:
-  title: Statistical
-  enum:
-    - st
+  name: Statistical
+  slug: st

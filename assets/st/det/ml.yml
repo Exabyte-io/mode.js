@@ -1,4 +1,3 @@
 tier3:
-  title: Machine Learning
-  enum:
-    - ml
+  name: Machine Learning
+  slug: ml
