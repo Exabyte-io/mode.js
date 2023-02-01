@@ -1,5 +1,5 @@
+import { findTree } from "@exabyte-io/code.js/dist/utils";
 import { expect } from "chai";
-import t from "t";
 
 import MODEL_TREE from "../model_tree";
 import { filterTree } from "../src/tree";
@@ -14,7 +14,7 @@ describe("Model tree", () => {
                 data: {
                     additionalAttribute: "test",
                     tier3: {
-                        title: "DFT modified",
+                        name: "DFT modified",
                     },
                 },
             },
@@ -26,9 +26,9 @@ describe("Model tree", () => {
     });
     it("can be filtered and modified", () => {
         const tree = filterTree([MODEL_TREE], paths, pathData);
-        const modified = t.find(tree, (node) => node.path === "/pb/qm/dft");
+        const modified = findTree(tree, (node) => node.path === "/pb/qm/dft");
         expect(modified).to.have.property("isDefault", true);
         expect(modified.data).to.have.property("additionalAttribute", "test");
-        expect(modified.data.tier3.title).to.be.equal("DFT modified");
+        expect(modified.data.tier3.name).to.be.equal("DFT modified");
     });
 });

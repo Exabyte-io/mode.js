@@ -42,12 +42,11 @@
         "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
-        "t": "^0.5.1",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4"
     },
     "devDependencies": {
-        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#79f3a6e80b1ac267e0f8a2cc2e281f970e45ae54",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#05c7fd1c6e3b007ed97f5d4f44edd7f46c8f853c",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
