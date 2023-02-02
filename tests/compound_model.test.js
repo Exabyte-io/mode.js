@@ -45,6 +45,21 @@ const MODEL_CONFIG_MULTI = {
     units: [UNIT_MODEL_CONFIG, UNIT_MODEL_CONFIG_2],
 };
 
+const LEGACY_MODEL_CONFIG = {
+    units: [
+        {
+            tier1: "pb",
+            tier2: "qm",
+            tier3: "abin",
+            type: "gw",
+        },
+    ],
+    method: {
+        type: "unknown",
+        subtype: "unknown",
+    },
+};
+
 describe("Model", () => {
     it("can be created", () => {
         const model = new Model(MODEL_CONFIG_BARE);
@@ -110,6 +125,12 @@ describe("Model", () => {
         const application = { name: "espresso", shortName: "qe" };
         const groupSlug = model.buildGroupSlug(application);
         expect(groupSlug).to.be.a("string");
+    });
+
+    it("support legacy config (model.method)", () => {
+        const model = new Model(LEGACY_MODEL_CONFIG);
+        expect(model.units[0].Method.type).to.equal("unknown");
+        expect(model.units[0].Method.subtype).to.equal("unknown");
     });
 
     // TODO: test for remove unit by index
