@@ -27,7 +27,7 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
 
         // in order to support the old config using `method` attribute
         if (!lodash.isEmpty(config.method) && this.units.length) {
-            const methodInstance = Model.MethodFactory.create(config.method);
+            const methodInstance = this.constructor.MethodFactory.create(config.method);
             this.setMethod(methodInstance);
         }
     }

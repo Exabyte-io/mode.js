@@ -7,7 +7,7 @@ export class MethodFactory {
     static PseudopotentialMethod = PseudopotentialMethod;
 
     static create(config) {
-        switch (config.type) {
+        switch (config?.type) {
             case "pseudopotential":
                 return new this.PseudopotentialMethod(config);
             default:

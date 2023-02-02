@@ -1,4 +1,5 @@
 import { FlowchartItemMixin, InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import lodash from "lodash";
 import { mix } from "mixwith";
 
 import { MethodFactory } from "./methods/factory";
@@ -31,8 +32,8 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
      *  Returns instance of a Method class.
      */
     get Method() {
-        if (!this._method) {
-            const methodConfig = this.prop("method");
+        const methodConfig = this.prop("method");
+        if (!this._method && !lodash.isEmpty(methodConfig)) {
             this._method = this.constructor.MethodFactory.create(methodConfig);
         }
         return this._method;
