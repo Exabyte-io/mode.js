@@ -17,6 +17,8 @@ import { buildModelPath } from "./utils";
 export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartEntityMixin) {
     static UnitModelFactory = UnitModelFactory;
 
+    static MethodFactory = MethodFactory;
+
     static UnitModelCls = UnitModel;
 
     constructor({ ...config } = {}) {
@@ -25,7 +27,7 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
 
         // in order to support the old config using `method` attribute
         if (!lodash.isEmpty(config.method) && this.units.length) {
-            const methodInstance = MethodFactory.create(config.method);
+            const methodInstance = Model.MethodFactory.create(config.method);
             this.setMethod(methodInstance);
         }
     }
