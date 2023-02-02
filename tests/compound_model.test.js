@@ -51,6 +51,16 @@ describe("Model", () => {
         expect(model.name).to.equal(MODEL_CONFIG_BARE.name);
     });
 
+    it("has a default config", () => {
+        const { defaultConfig } = Model;
+        const [defaultUnit] = defaultConfig.units;
+        expect(defaultUnit.tier1).to.be.a("string");
+        expect(defaultUnit.tier2).to.be.a("string");
+        expect(defaultUnit.tier3).to.be.a("string");
+        expect(defaultUnit.type).to.be.a("string");
+        expect(defaultUnit.subtype).to.be.a("string");
+    });
+
     it("can be created with unit models", () => {
         const model = new Model(MODEL_CONFIG_SIMPLE);
         expect(model.units).to.be.an("array");
