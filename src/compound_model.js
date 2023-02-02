@@ -4,9 +4,11 @@ import {
     NamedEntityMixin,
 } from "@exabyte-io/code.js/dist/entity";
 import { setNextLinks, setUnitsHead } from "@exabyte-io/code.js/dist/utils";
+import lodash from "lodash";
 import { mix } from "mixwith";
 
 import MODEL_TREE from "../model_tree";
+import { MethodFactory } from "./methods/factory";
 import { getDefaultModelConfig } from "./tree";
 import { UnitModel } from "./unit_model";
 import { UnitModelFactory } from "./unit_model_factory";
@@ -20,6 +22,12 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
     constructor({ ...config } = {}) {
         super(config);
         this._units = Model.instantiateUnits(config.units);
+
+        // in order to support the old config using `method` attribute
+        if (!lodash.isEmpty(config.method) && this.units.length) {
+            const methodInstance = MethodFactory.create(config.method);
+            this.setMethod(methodInstance);
+        }
     }
 
     get modelPath() {
@@ -71,7 +79,7 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
     /**
      * Legacy setter to support `model.method` setter.
      * @todo remove this function
-     * @param {Method} method
+     * @param {Method} method - Method instance
      */
     set method(method) {
         const [firstUnit] = this.units;
@@ -83,7 +91,7 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
     /**
      * Legacy function to support `model.setMethod` calls.
      * @todo remove this function
-     * @param {Method} method
+     * @param {Method} method - Method instance
      */
     setMethod(method) {
         this.method = method;
