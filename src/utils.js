@@ -49,3 +49,79 @@ export function buildModelPath(unitModels) {
     }
     return modelPath;
 }
+
+export const NODE_DATA_SELECTORS = [
+    {
+        pathRegex: /^\/\w+$/,
+        dataSelector: {
+            key: "tier1",
+            value: "data.tier1.slug",
+            name: "data.tier1.name",
+            type: "string",
+        },
+    },
+    {
+        pathRegex: /^(\/\w+){2}$/,
+        dataSelector: {
+            key: "tier2",
+            value: "data.tier2.slug",
+            name: "data.tier2.name",
+            type: "string",
+        },
+    },
+    {
+        pathRegex: /^(\/\w+){3}$/,
+        dataSelector: {
+            key: "tier3",
+            value: "data.tier3.slug",
+            name: "data.tier3.name",
+            type: "string",
+        },
+    },
+    {
+        pathRegex: /^(\/\w+){4}$/,
+        dataSelector: {
+            key: "type",
+            value: "data.type.slug",
+            name: "data.type.name",
+            type: "string",
+        },
+    },
+    {
+        pathRegex: /^(\/\w+){5}$/,
+        dataSelector: {
+            key: "subtype",
+            value: "data.subtype.slug",
+            name: "data.subtype.name",
+            type: "string",
+        },
+    },
+    {
+        pathRegex: /^\/pb\/qm\/dft\/ksdft(\/\w+){2}$/,
+        dataSelector: {
+            key: "functional",
+            value: "data.functional.slug",
+            name: "data.functional.name",
+            type: "object",
+        },
+    },
+];
+
+function getDataSelector(nodePath) {
+    return NODE_DATA_SELECTORS.reduce((accumulator, { pathRegex, dataSelector }) => {
+        if (pathRegex.test(nodePath)) {
+            Object.assign(accumulator, dataSelector);
+        }
+        return accumulator;
+    }, {});
+}
+
+export function pickNodeData(node) {
+    const dataSelector = getDataSelector(node.path);
+    if (dataSelector.type === "string") {
+        return {
+            [dataSelector.key]: lodash.get(node, dataSelector.value),
+        };
+    }
+    return node.data;
+}

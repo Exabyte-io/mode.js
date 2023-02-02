@@ -1,6 +1,8 @@
-import { deepClone } from "@exabyte-io/code.js/dist/utils";
+import { deepClone, findTree } from "@exabyte-io/code.js/dist/utils";
 import lodash from "lodash";
 import _ from "underscore";
+
+import { pickNodeData } from "./utils";
 // TODO: migrate to use manifest instead
 
 const methods = {
@@ -173,6 +175,7 @@ export const getDefaultModelTypeForApplication = (application) => {
  * @param {string[]} paths - Array of node paths
  * @param {Object[]} pathData - Array of objects containing path and node config.
  * @returns {Object[]} - The filtered tree (with possibly modified data).
+ * @todo rename, e.g. filterMergeTree, filterModelTree,
  */
 export function filterTree(nodes, paths, pathData = null) {
     return nodes.reduce((accumulator, node) => {
@@ -191,4 +194,43 @@ export function filterTree(nodes, paths, pathData = null) {
         }
         return accumulator;
     }, []);
+}
+
+export function getUnitModelConfigByPath({ tree, path }) {
+    if (!path) return undefined;
+    const nodePaths = path
+        .split("/")
+        .filter(Boolean)
+        .reduce((accumulator, value, index) => {
+            if (index === 0) {
+                accumulator.push(`/${value}`);
+            } else {
+                accumulator.push([accumulator[index - 1], value].join("/"));
+            }
+            return accumulator;
+        }, []);
+    const nodeData = nodePaths
+        .map((nodePath) => findTree(tree, (n) => n.path === nodePath))
+        .map((node) => pickNodeData(node));
+    return lodash.merge({}, ...nodeData);
+}
+
+export function getDefaultMethodConfig({ modelPath }) {
+    if (/^\/pb\/qm\/dft\/ksdft(\/\w+){2}$/.test(modelPath)) {
+        return {
+            type: "pseudopotential",
+            subtype: "us",
+        };
+    }
+    return undefined;
+}
+
+export function getDefaultModelConfig({ tree, subTreePath = null }) {
+    const workingTree = subTreePath ? findTree(tree, (n) => n.path === subTreePath) : tree;
+    const defaultPath = findTree(workingTree, (node) => node.data?.isDefault)?.path;
+    const defaultConfig = getUnitModelConfigByPath({ tree: workingTree, path: defaultPath });
+    return {
+        units: [defaultConfig],
+        method: getDefaultMethodConfig({ modelPath: defaultPath }),
+    };
 }
