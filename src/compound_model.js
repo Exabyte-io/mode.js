@@ -6,6 +6,8 @@ import {
 import { setNextLinks, setUnitsHead } from "@exabyte-io/code.js/dist/utils";
 import { mix } from "mixwith";
 
+import MODEL_TREE from "../model_tree";
+import { getDefaultModelConfig } from "./tree";
 import { UnitModel } from "./unit_model";
 import { UnitModelFactory } from "./unit_model_factory";
 import { buildModelPath } from "./utils";
@@ -106,6 +108,10 @@ export class Model extends mix(InMemoryEntity).with(NamedEntityMixin, FlowchartE
      */
     buildGroupSlug(application) {
         return this.units.map((unit) => unit.buildGroupSlug(application)).join("#");
+    }
+
+    static get defaultConfig() {
+        return getDefaultModelConfig({ tree: MODEL_TREE });
     }
 
     toJSON() {
