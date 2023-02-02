@@ -1,0 +1,98 @@
+# This file contains the component list for common functionals
+# Rung 1: Local Density Approximation (LDA)
+spw92:
+  components:
+    - slug: slater
+      fraction: 1.0
+    - slug: pw92
+      fraction: 1.0
+spz:
+  components:
+    - slug: slater
+      fraction: 1.0
+    - slug: pz81
+      fraction: 1.0
+svwn:
+  components:
+    - slug: slater
+      fraction: 1.0
+    - slug: vwn5
+      fraction: 1.0
+# Rung 2: Generalized Gradient Approximation (GGA)
+pbe:
+  components:
+    - slug: pbe-x
+      fraction: 1.0
+    - slug: pbe-c
+      fraction: 1.0
+pbesol:
+  components:
+    - slug: pbesol-x
+      fraction: 1.0
+    - slug: pbesol-c
+      fraction: 1.0
+pw91:
+  components:
+    - slug: pw91-x
+      fraction: 1.0
+    - slug: pw91-c
+      fraction: 1.0
+# Rung 3: meta-GGA
+scan:
+  components:
+    - slug: scan-x
+      fraction: 1.0
+    - slug: scan-c
+      fraction: 1.0
+tpss:
+  components:
+    - slug: tpss-x
+      fraction: 1.0
+    - slug: tpss-c
+      fraction: 1.0
+m06l:
+  components:
+    - slug: m06-l-x
+      fraction: 1.0
+    - slug: m06-l-c
+      fraction: 1.0
+# Rung 4: Hybrid functionals, range-separated hybrid functionals
+b3lyp:
+  components:
+    - slug: exact-exchange
+      fraction: 0.20
+    - slug: slater
+      fraction: 0.08
+    - slug: b88
+      fraction: 0.72
+    - slug: vwn1rpa
+      fraction: 0.19
+    - slug: lyp
+      fraction: 0.81
+pbe0:
+  components:
+    - slug: exact-exchange
+      fraction: 0.25
+    - slug: pbe-x
+      fraction: 0.75
+    - slug: pbe-c
+      fraction: 1.0
+hse06:
+  attenuation: 0.11
+  components:
+    - slug: exact-exchange
+      range: short-range
+      fraction: 0.25
+    - slug: exact-exchange
+      range: long-range
+      fraction: 0.0
+    - slug: wpbe-x
+      range: short-range
+      fraction: -0.25
+    - slug: wpbe-x
+      range: long-range
+      fraction: 0.0
+    - slug: pbe-x
+      fraction: 1.0
+    - slug: pbe-c
+      fraction: 1.0

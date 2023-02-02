@@ -5,26 +5,11 @@ spw92:
   functional:
     name: Slater-PW92
     slug: spw92
-    components:
-      - slug: slater
-        fraction: 1.0
-      - slug: pw92
-        fraction: 1.0
 spz:
   functional:
     name: Slater-PZ
     slug: spz
-    components:
-      - slug: slater
-        fraction: 1.0
-      - slug: pz81
-        fraction: 1.0
 svwn:
   functional:
     name: Slater-VWN
     slug: svwn
-    components:
-      - slug: slater
-        fraction: 1.0
-      - slug: vwn5
-        fraction: 1.0

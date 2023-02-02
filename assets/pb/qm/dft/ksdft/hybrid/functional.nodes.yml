@@ -5,47 +5,11 @@ b3lyp:
   functional:
     name: B3LYP
     slug: b3lyp
-    components:
-      - slug: exact-exchange
-        fraction: 0.20
-      - slug: slater
-        fraction: 0.08
-      - slug: b88
-        fraction: 0.72
-      - slug: vwn1rpa
-        fraction: 0.19
-      - slug: lyp
-        fraction: 0.81
 pbe0:
   functional:
     name: PBE0
     slug: pbe0
-    components:
-      - slug: exact-exchange
-        fraction: 0.25
-      - slug: pbe-x
-        fraction: 0.75
-      - slug: pbe-c
-        fraction: 1.0
 hse06:
   functional:
     name: HSE06
     slug: hse06
-    attenuation: 0.11
-    components:
-      - slug: exact-exchange
-        range: short-range
-        fraction: 0.25
-      - slug: exact-exchange
-        range: long-range
-        fraction: 0.0
-      - slug: wpbe-x
-        range: short-range
-        fraction: -0.25
-      - slug: wpbe-x
-        range: long-range
-        fraction: 0.0
-      - slug: pbe-x
-        fraction: 1.0
-      - slug: pbe-c
-        fraction: 1.0
