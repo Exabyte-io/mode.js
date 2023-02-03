@@ -94,7 +94,7 @@ export class UnitModel extends mix(InMemoryEntity).with(FlowchartItemMixin) {
             ...super.toJSON(),
             type: this.type,
             subtype: this.subtype,
-            method: this.Method.toJSON(),
+            method: this.Method ? this.Method.toJSON() : null,
         };
     }
 }
