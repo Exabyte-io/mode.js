@@ -1,0 +1,14 @@
+ldaConfigs: !combine
+  name: test
+  forEach:
+    - !parameter
+      key: parameters.functional
+      ref: "esse:/schema/models_directory/pb/qm/dft/mixins/enum_options.yml#/lda"
+    - !parameter
+      key: parameters.dispersionCorrection
+      ref: "esse:/schema/model_mixins/enum_options.yml#/dispersionCorrection"
+      exclude: "^TS"
+  config:
+    tags:
+      - density functional theory
+      - local density approximation
