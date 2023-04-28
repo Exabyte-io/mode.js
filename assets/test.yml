@@ -1,5 +1,8 @@
 ldaConfigs: !combine
-  name: test
+  name:
+    template: DFT($parameters.functional)
+    substitutions:
+      pz: PZ
   forEach:
     - !parameter
       key: parameters.functional
