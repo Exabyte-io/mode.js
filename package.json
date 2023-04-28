@@ -36,7 +36,7 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#18104bee9d30c2f8f7a91d462b35b0aa4212aa66",
+        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#c05d5c5f26e353513a344cb223a59fd5a75d63f1",
         "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
@@ -45,7 +45,7 @@
     },
     "devDependencies": {
         "@exabyte-io/ade.js": "2022.8.31-0",
-        "@exabyte-io/code.js": "2022.10.11-0",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#3a3adb4eea03ffb9afea6e097702166c59fb7a28",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@exabyte-io/made.js": "2022.6.15-0",
         "chai": "^4.3.4",
