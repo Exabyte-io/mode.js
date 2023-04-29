@@ -12,6 +12,25 @@ ldaConfigs: !combine
       ref: "node_modules/@exabyte-io/esse.js/schema/model_mixins/enum_options.yml#/dispersionCorrection"
       exclude: "^TS"
   config:
+    categories:
+      tier1:
+        slug: pb
+        name: physics-based
+      tier2:
+        slug: qm
+        name: quantum-mechanical
+      tier3:
+        slug: dft
+        name: density functional theory
+      type:
+        slug: ksdft
+        name: Kohn-Sham DFT
+      subtype:
+        slug: lda
+        name: Local Density Approximation
     tags:
       - density functional theory
       - local density approximation
+    method:
+      units: []
+    schemaId: models-directory/pb/qm/dft/ksdft/lda

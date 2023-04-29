@@ -2,6 +2,7 @@ import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 import { allYAMLSchemas } from "@exabyte-io/code.js/dist/utils";
+import { JSONSchemasInterface } from "@exabyte-io/code.js/dist/JSONSchemasInterface";
 
 /**
  * Render name template based on config.
@@ -35,7 +36,17 @@ try {
     let configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed;
     configs.forEach((config) => {
         config.name = generateName(config.name?.template, config, config.name?.substitutions);
-    })
+    });
+
+
+    configs.forEach((config) => {
+         const validate = JSONSchemasInterface.resolveJsonValidator(config.schemaId, {
+             allErrors: true,
+             verbose: true,
+         });
+         console.log(`${config.schemaId}: ${validate(config)}`);
+         console.error(validate.errors);
+    });
 
     console.log(JSON.stringify(configs, null, 4));
 } catch (e) {
