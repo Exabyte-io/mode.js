@@ -6,10 +6,10 @@ ldaConfigs: !combine
   forEach:
     - !parameter
       key: parameters.functional
-      ref: "node_modules/@exabyte-io/esse.js/schema/models_directory/pb/qm/dft/mixins/enum_options.yml#/lda"
+      values: !esse "model/mixins/dft/enum-options#/lda.enum"
     - !parameter
       key: parameters.dispersionCorrection
-      ref: "node_modules/@exabyte-io/esse.js/schema/model_mixins/enum_options.yml#/dispersionCorrection"
+      values: !esse "model/mixins/enum-options#/dispersionCorrection.enum"
       exclude: "^TS"
   config:
     categories:
@@ -31,6 +31,4 @@ ldaConfigs: !combine
     tags:
       - density functional theory
       - local density approximation
-    method:
-      units: []
-    schemaId: models-directory/pb/qm/dft/ksdft/lda
+    schema: !esse "models-directory/lda"

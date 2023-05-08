@@ -2,7 +2,7 @@ import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 import { allYAMLSchemas } from "@exabyte-io/code.js/dist/utils";
-import { JSONSchemasInterface } from "@exabyte-io/code.js/dist/JSONSchemasInterface";
+import Ajv from "ajv";
 
 /**
  * Render name template based on config.
@@ -11,6 +11,12 @@ import { JSONSchemasInterface } from "@exabyte-io/code.js/dist/JSONSchemasInterf
  * @param {Object} data - Entity config
  * @param {Object} substitutionMap - Maps object value to human-readable string
  * @return {string}
+ * @example
+ * generateName(
+ *     "Hello $user!",
+ *     {user: "user001"},
+ *     {user001: "John Doe"}
+ * ); // "Hello John Doe!"
  */
 function generateName(template, data, substitutionMap = {}) {
     // Regular expression to match the template variables, e.g `$job.workflow`
@@ -40,12 +46,11 @@ try {
 
 
     configs.forEach((config) => {
-         const validate = JSONSchemasInterface.resolveJsonValidator(config.schemaId, {
-             allErrors: true,
-             verbose: true,
-         });
-         console.log(`${config.schemaId}: ${validate(config)}`);
+         const ajv = new Ajv({ allErrors: true, verbose: true });
+         const validate = ajv.compile(config.schema);
+         console.log(`${config.schema.schemaId}: ${validate(config)}`);
          console.error(validate.errors);
+         delete config.schema;
     });
 
     console.log(JSON.stringify(configs, null, 4));
