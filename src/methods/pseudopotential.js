@@ -56,6 +56,7 @@ export class PseudopotentialMethod extends Method {
 
     // add new pseudopotentials to the list of all pseudopotentials
     addToAllPseudos(pseudos) {
+        // eslint-disable-next-line no-param-reassign
         pseudos = safeMakeArray(pseudos);
         const allPseudos = this.allPseudopotentials;
         allPseudos.push(...pseudos);

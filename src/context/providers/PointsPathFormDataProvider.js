@@ -17,9 +17,9 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
     ApplicationContextMixin,
     MaterialContextMixin,
 ) {
-    static materialCls = Made.Material;
+    static Material = Made.Material;
 
-    static applicationCls = Application;
+    static Application = Application;
 
     constructor(config) {
         super(config);
@@ -92,8 +92,11 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
         }
         return {
             // eslint-disable-next-line no-unused-vars
-            TitleField: ({ title, required }) =>
-                this.material.getBrillouinZoneImageComponent(title),
+            TitleField: ({
+                title,
+                // eslint-disable-next-line no-unused-vars
+                required,
+            }) => this.material.getBrillouinZoneImageComponent(title),
         };
     }
 

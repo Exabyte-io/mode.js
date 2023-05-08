@@ -6,7 +6,7 @@ import { mix } from "mixwith";
 export class BoundaryConditionsFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
     MaterialContextMixin,
 ) {
-    static materialCls = Made.Material;
+    static Material = Made.Material;
 
     get boundaryConditions() {
         return this.material.metadata.boundaryConditions || {};

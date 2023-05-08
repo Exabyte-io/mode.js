@@ -3,7 +3,7 @@ import { ApplicationContextMixin, ContextProvider } from "@exabyte-io/code.js/di
 import { mix } from "mixwith";
 
 export class MLSettingsContextProvider extends mix(ContextProvider).with(ApplicationContextMixin) {
-    static applicationCls = Application;
+    static Application = Application;
 
     // eslint-disable-next-line class-methods-use-this
     get uiSchema() {

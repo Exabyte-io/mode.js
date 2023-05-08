@@ -7,7 +7,7 @@ import { mix } from "mixwith";
 export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).with(
     MaterialContextMixin,
 ) {
-    static materialCls = Made.Material;
+    static Material = Made.Material;
 
     constructor(config) {
         super(config);
@@ -59,7 +59,7 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
             return {
                 ...vector,
                 items: {
-                    type: "number",
+                    type: this.isUsingJinjaVariables ? "string" : "number",
                     default: defaultValue,
                 },
             };
@@ -154,7 +154,17 @@ export class PointsGridFormDataProvider extends mix(JSONSchemaFormDataProvider).
         return grid.dimensions.reduce((a, b) => a * b) * nAtoms;
     }
 
+    static _canTransform(data) {
+        return (
+            (data.preferKPPRA && data.KPPRA) ||
+            (!data.preferKPPRA && data.dimensions.every((d) => typeof d === "number"))
+        );
+    }
+
     transformData(data) {
+        if (!PointsGridFormDataProvider._canTransform(data)) {
+            return data;
+        }
         // 1. check if KPPRA is preferred
         if (data.preferKPPRA) {
             // 2. KPPRA is preferred => recalculate grid; NOTE: `data.KPPRA` is undefined at first

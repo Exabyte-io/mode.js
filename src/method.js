@@ -1,7 +1,6 @@
-import lodash from "lodash";
-
-import  { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import { deepClone } from "@exabyte-io/code.js/dist/utils";
+import lodash from "lodash";
 
 import { PseudopotentialMethodConfig } from "./default_methods";
 
@@ -50,7 +49,6 @@ export class Method extends InMemoryEntity {
     // utilizing "data" field as a "blackbox" container for searchText
     setSearchText(searchText) {
         this.setData({ ...this.prop("data"), searchText });
-
     }
 
     setData(data = {}) {
@@ -64,8 +62,8 @@ export class Method extends InMemoryEntity {
 
     // data without client-only fields
     cleanData(fieldsToExclude = []) {
-        const filteredData = Object.assign({}, this.prop("data"));
-        fieldsToExclude.forEach(f => {
+        const filteredData = { ...this.prop("data") };
+        fieldsToExclude.forEach((f) => {
             delete filteredData[f];
         });
         return filteredData;
@@ -73,9 +71,7 @@ export class Method extends InMemoryEntity {
 
     // override in child class if needed
     toJSONWithCleanData(fieldsToExclude = []) {
-        const json = Object.assign({}, this._json, {data: this.cleanData(fieldsToExclude)});
+        const json = { ...this._json, data: this.cleanData(fieldsToExclude) };
         return deepClone(json);
     }
-
-
 }

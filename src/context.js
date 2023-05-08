@@ -5,9 +5,9 @@ import { NEBFormDataProvider } from "./context/providers/NEBFormDataProvider";
 import { PlanewaveCutoffsContextProvider } from "./context/providers/PlanewaveCutoffsContextProvider";
 import { PointsGridFormDataProvider } from "./context/providers/PointsGridFormDataProvider";
 import {
-    PointsPathFormDataProvider,
+    ExplicitPointsPath2PIBAFormDataProvider,
     ExplicitPointsPathFormDataProvider,
-    ExplicitPointsPath2PIBAFormDataProvider
+    PointsPathFormDataProvider,
 } from "./context/providers/PointsPathFormDataProvider";
 
 export {
@@ -20,4 +20,4 @@ export {
     PointsPathFormDataProvider,
     ExplicitPointsPathFormDataProvider,
     ExplicitPointsPath2PIBAFormDataProvider,
-}
+};
