@@ -3,6 +3,7 @@ import yaml from "js-yaml";
 import lodash from "lodash";
 import { allYAMLSchemas } from "@exabyte-io/code.js/dist/utils";
 import Ajv from "ajv";
+import nunjucks from "nunjucks"
 
 /**
  * Render name template based on config.
@@ -13,24 +14,30 @@ import Ajv from "ajv";
  * @return {string}
  * @example
  * generateName(
- *     "Hello $user!",
+ *     "Hello {{user}}!",
  *     {user: "user001"},
  *     {user001: "John Doe"}
  * ); // "Hello John Doe!"
  */
 function generateName(template, data, substitutionMap = {}) {
-    // Regular expression to match the template variables, e.g `$job.workflow`
-    const regex = /\$(\w+(\.\w+)*)/g;
+    // Create a copy of data to avoid modifying the original
+    const renderData = lodash.cloneDeep(data);
 
-    return template.replace(regex, (match, objPath) => {
-        const value = lodash.get(data, objPath)
+    // Helper function for recursive substitution
+    function substituteNested(obj) {
+        lodash.forIn(obj, (value, key) => {
+            if (lodash.isPlainObject(value)) {
+                // If value is an object, recurse
+                substituteNested(value);
+            } else if (substitutionMap[value]) {
+                // If value is in substitution map, replace it
+                obj[key] = substitutionMap[value];
+            }
+        });
+    }
 
-        if (substitutionMap[value]) {
-            return substitutionMap[value];
-        }
-
-        return value || "";
-    });
+    substituteNested(renderData);
+    return nunjucks.renderString(template, renderData);
 }
 
 

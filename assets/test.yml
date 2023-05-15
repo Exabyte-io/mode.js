@@ -1,6 +1,6 @@
 ldaConfigs: !combine
   name:
-    template: DFT($parameters.functional)
+    template: DFT-{{ parameters.functional }}
     substitutions:
       pz: PZ
   forEach:
