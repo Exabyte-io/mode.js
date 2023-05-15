@@ -6,10 +6,10 @@ ldaConfigs: !combine
   forEach:
     - !parameter
       key: parameters.functional
-      values: !esse "model/mixins/dft/enum-options#/lda.enum"
+      values: !esse "model/mixins/dft/enum-options#/lda/enum"
     - !parameter
       key: parameters.dispersionCorrection
-      values: !esse "model/mixins/enum-options#/dispersionCorrection.enum"
+      values: !esse "model/mixins/enum-options#/dispersionCorrection/enum"
       exclude: "^TS"
   config:
     categories:
