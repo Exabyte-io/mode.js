@@ -1,34 +1,44 @@
 ldaConfigs: !combine
-  name:
-    template: DFT-{{ parameters.functional }}
-    substitutions:
-      pz: PZ
-  forEach:
-    - !parameter
-      key: parameters.functional
-      values: !esse "model/mixins/dft/enum-options#/lda/enum"
-    - !parameter
-      key: parameters.dispersionCorrection
-      values: !esse "model/mixins/enum-options#/dispersionCorrection/enum"
-      exclude: "^TS"
-  config:
-    categories:
-      tier1:
-        slug: pb
-        name: physics-based
-      tier2:
-        slug: qm
-        name: quantum-mechanical
-      tier3:
-        slug: dft
-        name: density functional theory
-      type:
-        slug: ksdft
-        name: Kohn-Sham DFT
-      subtype:
-        slug: lda
-        name: Local Density Approximation
-    tags:
-      - density functional theory
-      - local density approximation
-    schema: !esse "models-directory/lda"
+    name:
+        template: "{{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ '+' + parameters.hubbardType if parameters.hubbardType}}{{ ' (SOC)' if parameters.spinOrbitCoupling }}"
+        substitutions:
+            pbe: PBE
+            DFT-D3: D3
+    forEach:
+        - !parameter
+            key: parameters.functional
+            values: !esse "model/mixins/dft/enum-options#/gga/enum"
+        - !parameter
+            key: parameters.dispersionCorrection
+            values: !esse "model/mixins/enum-options#/dispersionCorrection/enum"
+            exclude: "^(?!.*DFT-D3).*$"
+            includeNull: true
+        - !parameter
+            key: parameters.spinOrbitCoupling
+            values: [true]
+            includeNull: true
+        - !parameter
+            key: parameters.hubbardType
+            values: !esse "model/mixins/enum-options#/hubbardType/enum"
+            includeNull: true
+
+    config:
+        categories:
+            tier1:
+                slug: pb
+                name: physics-based
+            tier2:
+                slug: qm
+                name: quantum-mechanical
+            tier3:
+                slug: dft
+                name: density functional theory
+            type:
+                slug: ksdft
+                name: Kohn-Sham DFT
+            subtype:
+                slug: gga
+                name: Generalized Gradient Approximation
+        tags:
+            - density functional theory
+        schema: !esse "models-directory/gga"
