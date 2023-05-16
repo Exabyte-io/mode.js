@@ -1,0 +1,109 @@
+#name:
+#  template: {{ pwUnit.categories.type | capitalize }}-{{ pspUnit.categories.subtype | capitalize }}PP ({{}}, {{}})
+# ---------------------------
+pwUnits: !combine
+    name: "Wave function: Plane wave"
+    config:
+        categories:
+            tier1: qm
+            tier2: wf
+            type: pw
+        tags:
+            - plane wave
+        schema: !esse "methods-directory/physical/pw"
+# ---------------------------
+pspUnits: !combine
+    name:
+        template: "{{ categories.subtype }} Pseudopotential"
+        substitutions:
+            us: Ultra-soft
+            nc: Norm-conserving
+            paw: Projector-augmented wave
+    forEach:
+        - !parameter
+            key: categories.subtype
+            values: !esse "methods-category/physical/qm/wf/enum-options#/pseudoSubtypes/enum"
+            exclude: "^coulomb"
+    config:
+        categories:
+            tier1: qm
+            tier2: wf
+            type: psp
+        tags:
+            - pseudopotential
+        schema: !esse "methods-directory/physical/psp"
+# ---------------------------
+diagUnits: !combine
+    name:
+        template: "{{ categories.type.name }} Diagonalization"
+    config:
+        categories:
+            tier1:
+                name: Optimization
+                slug: opt
+            tier2:
+                name: Differentiable Functions
+                slug: diff
+            tier3:
+                name: Mixed/Higher Order Algorithm
+                slug: ordern
+            type:
+                name: Conjugate Gradient
+                slug: cg
+        tags:
+            - diagonalization
+        schema: !esse "methods-directory/mathematical/cg"
+    extraConfigs: !combine
+        name:
+            template: "{{ categories.type.slug | title }} Diagonalization"
+        config:
+            categories:
+                tier1:
+                    name: Linear Algebra
+                    slug: linalg
+                tier2:
+                    name: Diagonalization
+                    slug: diag
+                type:
+                    name: Davidson diagonalization
+                    slug: davidson
+            tags:
+                - diagonalization
+            schema: !esse "methods-directory/mathematical/davidson"
+# ---------------------------
+occupationUnits: !combine
+    name:
+        template: "{{ categories.subtype }} Smearing"
+        substitutions:
+            gaussian: Gaussian
+            marzari-vanderbilt: Marzari-Vanderbilt
+            methfessel-paxton: Methfessel-Paxton
+            fermi-dirac: Fermi-Dirac
+    forEach:
+        - !parameter
+            key: categories.subtype
+            values: !esse "methods-category/physical/qm/wf/enum-options#/smearingSubtypes/enum"
+            exclude: "^(marzari|fermi)"
+    config:
+        categories:
+            tier1: qm
+            tier2: wf
+            type: smearing
+        tags:
+            - occupation number
+        schema: !esse "methods-directory/physical/smearing"
+    extraConfigs: !combine
+        name:
+            template: "{{ categories.subtype | title }} Tetrahedron Method"
+        forEach:
+            - !parameter
+                key: categories.subtype
+                values: !esse "methods-category/physical/qm/wf/enum-options#/tetrahedronSubtypes/enum"
+        config:
+            categories:
+                tier1: qm
+                tier2: wf
+                type: tetrahedron
+            tags:
+                - occupation number
+            schema: !esse "methods-directory/physical/tetrahedron"
