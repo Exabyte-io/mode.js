@@ -1,0 +1,56 @@
+- !combine
+    name:
+        template: {{ categories.subtype }}@{{ parameters.functional }}
+        substitutions:
+            pbe: PBE
+    forEach:
+        - !parameter
+            key: categories.subtype
+            values: !esse "models-category/pb/qm/abin/gw#/properties/subtype/enum"
+    config:
+        categories:
+            tier1:
+                slug: pb
+                name: physics-based
+            tier2:
+                slug: qm
+                name: quantum-mechanical
+            tier3:
+                slug: abin
+                name: ab-initio
+            type:
+                slug: gw
+                name: GW Approximation
+        parameters:
+            require: "pb/qm/dft/ksdft/gga?functional=pbe"
+        schema: !esse "models-directory/gw"
+#
+- !combine
+    name:
+        template: "{{ categories.subtype }}@{{ parameters.functional }} ({{ parameters.spinOrbitCoupling }})"
+        substitutions:
+            pbe: PBE
+    forEach:
+        - !parameter
+            key: categories.subtype
+            values: !esse "models-category/pb/qm/abin/gw#/properties/subtype/enum"
+        - !parameter
+            key: parameters.spinOrbitCoupling
+            values: [true]
+    config:
+        categories:
+            tier1:
+                slug: pb
+                name: physics-based
+            tier2:
+                slug: qm
+                name: quantum-mechanical
+            tier3:
+                slug: abin
+                name: ab-initio
+            type:
+                slug: gw
+                name: GW Approximation
+        parameters:
+            require: "pb/qm/dft/ksdft/gga?functional=pbe&spinOrbitCoupling=true"
+        schema: !esse "models-directory/gw"
