@@ -1,37 +1,9 @@
 #name:
 #  template: {{ pwUnit.categories.type | capitalize }}-{{ pspUnit.categories.subtype | capitalize }}PP ({{}}, {{}})
 # ---------------------------
-pwUnits: !combine
-    name: "Wave function: Plane wave"
-    config:
-        categories:
-            tier1: qm
-            tier2: wf
-            type: pw
-        tags:
-            - plane wave
-        schema: !esse "methods-directory/physical/pw"
+pwUnits: !include assets/methods/units/pw.yml
 # ---------------------------
-pspUnits: !combine
-    name:
-        template: "{{ categories.subtype }} Pseudopotential"
-        substitutions:
-            us: Ultra-soft
-            nc: Norm-conserving
-            paw: Projector-augmented wave
-    forEach:
-        - !parameter
-            key: categories.subtype
-            values: !esse "methods-category/physical/qm/wf/enum-options#/pseudoSubtypes/enum"
-            exclude: "^coulomb"
-    config:
-        categories:
-            tier1: qm
-            tier2: wf
-            type: psp
-        tags:
-            - pseudopotential
-        schema: !esse "methods-directory/physical/psp"
+pspUnits: !include assets/methods/units/psp.yml
 # ---------------------------
 diagUnits: !combine
     name:
