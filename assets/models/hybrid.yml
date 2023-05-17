@@ -1,14 +1,13 @@
-ldaConfigs: !combine
+- !combine
     name:
-        template: "{{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ '+' + parameters.hubbardType if parameters.hubbardType}}{{ ' (SOC)' if parameters.spinOrbitCoupling }}{{ ' (' + parameters.spinPolarization + ')' if parameters.spinPolarization }}"
+        template: "{{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ ' (SOC)' if parameters.spinOrbitCoupling }}{{ ' (' + parameters.spinPolarization + ')' if parameters.spinPolarization }}"
         substitutions:
-            pbe: PBE
+            hse06: HSE
             dft-d3: D3
-            u: U
     forEach:
         - !parameter
             key: parameters.functional
-            values: !esse "model/mixins/dft/enum-options#/gga/enum"
+            values: !esse "model/mixins/dft/enum-options#/hybrid/enum"
         - !parameter
             key: parameters.dispersionCorrection
             values: !esse "model/mixins/enum-options#/dispersionCorrection/enum"
@@ -19,17 +18,12 @@ ldaConfigs: !combine
             values: [true]
             isOptional: true
         - !parameter
-            key: parameters.hubbardType
-            values: !esse "model/mixins/enum-options#/hubbardType/enum"
-            isOptional: true
-        - !parameter
             key: parameters.spinPolarization
             values: !esse "model/mixins/enum-options#/spinPolarization/enum"
             exclude: "^non-collinear"
             isOptional: true
     exclusions:
         - [parameters.spinPolarization, parameters.spinOrbitCoupling]
-        - [parameters.hubbardType, parameters.dispersionCorrection]
     config:
         categories:
             tier1:
@@ -45,8 +39,8 @@ ldaConfigs: !combine
                 slug: ksdft
                 name: Kohn-Sham DFT
             subtype:
-                slug: gga
-                name: Generalized Gradient Approximation
+                slug: hybrid
+                name: Hybrid functional
         tags:
             - density functional theory
-        schema: !esse "models-directory/gga"
+        schema: !esse "models-directory/hybrid"

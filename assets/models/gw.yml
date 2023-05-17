@@ -1,12 +1,19 @@
 - !combine
     name:
-        template: {{ categories.subtype }}@{{ parameters.functional }}
+        template: "{{ categories.subtype.slug }}@{{ parameters.functional }}"
         substitutions:
             pbe: PBE
+            g0w0: G0W0
+            evgw0: evGW0
+            evgw: evGW
     forEach:
         - !parameter
             key: categories.subtype
             values: !esse "models-category/pb/qm/abin/gw#/properties/subtype/enum"
+        - !parameter
+            key: parameters.functional
+            values: !esse "model/mixins/dft/enum-options#/gga/enum"
+
     config:
         categories:
             tier1:
@@ -24,16 +31,22 @@
         parameters:
             require: "pb/qm/dft/ksdft/gga?functional=pbe"
         schema: !esse "models-directory/gw"
-#
+
 - !combine
     name:
-        template: "{{ categories.subtype }}@{{ parameters.functional }} ({{ parameters.spinOrbitCoupling }})"
+        template: "{{ categories.subtype.slug }}@{{ parameters.functional }}{{ ' (SOC)' if parameters.spinOrbitCoupling }}"
         substitutions:
             pbe: PBE
+            g0w0: G0W0
+            evgw0: evGW0
+            evgw: evGW
     forEach:
         - !parameter
             key: categories.subtype
             values: !esse "models-category/pb/qm/abin/gw#/properties/subtype/enum"
+        - !parameter
+            key: parameters.functional
+            values: !esse "model/mixins/dft/enum-options#/gga/enum"
         - !parameter
             key: parameters.spinOrbitCoupling
             values: [true]
