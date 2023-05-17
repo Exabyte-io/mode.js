@@ -1,9 +1,10 @@
 ldaConfigs: !combine
     name:
-        template: "{{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ '+' + parameters.hubbardType if parameters.hubbardType}}{{ ' (SOC)' if parameters.spinOrbitCoupling }}"
+        template: "{{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ '+' + parameters.hubbardType if parameters.hubbardType}}{{ ' (SOC)' if parameters.spinOrbitCoupling }}{{ ' (' + parameters.spinPolarization + ')' if parameters.spinPolarization }}"
         substitutions:
             pbe: PBE
-            DFT-D3: D3
+            dft-d3: D3
+            u: U
     forEach:
         - !parameter
             key: parameters.functional
@@ -11,17 +12,21 @@ ldaConfigs: !combine
         - !parameter
             key: parameters.dispersionCorrection
             values: !esse "model/mixins/enum-options#/dispersionCorrection/enum"
-            exclude: "^(?!.*DFT-D3).*$"
-            includeNull: true
+            exclude: "^(?!.*dft-d3).*$"
+            isOptional: true
         - !parameter
             key: parameters.spinOrbitCoupling
             values: [true]
-            includeNull: true
+            isOptional: true
         - !parameter
             key: parameters.hubbardType
             values: !esse "model/mixins/enum-options#/hubbardType/enum"
-            includeNull: true
-
+            isOptional: true
+        - !parameter
+            key: parameters.spinPolarization
+            values: !esse "model/mixins/enum-options#/spinPolarization/enum"
+            isOptional: true
+            exclude: "^non-collinear"
     config:
         categories:
             tier1:
