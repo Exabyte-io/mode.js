@@ -1,81 +1,23 @@
-#name:
-#  template: {{ pwUnit.categories.type | capitalize }}-{{ pspUnit.categories.subtype | capitalize }}PP ({{}}, {{}})
-# ---------------------------
-pwUnits: !include assets/methods/units/pw.yml
-# ---------------------------
-pspUnits: !include assets/methods/units/psp.yml
-# ---------------------------
-diagUnits: !combine
+!combine
     name:
-        template: "{{ categories.type.name }} Diagonalization"
-    config:
-        categories:
-            tier1:
-                name: Optimization
-                slug: opt
-            tier2:
-                name: Differentiable Functions
-                slug: diff
-            tier3:
-                name: Mixed/Higher Order Algorithm
-                slug: ordern
-            type:
-                name: Conjugate Gradient
-                slug: cg
-        tags:
-            - diagonalization
-        schema: !esse "methods-directory/mathematical/cg"
-    extraConfigs: !combine
-        name:
-            template: "{{ categories.type.slug | title }} Diagonalization"
-        config:
-            categories:
-                tier1:
-                    name: Linear Algebra
-                    slug: linalg
-                tier2:
-                    name: Diagonalization
-                    slug: diag
-                type:
-                    name: Davidson diagonalization
-                    slug: davidson
-            tags:
-                - diagonalization
-            schema: !esse "methods-directory/mathematical/davidson"
-# ---------------------------
-occupationUnits: !combine
-    name:
-        template: "{{ categories.subtype }} Smearing"
+        template: "{{ units[3]['categories']['type'] | upper }}-{{ units[2]['categories']['subtype'] | upper + 'PP' }} ({{ units[1]['categories']['type']['name'] }}, {{ units[0]['categories']['subtype'] | title }} {{'Tetrahedron Method' if units[0]['categories']['type'] == 'tetrahedron' else 'Smearing'}})"
         substitutions:
-            gaussian: Gaussian
-            marzari-vanderbilt: Marzari-Vanderbilt
-            methfessel-paxton: Methfessel-Paxton
-            fermi-dirac: Fermi-Dirac
+            pw: PW
+            nc: NC
+            paw: PAW
+            us: US
     forEach:
-        - !parameter
-            key: categories.subtype
-            values: !esse "methods-category/physical/qm/wf/enum-options#/smearingSubtypes/enum"
-            exclude: "^(marzari|fermi)"
+        -   key: units
+            action: push
+            values: !include assets/methods/units/pw.yml
+        -   key: units
+            action: push
+            values: !include assets/methods/units/psp.yml
+        -   key: units
+            action: push
+            values: !include assets/methods/units/diagonalization.yml
+        -   key: units
+            action: push
+            values: !include assets/methods/units/occupations.yml
     config:
-        categories:
-            tier1: qm
-            tier2: wf
-            type: smearing
-        tags:
-            - occupation number
-        schema: !esse "methods-directory/physical/smearing"
-    extraConfigs: !combine
-        name:
-            template: "{{ categories.subtype | title }} Tetrahedron Method"
-        forEach:
-            - !parameter
-                key: categories.subtype
-                values: !esse "methods-category/physical/qm/wf/enum-options#/tetrahedronSubtypes/enum"
-        config:
-            categories:
-                tier1: qm
-                tier2: wf
-                type: tetrahedron
-            tags:
-                - occupation number
-            schema: !esse "methods-directory/physical/tetrahedron"
+        schema: !esse method
