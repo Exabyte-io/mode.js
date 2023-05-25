@@ -7,6 +7,8 @@ import path from "path";
 
 const MODEL_ASSETS_PATH = "assets/models"
 const METHOD_ASSETS_PATH = "assets/methods"
+const LOG_VALIDATION = true;
+const LOG_CONFIG_NAMES = true;
 
 function getAssetFiles(currentPath, assetExtension = ".yml", resolvePath = true) {
     const fileNames = fs
@@ -19,7 +21,7 @@ function getAssetFiles(currentPath, assetExtension = ".yml", resolvePath = true)
 function validateConfig(config, debug = false) {
     const ajv = new Ajv({allErrors: true, verbose: true});
     const validate = ajv.compile(config.schema);
-    if (debug) console.log(`${config.schema.schemaId}: ${validate(config)}`);
+    if (debug) console.log(`Validating config for ${config.schema.schemaId}: ...${validate(config) ? "OK" : "ERROR"}`);
 
     if (validate.errors) {
         console.error("Validation errors:", validate.errors);
@@ -35,7 +37,7 @@ function createModelConfigs(assetPath, debug = false) {
     let configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
 
     configs.forEach((config) => {
-        validateConfig(config, false);
+        validateConfig(config, LOG_VALIDATION);
         delete config.schema;
     });
 
@@ -50,10 +52,10 @@ function createMethodConfigs(assetPath, debug = false) {
     // Iterate over groups of configs and set config-based values
     parsed.forEach((config) => {
         config.units.forEach((u) => {
-            validateConfig(u, false);
+            validateConfig(u, LOG_VALIDATION);
             delete u.schema;
         });
-        validateConfig(config, false);
+        validateConfig(config, LOG_VALIDATION);
         delete config.schema;
     });
 
@@ -64,7 +66,7 @@ function createMethodConfigs(assetPath, debug = false) {
 // Build and write MODEL configs
 try {
     const modelAssetFiles = getAssetFiles(MODEL_ASSETS_PATH, ".yml");
-    const modelConfigs = modelAssetFiles.flatMap((asset) => createModelConfigs(asset, true));
+    const modelConfigs = modelAssetFiles.flatMap((asset) => createModelConfigs(asset, LOG_CONFIG_NAMES));
     fs.writeFileSync("./model_list.js", `module.exports = ${JSON.stringify(modelConfigs)}`, "utf8");
 } catch (e) {
     console.error(e);
@@ -73,7 +75,7 @@ try {
 // Build and write METHOD configs
 try {
     const methodAssetFiles = getAssetFiles(METHOD_ASSETS_PATH, ".yml");
-    const methodConfigs = methodAssetFiles.flatMap((asset) => createMethodConfigs(asset, true));
+    const methodConfigs = methodAssetFiles.flatMap((asset) => createMethodConfigs(asset, LOG_CONFIG_NAMES));
     fs.writeFileSync("./method_list.js", `module.exports = ${JSON.stringify(methodConfigs)}`, "utf8");
 } catch (e) {
     console.error(e);
