@@ -1,6 +1,6 @@
 - !combine
     name:
-        template: "{{ categories.subtype.slug }}@{{ parameters.functional }}"
+        template: "{{ categories.subtype }}@{{ parameters.functional }}"
         substitutions:
             pbe: PBE
             g0w0: G0W0
@@ -16,25 +16,17 @@
 
     config:
         categories:
-            tier1:
-                slug: pb
-                name: physics-based
-            tier2:
-                slug: qm
-                name: quantum-mechanical
-            tier3:
-                slug: abin
-                name: ab-initio
-            type:
-                slug: gw
-                name: GW Approximation
+            tier1: pb
+            tier2: qm
+            tier3: abin
+            type: gw
         parameters:
             require: "pb/qm/dft/ksdft/gga?functional=pbe"
         schema: !esse "models-directory/gw"
 
 - !combine
     name:
-        template: "{{ categories.subtype.slug }}@{{ parameters.functional }}{{ ' (SOC)' if parameters.spinOrbitCoupling }}"
+        template: "{{ categories.subtype }}@{{ parameters.functional }}{{ ' (SOC)' if parameters.spinOrbitCoupling }}"
         substitutions:
             pbe: PBE
             g0w0: G0W0
@@ -52,18 +44,10 @@
             values: [true]
     config:
         categories:
-            tier1:
-                slug: pb
-                name: physics-based
-            tier2:
-                slug: qm
-                name: quantum-mechanical
-            tier3:
-                slug: abin
-                name: ab-initio
-            type:
-                slug: gw
-                name: GW Approximation
+            tier1: pb
+            tier2: qm
+            tier3: abin
+            type: gw
         parameters:
             require: "pb/qm/dft/ksdft/gga?functional=pbe&spinOrbitCoupling=true"
         schema: !esse "models-directory/gw"

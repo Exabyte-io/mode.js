@@ -32,21 +32,11 @@ ldaConfigs: !combine
         - [parameters.hubbardType, parameters.dispersionCorrection]
     config:
         categories:
-            tier1:
-                slug: pb
-                name: physics-based
-            tier2:
-                slug: qm
-                name: quantum-mechanical
-            tier3:
-                slug: dft
-                name: density functional theory
-            type:
-                slug: ksdft
-                name: Kohn-Sham DFT
-            subtype:
-                slug: gga
-                name: Generalized Gradient Approximation
+            tier1: pb
+            tier2: qm
+            tier3: dft
+            type: ksdft
+            subtype: gga
         tags:
             - density functional theory
         schema: !esse "models-directory/gga"

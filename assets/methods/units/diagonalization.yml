@@ -1,37 +1,25 @@
 !combine
     name:
-        template: "{{ categories.type.name }} Diagonalization"
+        template: "{{ categories.type }} Diagonalization"
+        substitutions:
+            cg: Conjugate Gradient
     config:
         categories:
-            tier1:
-                name: Optimization
-                slug: opt
-            tier2:
-                name: Differentiable Functions
-                slug: diff
-            tier3:
-                name: Mixed/Higher Order Algorithm
-                slug: ordern
-            type:
-                name: Conjugate Gradient
-                slug: cg
+            tier1: opt
+            tier2: diff
+            tier3: ordern
+            type: cg
         tags:
             - diagonalization
         schema: !esse "methods-directory/mathematical/cg"
     extraConfigs: !combine
         name:
-            template: "{{ categories.type.slug | title }} Diagonalization"
+            template: "{{ categories.type | title }} Diagonalization"
         config:
             categories:
-                tier1:
-                    name: Linear Algebra
-                    slug: linalg
-                tier2:
-                    name: Diagonalization
-                    slug: diag
-                type:
-                    name: Davidson diagonalization
-                    slug: davidson
+                tier1: linalg
+                tier2: diag
+                type: davidson
             tags:
                 - diagonalization
             schema: !esse "methods-directory/mathematical/davidson"

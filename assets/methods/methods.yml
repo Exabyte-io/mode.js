@@ -1,6 +1,7 @@
 !combine
     name:
-        template: "{{ units[3]['categories']['type'] | upper }}-{{ units[2]['categories']['subtype'] | upper + 'PP' }} ({{ units[1]['categories']['type']['name'] }}, {{ units[0]['categories']['subtype'] | title }} {{'Tetrahedron Method' if units[0]['categories']['type'] == 'tetrahedron' else 'Smearing'}})"
+        # note the order of units is reversed as compared to the list below, i.e. units[3] is the plane wave unit
+        template: "{{ units[3]['categories']['type'] | upper }}-{{ units[2]['categories']['subtype'] | upper + 'PP' }} ({{ units[1]['name'] }}, {{ units[0]['categories']['subtype'] | title }} {{'Tetrahedron Method' if units[0]['categories']['type'] == 'tetrahedron' else 'Smearing'}})"
         substitutions:
             pw: PW
             nc: NC
