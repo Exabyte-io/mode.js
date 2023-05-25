@@ -11,6 +11,11 @@ const LOG_VALIDATION = true;
 const LOG_CONFIG_NAMES = true;
 const METHOD_PATH_SEPARATOR = "::";
 
+/** Get list of paths for asset files in a directory.
+ * @param {string} currentPath - Path to current directory, i.e. $PWD
+ * @param {string} assetExtension - File extension for asset files
+ * @param {boolean} resolvePath - whether to resolve the paths of asset files
+ */
 function getAssetFiles(currentPath, assetExtension = ".yml", resolvePath = true) {
     const fileNames = fs
         .readdirSync(currentPath)
@@ -19,6 +24,11 @@ function getAssetFiles(currentPath, assetExtension = ".yml", resolvePath = true)
     return fileNames;
 }
 
+/**
+ * Validate a config containing its schema.
+ * @param {Object} config - Config containing schema (`config.schema`)
+ * @param {boolean} debug - Whether to log validation output
+ */
 function validateConfig(config, debug = false) {
     const ajv = new Ajv({allErrors: true, verbose: true});
     const validate = ajv.compile(config.schema);
@@ -30,6 +40,11 @@ function validateConfig(config, debug = false) {
     }
 }
 
+/**
+ * Generates URL path based categories and parameters.
+ * @param {Object} data - model or unit method config
+ * @return {string} - entity path
+ */
 function encodeDataAsURLPath(data) {
     const placeholder = 'unknown';
 
@@ -46,10 +61,15 @@ function encodeDataAsURLPath(data) {
         }
     }
 
-    // Return the URL-like path
     return params.toString() ? `/${path}?${params.toString()}` : `/${path}`;
 }
 
+/**
+ * Generates one or more model configs from asset and validates against corresponding schema.
+ * @param {string} assetPath - Path to asset file
+ * @param {boolean} debug - Whether to log model config name.
+ * @return {Object[]} - Array of model configs
+ */
 function createModelConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
     const parsed = yaml.load(testContent, {schema: allYAMLSchemas});
@@ -67,6 +87,12 @@ function createModelConfigs(assetPath, debug = false) {
     return configs;
 }
 
+/**
+ * Generates one of more method configs and validates against corresponding schema.
+ * @param {string} assetPath - Path to asset file
+ * @param {boolean} debug - Whether to log model config name.
+ * @return {Object[]} - Array of method configs
+ */
 function createMethodConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
     const parsed = yaml.load(testContent, { schema: allYAMLSchemas });
