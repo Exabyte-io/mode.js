@@ -6,8 +6,9 @@
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
+        "build:assets": "node build_entities.js",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
+        "postinstall": "npm run transpile && npm run build:assets",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
     },
@@ -17,9 +18,11 @@
     },
     "main": "dist/index.js",
     "files": [
+        "/assets",
         "/dist",
         "/src",
-        ".babelrc"
+        ".babelrc",
+        "build_entities.mjs"
     ],
     "author": "Exabyte Inc.",
     "bugs": {
