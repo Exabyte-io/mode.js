@@ -9,6 +9,7 @@ const MODEL_ASSETS_PATH = "assets/models"
 const METHOD_ASSETS_PATH = "assets/methods"
 const LOG_VALIDATION = true;
 const LOG_CONFIG_NAMES = true;
+const METHOD_PATH_SEPARATOR = "::";
 
 function getAssetFiles(currentPath, assetExtension = ".yml", resolvePath = true) {
     const fileNames = fs
@@ -29,6 +30,26 @@ function validateConfig(config, debug = false) {
     }
 }
 
+function encodeDataAsURLPath(data) {
+    const placeholder = 'unknown';
+
+    const path = ['tier1', 'tier2', 'tier3', 'type', 'subtype'].map(key => {
+        return lodash.get(data.categories, key, placeholder);
+    }).join('/');
+
+    const params = new URLSearchParams();
+    for (let key in data.parameters) {
+        if (lodash.isObject(data.parameters[key])) {
+            params.append(key, JSON.stringify(data.parameters[key]));
+        } else {
+            params.append(key, data.parameters[key]);
+        }
+    }
+
+    // Return the URL-like path
+    return params.toString() ? `/${path}?${params.toString()}` : `/${path}`;
+}
+
 function createModelConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
     const parsed = yaml.load(testContent, {schema: allYAMLSchemas});
@@ -37,6 +58,7 @@ function createModelConfigs(assetPath, debug = false) {
     let configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
 
     configs.forEach((config) => {
+        config.path = encodeDataAsURLPath(config);
         validateConfig(config, LOG_VALIDATION);
         delete config.schema;
     });
@@ -52,9 +74,11 @@ function createMethodConfigs(assetPath, debug = false) {
     // Iterate over groups of configs and set config-based values
     parsed.forEach((config) => {
         config.units.forEach((u) => {
+            u.path = encodeDataAsURLPath(u);
             validateConfig(u, LOG_VALIDATION);
             delete u.schema;
         });
+        config.path = config.units.map((u) => u.path).join(METHOD_PATH_SEPARATOR);
         validateConfig(config, LOG_VALIDATION);
         delete config.schema;
     });
