@@ -57,8 +57,8 @@ function encodeDataAsURLPath(data) {
  * @return {Object[]} - Array of model configs
  */
 function createModelConfigs(assetPath, debug = false) {
-    const testContent = fs.readFileSync(assetPath, "utf-8");
-    const parsed = yaml.load(testContent, {schema: allYAMLSchemas});
+    const fileContent = fs.readFileSync(assetPath, "utf-8");
+    const parsed = yaml.load(fileContent, {schema: allYAMLSchemas});
 
     // Assume either array of configs or object with array of configs as values
     let configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
@@ -80,8 +80,8 @@ function createModelConfigs(assetPath, debug = false) {
  * @return {Object[]} - Array of method configs
  */
 function createMethodConfigs(assetPath, debug = false) {
-    const testContent = fs.readFileSync(assetPath, "utf-8");
-    const parsed = yaml.load(testContent, { schema: allYAMLSchemas });
+    const fileContent = fs.readFileSync(assetPath, "utf-8");
+    const parsed = yaml.load(fileContent, { schema: allYAMLSchemas });
 
     // Iterate over groups of configs and set config-based values
     parsed.forEach((config) => {
