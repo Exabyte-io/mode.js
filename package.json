@@ -6,7 +6,7 @@
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
-        "build:assets": "node build_entities.js",
+        "build:assets": "node build_entities.mjs",
         "transpile": "babel --out-dir dist src",
         "postinstall": "npm run transpile && npm run build:assets",
         "prettier": "prettier --check src tests",
@@ -48,7 +48,7 @@
     },
     "devDependencies": {
         "@exabyte-io/ade.js": "2022.8.31-0",
-        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#52e1a5dd4ccb73f6e796faab286f1d7e55a09169",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#d5c093cb44f2424e0a4024dee4e98593a49c50b6",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@exabyte-io/made.js": "2022.6.15-0",
         "chai": "^4.3.4",

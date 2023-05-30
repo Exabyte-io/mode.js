@@ -1,31 +1,17 @@
-import { allYAMLSchemas } from "@exabyte-io/code.js/dist/utils";
+import { allYAMLSchemas, getFilesInDirectory } from "@exabyte-io/code.js/dist/utils";
 import Ajv from "ajv";
 import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
-import path from "path";
 
 const MODEL_ASSETS_PATH = "assets/models"
 const METHOD_ASSETS_PATH = "assets/methods"
-const LOG_VALIDATION = true;
-const LOG_CONFIG_NAMES = true;
+const LOG_VALIDATION = false;
+const LOG_CONFIG_NAMES = false;
 const METHOD_PATH_SEPARATOR = "::";
 
-/** Get list of paths for asset files in a directory.
- * @param {string} currentPath - Path to current directory, i.e. $PWD
- * @param {string} assetExtension - File extension for asset files
- * @param {boolean} resolvePath - whether to resolve the paths of asset files
- */
-function getAssetFiles(currentPath, assetExtension = ".yml", resolvePath = true) {
-    const fileNames = fs
-        .readdirSync(currentPath)
-        .filter((dirItem) => path.extname(dirItem) === assetExtension);
-    if (resolvePath) return fileNames.map((fileName) => path.resolve(currentPath, fileName));
-    return fileNames;
-}
-
 /**
- * Validate a config containing its schema.
+ * Validate a config containing its own schema.
  * @param {Object} config - Config containing schema (`config.schema`)
  * @param {boolean} debug - Whether to log validation output
  */
@@ -41,7 +27,7 @@ function validateConfig(config, debug = false) {
 }
 
 /**
- * Generates URL path based categories and parameters.
+ * Generates URL path based model or method categories and parameters.
  * @param {Object} data - model or unit method config
  * @return {string} - entity path
  */
@@ -115,18 +101,20 @@ function createMethodConfigs(assetPath, debug = false) {
 
 // Build and write MODEL configs
 try {
-    const modelAssetFiles = getAssetFiles(MODEL_ASSETS_PATH, ".yml");
+    const modelAssetFiles = getFilesInDirectory(MODEL_ASSETS_PATH, [".yml", ".yaml"], true);
     const modelConfigs = modelAssetFiles.flatMap((asset) => createModelConfigs(asset, LOG_CONFIG_NAMES));
     fs.writeFileSync("./model_list.js", `module.exports = ${JSON.stringify(modelConfigs)}`, "utf8");
+    console.log(`Created ${modelConfigs.length} model configs.`)
 } catch (e) {
     console.error(e);
 }
 
 // Build and write METHOD configs
 try {
-    const methodAssetFiles = getAssetFiles(METHOD_ASSETS_PATH, ".yml");
+    const methodAssetFiles = getFilesInDirectory(METHOD_ASSETS_PATH, [".yml", ".yaml"], true);
     const methodConfigs = methodAssetFiles.flatMap((asset) => createMethodConfigs(asset, LOG_CONFIG_NAMES));
     fs.writeFileSync("./method_list.js", `module.exports = ${JSON.stringify(methodConfigs)}`, "utf8");
+    console.log(`Created ${methodConfigs.length} method configs.`)
 } catch (e) {
     console.error(e);
 }
