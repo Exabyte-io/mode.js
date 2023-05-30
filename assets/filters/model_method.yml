@@ -1,0 +1,41 @@
+#
+# Model-Method Filter
+# -------------------
+# This file contains the mappings between model categories and
+# compatible unit method paths. Regular expressions can be also used to define filters for groups of paths.
+#
+# For now, the filter tree is defined by this single asset. However, as the tree grows,
+# we can isolate some of its branches to separate files and include them here.
+pb:
+    qm:
+        abin:
+            gw:
+                - path: /qm/wf/undefined/pw/undefined
+                - regex: "\/qm\/wf\/undefined\/psp\/.*"
+                - regex: "\/qm\/wf\/undefined\/smearing\/.*"
+                - regex: "\/qm\/wf\/undefined\/tetrahedron\/.*"
+                - path: /opt/diff/ordern/cg/undefined
+                - path: /linalg/diag/undefined/davidson/undefined
+        dft:
+            ksdft:
+                lda:
+                    - path: /qm/wf/undefined/pw/undefined
+                    - regex: "\/qm\/wf\/undefined\/psp\/.*"
+                    - regex: "\/qm\/wf\/undefined\/smearing\/.*"
+                    - regex: "\/qm\/wf\/undefined\/tetrahedron\/.*"
+                    - path: /opt/diff/ordern/cg/undefined
+                    - path: /linalg/diag/undefined/davidson/undefined
+                gga:
+                    - path: /qm/wf/undefined/pw/undefined
+                    - regex: "\/qm\/wf\/undefined\/psp\/.*"
+                    - regex: "\/qm\/wf\/undefined\/smearing\/.*"
+                    - regex: "\/qm\/wf\/undefined\/tetrahedron\/.*"
+                    - path: /opt/diff/ordern/cg/undefined
+                    - path: /linalg/diag/undefined/davidson/undefined
+                hybrid:
+                    - path: /qm/wf/undefined/pw/undefined
+                    - regex: "\/qm\/wf\/undefined\/psp\/.*"
+                    - regex: "\/qm\/wf\/undefined\/smearing\/.*"
+                    - regex: "\/qm\/wf\/undefined\/tetrahedron\/.*"
+                    - path: /opt/diff/ordern/cg/undefined
+                    - path: /linalg/diag/undefined/davidson/undefined
