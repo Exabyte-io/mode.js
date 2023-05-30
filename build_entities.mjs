@@ -28,15 +28,16 @@ function validateConfig(config, debug = false) {
 
 /**
  * Generates URL path based model or method categories and parameters.
+ * Note: Paths contain 'undefined' whenever a tier or type is `null` or `undefined`.
  * @param {Object} data - model or unit method config
  * @return {string} - entity path
  */
 function encodeDataAsURLPath(data) {
-    const placeholder = 'unknown';
+    const placeholder = "undefined";
 
-    const path = ['tier1', 'tier2', 'tier3', 'type', 'subtype'].map(key => {
+    const path = ["tier1", "tier2", "tier3", "type", "subtype"].map(key => {
         return lodash.get(data.categories, key, placeholder);
-    }).join('/');
+    }).join("/");
 
     const params = new URLSearchParams();
     for (let key in data.parameters) {
@@ -104,7 +105,7 @@ try {
     const modelAssetFiles = getFilesInDirectory(MODEL_ASSETS_PATH, [".yml", ".yaml"], true);
     const modelConfigs = modelAssetFiles.flatMap((asset) => createModelConfigs(asset, LOG_CONFIG_NAMES));
     fs.writeFileSync("./model_list.js", `module.exports = ${JSON.stringify(modelConfigs)}`, "utf8");
-    console.log(`Created ${modelConfigs.length} model configs.`)
+    console.log(`Created ${modelConfigs.length} model configs.`);
 } catch (e) {
     console.error(e);
 }
@@ -114,7 +115,7 @@ try {
     const methodAssetFiles = getFilesInDirectory(METHOD_ASSETS_PATH, [".yml", ".yaml"], true);
     const methodConfigs = methodAssetFiles.flatMap((asset) => createMethodConfigs(asset, LOG_CONFIG_NAMES));
     fs.writeFileSync("./method_list.js", `module.exports = ${JSON.stringify(methodConfigs)}`, "utf8");
-    console.log(`Created ${methodConfigs.length} method configs.`)
+    console.log(`Created ${methodConfigs.length} method configs.`);
 } catch (e) {
     console.error(e);
 }
