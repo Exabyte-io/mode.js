@@ -1,4 +1,4 @@
-import { allYAMLSchemas } from "@exabyte-io/code.js/dist/utils";
+import { JsYamlAllSchemas } from "@exabyte-io/code.js/dist/utils";
 import Ajv from "ajv";
 import fs from "fs";
 import yaml from "js-yaml";
@@ -72,7 +72,7 @@ function encodeDataAsURLPath(data) {
  */
 function createModelConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
-    const parsed = yaml.load(testContent, {schema: allYAMLSchemas});
+    const parsed = yaml.load(testContent, {schema: JsYamlAllSchemas});
 
     // Assume either array of configs or object with array of configs as values
     let configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
@@ -95,7 +95,7 @@ function createModelConfigs(assetPath, debug = false) {
  */
 function createMethodConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
-    const parsed = yaml.load(testContent, { schema: allYAMLSchemas });
+    const parsed = yaml.load(testContent, { schema: JsYamlAllSchemas });
 
     // Iterate over groups of configs and set config-based values
     parsed.forEach((config) => {
