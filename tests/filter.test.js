@@ -6,15 +6,15 @@ describe("model-method filter", () => {
     it("can filter a list of method by model parameters", () => {
         const methodConfigs = [
             {
-                path: "/qm/wf/undefined/smearing/gaussian::/opt/diff/ordern/cg/undefined::/qm/wf/undefined/psp/us::/qm/wf/undefined/pw/undefined",
+                path: "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/us::/qm/wf/none/pw/none",
                 name: "mock method A",
             },
             {
-                path: "/linalg/diag/undefined/davidson/undefined::/qm/wf/undefined/psp/paw::/qm/wf/undefined/pw/undefined",
+                path: "/linalg/diag/none/davidson/none::/qm/wf/none/psp/paw::/qm/wf/none/pw/none",
                 name: "mock method B",
             },
             {
-                path: "/some/unsupported/method/path::/qm/wf/undefined/pw/undefined",
+                path: "/some/unsupported/method/path::/qm/wf/none/pw/none",
                 name: "mock method C",
             },
         ];
@@ -28,7 +28,7 @@ describe("model-method filter", () => {
         expect(filteredConfigs).to.have.length(2);
         expect(filteredConfigs).not.to.have.deep.members([
             {
-                path: "/some/unsupported/method/path::/qm/wf/undefined/pw/undefined",
+                path: "/some/unsupported/method/path::/qm/wf/none/pw/none",
                 name: "mock method C",
             },
         ]);

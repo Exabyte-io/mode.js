@@ -28,12 +28,12 @@ function validateConfig(config, debug = false) {
 
 /**
  * Generates URL path based model or method categories and parameters.
- * Note: Paths contain 'undefined' whenever a tier or type is `null` or `undefined`.
+ * Note: Paths contain 'none' whenever a tier or type is `null` or `undefined`.
  * @param {Object} data - model or unit method config
  * @return {string} - entity path
  */
 function encodeDataAsURLPath(data) {
-    const placeholder = "undefined";
+    const placeholder = "none";
 
     const path = ["tier1", "tier2", "tier3", "type", "subtype"].map(key => {
         return lodash.get(data.categories, key, placeholder);
