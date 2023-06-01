@@ -6,8 +6,9 @@
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
+        "build:assets": "node build_entities.mjs",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
+        "postinstall": "npm run transpile && npm run build:assets",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
     },
@@ -17,9 +18,11 @@
     },
     "main": "dist/index.js",
     "files": [
+        "/assets",
         "/dist",
         "/src",
-        ".babelrc"
+        ".babelrc",
+        "build_entities.mjs"
     ],
     "author": "Exabyte Inc.",
     "bugs": {
@@ -36,6 +39,8 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
+        "ajv": "4.1.7",
+        "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
         "underscore": "^1.13.3",
@@ -43,7 +48,7 @@
     },
     "devDependencies": {
         "@exabyte-io/ade.js": "2022.8.31-0",
-        "@exabyte-io/code.js": "2022.10.11-0",
+        "@exabyte-io/code.js": "2023.6.1-0",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@exabyte-io/made.js": "2022.6.15-0",
         "chai": "^4.3.4",
