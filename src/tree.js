@@ -5,14 +5,21 @@ import _ from "underscore";
 import modelMethodMap from "../model_method_map";
 
 // TODO: migrate to use manifest instead
-const methods = {
-    pseudopotential: ["paw", "nc", "us"],
-    // TODO: Add additional basis set options, once user choice of specific (i.e 3-21G vs cc-pVDZ) is implemented.
-    localorbital: ["pople"],
-    unknown: ["unknown"],
+
+export const METHODS = {
+    pseudopotential: "pseudopotential",
+    localorbital: "localorbital",
+    unknown: "unknown",
 };
 
-export const getPseudopotentialTypesFromTree = () => methods.pseudopotential;
+const methods = {
+    [METHODS.pseudopotential]: ["paw", "nc", "us"],
+    // TODO: Add additional basis set options, once user choice of specific (i.e 3-21G vs cc-pVDZ) is implemented.
+    [METHODS.localorbital]: ["pople"],
+    [METHODS.unknown]: ["unknown"],
+};
+
+export const getPseudopotentialTypesFromTree = () => methods[METHODS.pseudopotential];
 
 // DFT-specific
 
