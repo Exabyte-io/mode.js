@@ -10,6 +10,8 @@ export class Method extends InMemoryEntity {
         super({ ...config, data });
     }
 
+    static _useDeepClone = true;
+
     cloneWithoutData() {
         const clone = this.clone();
         clone.setData({});

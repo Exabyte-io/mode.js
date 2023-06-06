@@ -13,6 +13,8 @@ export class Model extends InMemoryEntity {
         this._MethodFactory = MethodFactory;
     }
 
+    static _useDeepClone = true;
+
     get type() {
         return this.prop("type", this.defaultType);
     }
