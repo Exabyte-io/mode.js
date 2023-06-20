@@ -19,7 +19,7 @@ describe("model-method filter", () => {
             },
         ];
         const modelConfig = {
-            categories: { tier1: "pb", tier2: "qm", tier3: "dft", type: "ksdft", subtype: "gga" },
+            categories: { tier1: "pb", tier2: "qm", tier3: "dft", type: "ksdft", subtype: "lda" },
         };
         const filteredConfigs = filterMethodsByModel({
             methodList: methodConfigs,

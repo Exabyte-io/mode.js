@@ -2,7 +2,8 @@ import { deepClone, filterEntityList, mergeTerminalNodes } from "@exabyte-io/cod
 import lodash from "lodash";
 import _ from "underscore";
 
-import modelMethodMap from "../model_method_map";
+// TODO: reactivate once build script is included in postinstall again
+// import modelMethodMap from "../model_method_map";
 
 // TODO: migrate to use manifest instead
 
@@ -159,6 +160,26 @@ export const getTreeByApplicationNameAndVersion = ({
 
 export const getDefaultModelTypeForApplication = (application) => {
     return Object.keys(getTreeByApplicationNameAndVersion(application))[0];
+};
+
+// TODO: remove once model-method map is imported from script-generated file
+const modelMethodMap = {
+    pb: {
+        qm: {
+            dft: {
+                ksdft: {
+                    lda: [
+                        { path: "/qm/wf/none/pw/none" },
+                        { regex: "/qm/wf/none/psp/.*" },
+                        { regex: "/qm/wf/none/smearing/.*" },
+                        { regex: "/qm/wf/none/tetrahedron/.*" },
+                        { path: "/opt/diff/ordern/cg/none" },
+                        { path: "/linalg/diag/none/davidson/none" },
+                    ],
+                },
+            },
+        },
+    },
 };
 
 /**
