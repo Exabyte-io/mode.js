@@ -1,0 +1,14 @@
+!combine
+    name:
+        template: "{{ units[0]['name'] }}"
+        substitutions:
+            pw: PW
+            nc: NC
+            paw: PAW
+            us: US
+    forEach:
+        -   key: units
+            action: push
+            values: !include assets/methods/units/ao_pople.yml
+    config:
+        schema: !esse method
