@@ -1,11 +1,6 @@
 !combine
     name:
         template: "{{ units[0]['name'] }}"
-        substitutions:
-            pw: PW
-            nc: NC
-            paw: PAW
-            us: US
     forEach:
         -   key: units
             action: push
