@@ -39,6 +39,10 @@ const DFTModelTree = {
         methods,
         functionals: ["pz", "pw", "vwn", "other"],
     },
+    hybrid: {
+        methods,
+        functionals: ["b3lyp"],
+    },
     other: {
         methods,
         functionals: ["other"],
@@ -96,14 +100,7 @@ export const treeSlugToNamedObject = (modelSlug) => {
 
 const VASP_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
 const ESPRESSO_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
-const NWCHEM_MODELS_TREE = {
-    dft: {
-        hybrid: {
-            methods: methods[METHODS.localorbital],
-            functionals: ["b3lyp"],
-        },
-    },
-};
+const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
 
 ["gga", "lda"].forEach((approximation) => {
     // pick "paw" for vasp
