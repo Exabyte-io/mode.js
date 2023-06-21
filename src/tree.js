@@ -95,7 +95,12 @@ export const treeSlugToNamedObject = (modelSlug) => {
 
 const VASP_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
 const ESPRESSO_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
-const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
+const NWCHEM_MODELS_TREE = {
+    hybrid: {
+        methods: methods[METHODS.localorbital],
+        functionals: ["b3lyp"],
+    },
+};
 
 ["gga", "lda"].forEach((approximation) => {
     // pick "paw" for vasp
@@ -106,9 +111,6 @@ const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
     // assert "us" is the first option
     ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential =
         ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential.reverse();
-
-    // NWCHEM_MODELS_TREE.dft[approximation].methods.localorbital =
-    //     NWCHEM_MODELS_TREE.dft[approximation].methods.localorbital;
 });
 
 const UNKNOWN_MODELS_TREE = _.pick(MODEL_TREE, "unknown");
