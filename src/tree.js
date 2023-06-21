@@ -77,6 +77,7 @@ export const MODEL_NAMES = {
     dft: "density functional theory",
     lda: "local density approximation",
     gga: "generalized gradient approximation",
+    hybrid: "hybrid functional",
     ml: "machine learning",
     re: "regression",
 };
@@ -96,9 +97,11 @@ export const treeSlugToNamedObject = (modelSlug) => {
 const VASP_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
 const ESPRESSO_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
 const NWCHEM_MODELS_TREE = {
-    hybrid: {
-        methods: methods[METHODS.localorbital],
-        functionals: ["b3lyp"],
+    dft: {
+        hybrid: {
+            methods: methods[METHODS.localorbital],
+            functionals: ["b3lyp"],
+        },
     },
 };
 
