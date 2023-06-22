@@ -92,8 +92,11 @@ export class PointsPathFormDataProvider extends mix(JSONSchemaFormDataProvider).
         }
         return {
             // eslint-disable-next-line no-unused-vars
-            TitleField: ({ title, required }) =>
-                this.material.getBrillouinZoneImageComponent(title),
+            TitleField: ({
+                title,
+                // eslint-disable-next-line no-unused-vars
+                required,
+            }) => this.material.getBrillouinZoneImageComponent(title),
         };
     }
 

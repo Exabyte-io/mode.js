@@ -1,16 +1,26 @@
-import { deepClone } from "@exabyte-io/code.js/dist/utils";
+import { deepClone, filterEntityList, mergeTerminalNodes } from "@exabyte-io/code.js/dist/utils";
 import lodash from "lodash";
 import _ from "underscore";
+
+// TODO: reactivate once build script is included in postinstall again
+// import modelMethodMap from "../model_method_map";
+
 // TODO: migrate to use manifest instead
 
-const methods = {
-    pseudopotential: ["paw", "nc", "us"],
-    // TODO: Add additional basis set options, once user choice of specific (i.e 3-21G vs cc-pVDZ) is implemented.
-    localorbital: ["pople"],
-    unknown: ["unknown"],
+export const METHODS = {
+    pseudopotential: "pseudopotential",
+    localorbital: "localorbital",
+    unknown: "unknown",
 };
 
-export const getPseudopotentialTypesFromTree = () => methods.pseudopotential;
+const methods = {
+    [METHODS.pseudopotential]: ["paw", "nc", "us"],
+    // TODO: Add additional basis set options, once user choice of specific (i.e 3-21G vs cc-pVDZ) is implemented.
+    [METHODS.localorbital]: ["pople"],
+    [METHODS.unknown]: ["unknown"],
+};
+
+export const getPseudopotentialTypesFromTree = () => methods[METHODS.pseudopotential];
 
 // DFT-specific
 
@@ -151,3 +161,75 @@ export const getTreeByApplicationNameAndVersion = ({
 export const getDefaultModelTypeForApplication = (application) => {
     return Object.keys(getTreeByApplicationNameAndVersion(application))[0];
 };
+
+// TODO: remove once model-method map is imported from script-generated file
+const modelMethodMap = {
+    pb: {
+        qm: {
+            dft: {
+                ksdft: {
+                    lda: [
+                        { path: "/qm/wf/none/pw/none" },
+                        { regex: "/qm/wf/none/psp/.*" },
+                        { regex: "/qm/wf/none/smearing/.*" },
+                        { regex: "/qm/wf/none/tetrahedron/.*" },
+                        { path: "/opt/diff/ordern/cg/none" },
+                        { path: "/linalg/diag/none/davidson/none" },
+                    ],
+                },
+            },
+        },
+    },
+};
+
+/**
+ * Create list of filter objects based on model categories.
+ * @param {Object} filterTree - filter tree constructed from assets
+ * @param {string} tier1 - Level 1 tier
+ * @param {string} tier2 - Level 2 tier
+ * @param {string} tier3 - Level 3 tier
+ * @param {string} type - Type
+ * @param {string} subtype - Subtype
+ * @return {*[]}
+ */
+function getMethodFilterObjects({ filterTree, tier1, tier2, tier3, type, subtype }) {
+    let filterList;
+    if (!tier1) {
+        filterList = mergeTerminalNodes(filterTree);
+    } else if (!tier2) {
+        filterList = mergeTerminalNodes(filterTree[tier1]);
+    } else if (!tier3) {
+        filterList = mergeTerminalNodes(filterTree[tier1][tier2]);
+    } else if (!type) {
+        filterList = mergeTerminalNodes(filterTree[tier1][tier2][tier3]);
+    } else if (!subtype) {
+        filterList = mergeTerminalNodes(filterTree[tier1][tier2][tier3][type]);
+    } else {
+        filterList = filterTree[tier1][tier2][tier3][type][subtype];
+    }
+    const extractUniqueBy = (name) => {
+        return lodash
+            .chain(filterList)
+            .filter((o) => Boolean(o[name]))
+            .uniqBy(name)
+            .value();
+    };
+
+    return [].concat(extractUniqueBy("path"), extractUniqueBy("regex"));
+}
+
+/**
+ * Filter list of method configs based on model
+ * @param {Object[]} methodList - Array of method configs
+ * @param {Object} model - Model config for which methods should be filtered
+ * @return {Object[]}
+ */
+export function filterMethodsByModel({ methodList, model }) {
+    const { categories } = model;
+    const filterObjects = getMethodFilterObjects({ filterTree: modelMethodMap, ...categories });
+    return filterEntityList({
+        entitiesOrPaths: methodList,
+        filterObjects,
+        multiPathSeparator: "::",
+    });
+}
