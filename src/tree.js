@@ -163,6 +163,10 @@ export const getDefaultModelTypeForApplication = (application) => {
     return Object.keys(getTreeByApplicationNameAndVersion(application))[0];
 };
 
+function safelyGet(obj, ...args) {
+    return lodash.get(obj, args, undefined);
+}
+
 /**
  * Create list of filter objects based on model categories.
  * @param {Object} filterTree - filter tree constructed from assets
@@ -180,17 +184,18 @@ function getMethodFilterObjects({ filterTree, tier1, tier2, tier3, type, subtype
     } else if (!tier2) {
         filterList = mergeTerminalNodes(filterTree[tier1]);
     } else if (!tier3) {
-        filterList = mergeTerminalNodes(filterTree[tier1][tier2]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2));
     } else if (!type) {
-        filterList = mergeTerminalNodes(filterTree[tier1][tier2][tier3]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2, tier3));
     } else if (!subtype) {
-        filterList = mergeTerminalNodes(filterTree[tier1][tier2][tier3][type]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2, tier3, type));
     } else {
-        filterList = filterTree[tier1][tier2][tier3][type][subtype];
+        filterList = safelyGet(filterTree, tier1, tier2, tier3, type, subtype);
     }
     const extractUniqueBy = (name) => {
         return lodash
             .chain(filterList)
+            .filter(Boolean)
             .filter((o) => Boolean(o[name]))
             .uniqBy(name)
             .value();
