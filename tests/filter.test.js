@@ -20,7 +20,7 @@ describe("model-method filter", () => {
 
     it("can filter a list of method by model parameters", () => {
         const modelConfig = {
-            categories: { tier1: "pb", tier2: "qm", tier3: "dft", type: "ksdft", subtype: "gga" },
+            categories: { tier1: "pb", tier2: "qm", tier3: "dft", type: "ksdft", subtype: "lda" },
         };
         const filteredConfigs = filterMethodsByModel({
             methodList: methodConfigs,
