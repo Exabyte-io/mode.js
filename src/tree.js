@@ -211,6 +211,7 @@ function getMethodFilterObjects({ filterTree, tier1, tier2, tier3, type, subtype
  * @return {Object[]}
  */
 export function filterMethodsByModel({ methodList, model }) {
+    if (!model) return [];
     const { categories } = model;
     const filterObjects = getMethodFilterObjects({ filterTree: modelMethodMap, ...categories });
     return filterEntityList({

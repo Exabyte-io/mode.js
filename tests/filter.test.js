@@ -45,4 +45,12 @@ describe("model-method filter", () => {
         });
         expect(filteredConfigs).to.have.length(0);
     });
+
+    it("should return empty array if no model is given", () => {
+        const filteredConfigs = filterMethodsByModel({
+            methodList: methodConfigs,
+            model: undefined,
+        });
+        expect(filteredConfigs).to.have.length(0);
+    });
 });
