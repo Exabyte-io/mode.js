@@ -182,7 +182,7 @@ function getMethodFilterObjects({ filterTree, tier1, tier2, tier3, type, subtype
     if (!tier1) {
         filterList = mergeTerminalNodes(filterTree);
     } else if (!tier2) {
-        filterList = mergeTerminalNodes(filterTree[tier1]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1));
     } else if (!tier3) {
         filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2));
     } else if (!type) {
