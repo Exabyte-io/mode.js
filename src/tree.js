@@ -2,8 +2,7 @@ import { deepClone, filterEntityList, mergeTerminalNodes } from "@exabyte-io/cod
 import lodash from "lodash";
 import _ from "underscore";
 
-// TODO: reactivate once build script is included in postinstall again
-// import modelMethodMap from "../model_method_map";
+import modelMethodMap from "../model_method_map";
 
 // TODO: migrate to use manifest instead
 
@@ -39,6 +38,10 @@ const DFTModelTree = {
         modifiers: DFTModelModifiers,
         methods,
         functionals: ["pz", "pw", "vwn", "other"],
+    },
+    hybrid: {
+        methods: { [METHODS.localorbital]: ["pople"] },
+        functionals: ["b3lyp"],
     },
     other: {
         methods,
@@ -78,6 +81,7 @@ export const MODEL_NAMES = {
     dft: "density functional theory",
     lda: "local density approximation",
     gga: "generalized gradient approximation",
+    hybrid: "hybrid functional",
     ml: "machine learning",
     re: "regression",
 };
@@ -107,9 +111,6 @@ const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
     // assert "us" is the first option
     ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential =
         ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential.reverse();
-
-    // NWCHEM_MODELS_TREE.dft[approximation].methods.localorbital =
-    //     NWCHEM_MODELS_TREE.dft[approximation].methods.localorbital;
 });
 
 const UNKNOWN_MODELS_TREE = _.pick(MODEL_TREE, "unknown");
@@ -162,25 +163,9 @@ export const getDefaultModelTypeForApplication = (application) => {
     return Object.keys(getTreeByApplicationNameAndVersion(application))[0];
 };
 
-// TODO: remove once model-method map is imported from script-generated file
-const modelMethodMap = {
-    pb: {
-        qm: {
-            dft: {
-                ksdft: {
-                    lda: [
-                        { path: "/qm/wf/none/pw/none" },
-                        { regex: "/qm/wf/none/psp/.*" },
-                        { regex: "/qm/wf/none/smearing/.*" },
-                        { regex: "/qm/wf/none/tetrahedron/.*" },
-                        { path: "/opt/diff/ordern/cg/none" },
-                        { path: "/linalg/diag/none/davidson/none" },
-                    ],
-                },
-            },
-        },
-    },
-};
+function safelyGet(obj, ...args) {
+    return lodash.get(obj, args, undefined);
+}
 
 /**
  * Create list of filter objects based on model categories.
@@ -197,19 +182,20 @@ function getMethodFilterObjects({ filterTree, tier1, tier2, tier3, type, subtype
     if (!tier1) {
         filterList = mergeTerminalNodes(filterTree);
     } else if (!tier2) {
-        filterList = mergeTerminalNodes(filterTree[tier1]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1));
     } else if (!tier3) {
-        filterList = mergeTerminalNodes(filterTree[tier1][tier2]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2));
     } else if (!type) {
-        filterList = mergeTerminalNodes(filterTree[tier1][tier2][tier3]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2, tier3));
     } else if (!subtype) {
-        filterList = mergeTerminalNodes(filterTree[tier1][tier2][tier3][type]);
+        filterList = mergeTerminalNodes(safelyGet(filterTree, tier1, tier2, tier3, type));
     } else {
-        filterList = filterTree[tier1][tier2][tier3][type][subtype];
+        filterList = safelyGet(filterTree, tier1, tier2, tier3, type, subtype);
     }
     const extractUniqueBy = (name) => {
         return lodash
             .chain(filterList)
+            .filter(Boolean)
             .filter((o) => Boolean(o[name]))
             .uniqBy(name)
             .value();
@@ -225,6 +211,7 @@ function getMethodFilterObjects({ filterTree, tier1, tier2, tier3, type, subtype
  * @return {Object[]}
  */
 export function filterMethodsByModel({ methodList, model }) {
+    if (!model) return [];
     const { categories } = model;
     const filterObjects = getMethodFilterObjects({ filterTree: modelMethodMap, ...categories });
     return filterEntityList({

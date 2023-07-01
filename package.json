@@ -8,7 +8,7 @@
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "build:assets": "node build_entities.mjs && node build_filter.mjs",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
+        "postinstall": "npm run transpile && npm run build:assets",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
     },
@@ -49,7 +49,7 @@
     },
     "devDependencies": {
         "@exabyte-io/ade.js": "2022.8.31-0",
-        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#53d1c8314fec79f98577ba8b35344d107a258ba0",
+        "@exabyte-io/code.js": "git+https://github.com/Exabyte-io/code.js.git#59c1559f7b53c4445534def2adf689a42f26a6b0",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@exabyte-io/made.js": "2022.6.15-0",
         "chai": "^4.3.4",
