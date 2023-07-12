@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 const { getFilesInDirectory, JsYamlAllSchemas } = require("@exabyte-io/code.js/dist/utils");
 const Ajv = require("ajv");
 const fs = require("fs");
