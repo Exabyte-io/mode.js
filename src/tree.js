@@ -2,7 +2,7 @@ import { deepClone, filterEntityList, mergeTerminalNodes } from "@exabyte-io/cod
 import lodash from "lodash";
 import _ from "underscore";
 
-import modelMethodMap from "../model_method_map";
+import modelMethodMap from "./model_method_map";
 
 // TODO: migrate to use manifest instead
 

@@ -5,8 +5,3 @@ node_modules/
 .nyc_output/
 .idea/
 
-# created from assets
-model_list.js
-method_list.js
-model_method_map.js
-
