@@ -1,11 +1,12 @@
-import { JsYamlAllSchemas, getFilesInDirectory } from "@exabyte-io/code.js/dist/utils";
-import Ajv from "ajv";
-import fs from "fs";
-import yaml from "js-yaml";
-import lodash from "lodash";
+/* eslint-disable no-restricted-syntax */
+const { getFilesInDirectory, JsYamlAllSchemas } = require("@exabyte-io/code.js/dist/utils");
+const Ajv = require("ajv");
+const fs = require("fs");
+const yaml = require("js-yaml");
+const lodash = require("lodash");
 
-const MODEL_ASSETS_PATH = "assets/models"
-const METHOD_ASSETS_PATH = "assets/methods"
+const MODEL_ASSETS_PATH = "assets/models";
+const METHOD_ASSETS_PATH = "assets/methods";
 const LOG_VALIDATION = false;
 const LOG_CONFIG_NAMES = false;
 const METHOD_PATH_SEPARATOR = "::";
@@ -16,13 +17,18 @@ const METHOD_PATH_SEPARATOR = "::";
  * @param {boolean} debug - Whether to log validation output
  */
 function validateConfig(config, debug = false) {
-    const ajv = new Ajv({allErrors: true, verbose: true});
+    const ajv = new Ajv({ allErrors: true, verbose: true });
     const validate = ajv.compile(config.schema);
-    if (debug) console.log(`Validating config for ${config.schema.schemaId}: ...${validate(config) ? "OK" : "ERROR"}`);
+    if (debug)
+        console.log(
+            `Validating config for ${config.schema.schemaId}: ...${
+                validate(config) ? "OK" : "ERROR"
+            }`,
+        );
 
     if (validate.errors) {
         console.error("Validation errors:", validate.errors);
-        throw new Error(`Validation failed for ${config.schema.schemaId}`)
+        throw new Error(`Validation failed for ${config.schema.schemaId}`);
     }
 }
 
@@ -35,12 +41,14 @@ function validateConfig(config, debug = false) {
 function encodeDataAsURLPath(data) {
     const placeholder = "none";
 
-    const path = ["tier1", "tier2", "tier3", "type", "subtype"].map(key => {
-        return lodash.get(data.categories, key, placeholder);
-    }).join("/");
+    const path = ["tier1", "tier2", "tier3", "type", "subtype"]
+        .map((key) => {
+            return lodash.get(data.categories, key, placeholder);
+        })
+        .join("/");
 
     const params = new URLSearchParams();
-    for (let key in data.parameters) {
+    for (const key in data.parameters) {
         if (lodash.isObject(data.parameters[key])) {
             params.append(key, JSON.stringify(data.parameters[key]));
         } else {
@@ -62,7 +70,7 @@ function createModelConfigs(assetPath, debug = false) {
     const parsed = yaml.load(testContent, { schema: JsYamlAllSchemas });
 
     // Assume either array of configs or object with array of configs as values
-    let configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
+    const configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
 
     configs.forEach((config) => {
         config.path = encodeDataAsURLPath(config);
@@ -103,7 +111,9 @@ function createMethodConfigs(assetPath, debug = false) {
 // Build and write MODEL configs
 try {
     const modelAssetFiles = getFilesInDirectory(MODEL_ASSETS_PATH, [".yml", ".yaml"], true);
-    const modelConfigs = modelAssetFiles.flatMap((asset) => createModelConfigs(asset, LOG_CONFIG_NAMES));
+    const modelConfigs = modelAssetFiles.flatMap((asset) =>
+        createModelConfigs(asset, LOG_CONFIG_NAMES),
+    );
     fs.writeFileSync("./model_list.js", `module.exports = ${JSON.stringify(modelConfigs)}`, "utf8");
     console.log(`Created ${modelConfigs.length} model configs.`);
 } catch (e) {
@@ -113,8 +123,14 @@ try {
 // Build and write METHOD configs
 try {
     const methodAssetFiles = getFilesInDirectory(METHOD_ASSETS_PATH, [".yml", ".yaml"], true);
-    const methodConfigs = methodAssetFiles.flatMap((asset) => createMethodConfigs(asset, LOG_CONFIG_NAMES));
-    fs.writeFileSync("./method_list.js", `module.exports = ${JSON.stringify(methodConfigs)}`, "utf8");
+    const methodConfigs = methodAssetFiles.flatMap((asset) =>
+        createMethodConfigs(asset, LOG_CONFIG_NAMES),
+    );
+    fs.writeFileSync(
+        "./method_list.js",
+        `module.exports = ${JSON.stringify(methodConfigs)}`,
+        "utf8",
+    );
     console.log(`Created ${methodConfigs.length} method configs.`);
 } catch (e) {
     console.error(e);
