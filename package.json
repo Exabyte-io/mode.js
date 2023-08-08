@@ -8,7 +8,7 @@
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "build:assets": "node build_entities.js && node build_filter.js",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile && npm run build:assets",
+        "postinstall": "npm run transpile",
         "prettier": "prettier --check src tests",
         "prepare": "husky install || exit 0"
     },

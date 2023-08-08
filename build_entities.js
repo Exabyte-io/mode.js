@@ -114,7 +114,12 @@ try {
     const modelConfigs = modelAssetFiles.flatMap((asset) =>
         createModelConfigs(asset, LOG_CONFIG_NAMES),
     );
-    fs.writeFileSync("./model_list.js", `module.exports = ${JSON.stringify(modelConfigs)}`, "utf8");
+    const ignore = "// eslint-disable\n";
+    fs.writeFileSync(
+        "./src/model_list.js",
+        ignore + `module.exports = ${JSON.stringify(modelConfigs)}`,
+        "utf8",
+    );
     console.log(`Created ${modelConfigs.length} model configs.`);
 } catch (e) {
     console.error(e);
@@ -126,9 +131,10 @@ try {
     const methodConfigs = methodAssetFiles.flatMap((asset) =>
         createMethodConfigs(asset, LOG_CONFIG_NAMES),
     );
+    const ignore = "// eslint-disable\n";
     fs.writeFileSync(
-        "./method_list.js",
-        `module.exports = ${JSON.stringify(methodConfigs)}`,
+        "./src/method_list.js",
+        ignore + `module.exports = ${JSON.stringify(methodConfigs)}`,
         "utf8",
     );
     console.log(`Created ${methodConfigs.length} method configs.`);
