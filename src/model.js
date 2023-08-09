@@ -43,7 +43,7 @@ export class Model extends InMemoryEntity {
     }
 
     get tree() {
-        return (this._application && this.treeByApplicationNameAndVersion) || Model.tree;
+        return (this._application && this.treeByApplicationNameAndVersion) || MODEL_TREE;
     }
 
     get treeBranchForType() {
@@ -99,11 +99,6 @@ export class Model extends InMemoryEntity {
             ...DFTModelConfig,
             method: Method.defaultConfig,
         };
-    }
-
-    // TODO : are these necessary if non-statics default to statics
-    static get tree() {
-        return MODEL_TREE;
     }
 
     static get allTypes() {
