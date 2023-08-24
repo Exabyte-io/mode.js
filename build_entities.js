@@ -114,7 +114,7 @@ try {
     const modelConfigs = modelAssetFiles.flatMap((asset) =>
         createModelConfigs(asset, LOG_CONFIG_NAMES),
     );
-    const ignore = "// eslint-disable\n";
+    const ignore = "/* eslint-disable */\n";
     fs.writeFileSync(
         "./src/model_list.js",
         ignore + "module.exports = {allModels: " + JSON.stringify(modelConfigs) + "}",
@@ -131,7 +131,7 @@ try {
     const methodConfigs = methodAssetFiles.flatMap((asset) =>
         createMethodConfigs(asset, LOG_CONFIG_NAMES),
     );
-    const ignore = "// eslint-disable\n";
+    const ignore = "/* eslint-disable */\n";
     fs.writeFileSync(
         "./src/method_list.js",
         ignore + "module.exports = {allMethods: " + JSON.stringify(methodConfigs) + "}",
