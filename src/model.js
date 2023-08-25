@@ -35,11 +35,11 @@ export class Model extends InMemoryEntity {
     }
 
     get defaultType() {
-        return this.allowedTypes[0].slug;
+        return this.allowedTypes[0]?.slug;
     }
 
     get defaultSubtype() {
-        return this.allowedSubtypes[0].slug;
+        return this.allowedSubtypes[0]?.slug;
     }
 
     get tree() {
@@ -47,11 +47,11 @@ export class Model extends InMemoryEntity {
     }
 
     get treeBranchForType() {
-        return this.tree[this.type];
+        return this.tree[this.type] || {};
     }
 
     get treeBranchForSubType() {
-        return this.treeBranchForType[this.subtype];
+        return this.treeBranchForType[this.subtype] || {};
     }
 
     get treeByApplicationNameAndVersion() {
@@ -77,7 +77,7 @@ export class Model extends InMemoryEntity {
 
     // Consider moving the below to `Method`
     get methodsFromTree() {
-        return this.treeBranchForSubType.methods;
+        return this.treeBranchForSubType.methods || {};
     }
 
     get methodTypes() {
@@ -90,7 +90,7 @@ export class Model extends InMemoryEntity {
 
     get defaultMethodConfig() {
         const type = Object.keys(this.methodsFromTree)[0];
-        const subtype = this.methodsFromTree[type][0];
+        const subtype = (this.methodsFromTree[type] || [])[0];
         return { type, subtype };
     }
 
