@@ -1,6 +1,6 @@
 - !combine
     name:
-        template: "{{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ ' (SOC)' if parameters.spinOrbitCoupling }}{{ ' (' + parameters.spinPolarization + ')' if parameters.spinPolarization }}"
+        template: "DFT {{ categories.subtype | capitalize }} {{ parameters.functional }}{{ '-' + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ ' (SOC)' if parameters.spinOrbitCoupling }}{{ ' (' + parameters.spinPolarization + ')' if parameters.spinPolarization }}"
         substitutions:
             hse06: HSE
             b3lyp: B3LYP
