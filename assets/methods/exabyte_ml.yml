@@ -6,4 +6,4 @@ forEach:
     action: push
     values: !include assets/methods/units/regression.yml
 config:
-  schema: !esse method
+  schema: !esse method/categorized-method

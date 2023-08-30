@@ -21,14 +21,12 @@ function validateConfig(config, debug = false) {
     const validate = ajv.compile(config.schema);
     if (debug)
         console.log(
-            `Validating config for ${config.schema.schemaId}: ...${
-                validate(config) ? "OK" : "ERROR"
-            }`,
+            `Validating config for ${config.schema.$id}: ...${validate(config) ? "OK" : "ERROR"}`,
         );
 
     if (validate.errors) {
         console.error("Validation errors:", validate.errors);
-        throw new Error(`Validation failed for ${config.schema.schemaId}`);
+        throw new Error(`Validation failed for ${config.schema.$id}`);
     }
 }
 

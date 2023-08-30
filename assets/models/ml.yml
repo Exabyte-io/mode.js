@@ -6,4 +6,5 @@
       tier2: det
       tier3: ml
       type: re
+    parameters: {}
     schema: !esse 'models-directory/re'

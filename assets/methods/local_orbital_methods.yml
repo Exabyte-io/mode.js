@@ -6,4 +6,4 @@ forEach:
     action: push
     values: !include assets/methods/units/ao_pople.yml
 config:
-  schema: !esse method
+  schema: !esse method/categorized-method
