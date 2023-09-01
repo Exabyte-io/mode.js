@@ -21,14 +21,12 @@ function validateConfig(config, debug = false) {
     const validate = ajv.compile(config.schema);
     if (debug)
         console.log(
-            `Validating config for ${config.schema.schemaId}: ...${
-                validate(config) ? "OK" : "ERROR"
-            }`,
+            `Validating config for ${config.schema.$id}: ...${validate(config) ? "OK" : "ERROR"}`,
         );
 
     if (validate.errors) {
         console.error("Validation errors:", validate.errors);
-        throw new Error(`Validation failed for ${config.schema.schemaId}`);
+        throw new Error(`Validation failed for ${config.schema.$id}`);
     }
 }
 
@@ -114,7 +112,12 @@ try {
     const modelConfigs = modelAssetFiles.flatMap((asset) =>
         createModelConfigs(asset, LOG_CONFIG_NAMES),
     );
-    fs.writeFileSync("./model_list.js", `module.exports = ${JSON.stringify(modelConfigs)}`, "utf8");
+    const ignore = "/* eslint-disable */\n";
+    fs.writeFileSync(
+        "./src/data/model_list.js",
+        ignore + "module.exports = {allModels: " + JSON.stringify(modelConfigs) + "}",
+        "utf8",
+    );
     console.log(`Created ${modelConfigs.length} model configs.`);
 } catch (e) {
     console.error(e);
@@ -126,9 +129,10 @@ try {
     const methodConfigs = methodAssetFiles.flatMap((asset) =>
         createMethodConfigs(asset, LOG_CONFIG_NAMES),
     );
+    const ignore = "/* eslint-disable */\n";
     fs.writeFileSync(
-        "./method_list.js",
-        `module.exports = ${JSON.stringify(methodConfigs)}`,
+        "./src/data/method_list.js",
+        ignore + "module.exports = {allMethods: " + JSON.stringify(methodConfigs) + "}",
         "utf8",
     );
     console.log(`Created ${methodConfigs.length} method configs.`);
