@@ -114,7 +114,7 @@ try {
     );
     const ignore = "/* eslint-disable */\n";
     fs.writeFileSync(
-        "./src/model_list.js",
+        "./src/data/model_list.js",
         ignore + "module.exports = {allModels: " + JSON.stringify(modelConfigs) + "}",
         "utf8",
     );
@@ -131,7 +131,7 @@ try {
     );
     const ignore = "/* eslint-disable */\n";
     fs.writeFileSync(
-        "./src/method_list.js",
+        "./src/data/method_list.js",
         ignore + "module.exports = {allMethods: " + JSON.stringify(methodConfigs) + "}",
         "utf8",
     );

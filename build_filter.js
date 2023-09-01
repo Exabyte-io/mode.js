@@ -9,7 +9,7 @@ try {
     const modelMethodMap = yaml.load(fileContent, { schema: JsYamlAllSchemas });
     const ignore = "/* eslint-disable */\n";
     fs.writeFileSync(
-        "./src/model_method_map.js",
+        "./src/data/model_method_map.js",
         ignore + `module.exports = ${JSON.stringify(modelMethodMap)}`,
         "utf8",
     );
