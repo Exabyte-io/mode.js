@@ -1,4 +1,3 @@
-import * as context from "./context";
 import { allMethods as categorizedMethodList } from "./data/method_list";
 import { allModels as categorizedModelList } from "./data/model_list";
 import * as default_methods from "./default_methods";
@@ -19,7 +18,6 @@ export {
     ModelFactory,
     PseudopotentialMethod,
     DFTModel,
-    context,
     tree,
     default_models,
     default_methods,
