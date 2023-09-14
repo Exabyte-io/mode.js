@@ -47,6 +47,7 @@ export class PseudopotentialMethod extends Method {
      */
     setPseudopotentialPerElement(pseudo) {
         if (!pseudo) {
+            this.setPseudopotentials([]);
             return;
         }
         const arr = this.pseudopotentials.filter((x) => x.element !== pseudo.element);
