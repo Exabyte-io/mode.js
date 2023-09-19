@@ -40,8 +40,8 @@ const DFTModelTree = {
         functionals: ["pz", "pw", "vwn", "other"],
     },
     hybrid: {
-        methods: { [METHODS.localorbital]: ["pople"] },
-        functionals: ["b3lyp"],
+        methods,
+        functionals: ["b3lyp", "hse06"],
     },
     other: {
         methods,

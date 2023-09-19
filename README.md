@@ -46,6 +46,46 @@ npm run transpile
 npm run test
 ```
 
+#### How to Add New Models and Methods
+
+The list of model and method entities is compiled from Yaml assets located in the `./assets` directory
+using the `build_entities.js` script. The assets processed by this script usually involve custom Yaml
+types such as `!combine` to generate several entity configurations at once.
+
+A new model or method may be added either by extending parameters of an existing entity or by adding
+a new asset file such as the following:
+
+```yaml
+!combine
+name:
+  template: 'Model{{ "-" + parameters.example }}' # set the model name using a template
+
+# Loop over parameters to create combinations
+forEach:
+  - !parameter
+    key: parameters.example # path of where to set the property
+    values: ["A", "B", "C"] # values to iterate over
+    isOptional: true
+
+# static configuration (same for all created entities
+config:
+  tags:
+    - example_model
+    - tutorial
+  schema: !esse 'schema-id-placeholder' # add a schema using the !esse type to validate each configuration 
+```
+
+The above asset file will create four model configurations, "Model-A", "Model-B", "Model-C",
+and "Model". The latter entity is created due to the `isOptional` flag of the example parameter.
+There are a few more options available to customize the entity asset, for instance, the `!combine` type
+has an `exclusions` property where conflicting pairs of entity properties can be defined, so that
+combinations of those will be avoided.
+
+For more examples, please see the asset files in `./assets` or [code.js](https://github.com/Exabyte-io/code.js)
+for the definition of Yaml types such as `!combine` or `!parameter`.
+
+
+
 MoDe
 ====
 
