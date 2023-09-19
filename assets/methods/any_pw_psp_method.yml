@@ -1,0 +1,11 @@
+!combine
+name:
+  template: 'Any {{ units[0]["categories"]["type"] }} Pseudopotential Method'
+  substitutions:
+    pw: Plane-wave
+forEach:
+  - key: units
+    action: push
+    values: !include assets/methods/units/pw.yml
+config:
+  schema: !esse method/categorized-method
