@@ -13,7 +13,7 @@ export const METHODS = {
 };
 
 const methods = {
-    [METHODS.pseudopotential]: ["paw", "nc", "us"],
+    [METHODS.pseudopotential]: ["us", "nc", "paw"],
     // TODO: Add additional basis set options, once user choice of specific (i.e 3-21G vs cc-pVDZ) is implemented.
     [METHODS.localorbital]: ["pople"],
     [METHODS.unknown]: ["unknown"],
@@ -106,11 +106,7 @@ const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
     // pick "paw" for vasp
     VASP_MODELS_TREE.dft[approximation].methods.pseudopotential = VASP_MODELS_TREE.dft[
         approximation
-    ].methods.pseudopotential.splice(0, 1);
-
-    // assert "us" is the first option
-    ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential =
-        ESPRESSO_MODELS_TREE.dft[approximation].methods.pseudopotential.reverse();
+    ].methods.pseudopotential.splice(2, 3);
 });
 
 const UNKNOWN_MODELS_TREE = _.pick(MODEL_TREE, "unknown");
