@@ -1,3 +1,5 @@
+import omit from "lodash/omit";
+
 import { Model } from "../model";
 import { getDefaultModelTypeForApplication } from "../tree";
 import { DFTModel } from "./dft";
@@ -8,12 +10,22 @@ export class ModelFactory {
     static Model = Model;
 
     static create(config) {
+        let model;
         switch (config.type) {
             case "dft":
-                return new this.DFTModel(config);
+                model = new this.DFTModel(config);
+                break;
             default:
-                return new this.Model(config);
+                model = new this.Model(config);
+                break;
         }
+        const methodConfig = config.method || model.defaultMethodConfig;
+        const method = model._MethodFactory.create({
+            ...methodConfig,
+            ...omit(config, ["type", "subtype"]),
+        });
+        model.setMethod(method);
+        return model;
     }
 
     static createFromApplication(config) {
