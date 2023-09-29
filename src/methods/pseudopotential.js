@@ -1,5 +1,5 @@
 import { safeMakeArray } from "@exabyte-io/code.js/dist/utils";
-import _ from "underscore";
+import sortBy from "lodash/sortBy";
 
 import { Method } from "../method";
 
@@ -71,7 +71,7 @@ export class PseudopotentialMethod extends Method {
         // sort by alphabetical order to ensure elements order consistency in VASP POSCAR/POTCAR
         this.setData({
             ...this.data,
-            pseudo: _.sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
+            pseudo: sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
         });
     }
 
@@ -82,7 +82,7 @@ export class PseudopotentialMethod extends Method {
         // sort by alphabetical order to ensure elements order consistency in VASP POSCAR/POTCAR
         this.setData({
             ...this.data,
-            allPseudo: _.sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
+            allPseudo: sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
         });
     }
 
