@@ -69,6 +69,14 @@ export class Method extends InMemoryEntity {
         return filteredData;
     }
 
+    /** Initialize method data based on its dependencies.
+     * @param {Object} config - Object containing dependencies necessary to update method data.
+     */
+    // eslint-disable-next-line class-methods-use-this,no-unused-vars
+    initializeData(config) {
+        // implement in child classes
+    }
+
     // override in child class if needed
     toJSONWithCleanData(fieldsToExclude = []) {
         const json = { ...this._json, data: this.cleanData(fieldsToExclude) };
