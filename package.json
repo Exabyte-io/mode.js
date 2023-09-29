@@ -51,6 +51,7 @@
         "@exabyte-io/code.js": "2023.9.14-1",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@exabyte-io/made.js": "2022.6.15-0",
+        "@exabyte-io/prode.js": "2023.9.20-0",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
         "eslint-config-airbnb": "19.0.2",
@@ -71,7 +72,8 @@
     "peerDependencies": {
         "@exabyte-io/ade.js": "*",
         "@exabyte-io/code.js": "*",
-        "@exabyte-io/made.js": "*"
+        "@exabyte-io/made.js": "*",
+        "@exabyte-io/prode.js": "*"
     },
     "engines": {
         "node": ">=12.0.0"
