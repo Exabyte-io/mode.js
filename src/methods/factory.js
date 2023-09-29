@@ -7,11 +7,16 @@ export class MethodFactory {
     static PseudopotentialMethod = PseudopotentialMethod;
 
     static create(config) {
+        let method;
         switch (config.type) {
             case "pseudopotential":
-                return new this.PseudopotentialMethod(config);
+                method = new this.PseudopotentialMethod(config);
+                break;
             default:
-                return new this.Method(config);
+                method = new this.Method(config);
+                break;
         }
+        method.initializeData(config);
+        return method;
     }
 }
