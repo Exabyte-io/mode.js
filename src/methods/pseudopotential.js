@@ -133,7 +133,7 @@ export class PseudopotentialMethod extends Method {
      * @param {{ pseudopotentials: Pseudopotential[], application, model, elements: string[] }} config - Config with dependencies
      */
     initializeData(config = {}) {
-        const { pseudopotentials, application, model, elements } = config;
+        const { metaProperties: pseudopotentials, application, model, elements } = config;
         if (
             !pseudopotentials ||
             pseudopotentials.length === 0 ||
