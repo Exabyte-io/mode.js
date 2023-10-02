@@ -8,6 +8,7 @@ export class PseudopotentialMethod extends Method {
     constructor(config) {
         super(config);
         this.PseudopotentialCls = Pseudopotential;
+        this.initialize(config.extraConfig);
     }
 
     // "Unique" or "selected" pseudopotentials - one per element
@@ -130,10 +131,10 @@ export class PseudopotentialMethod extends Method {
     }
 
     /**
-     * @param {{ pseudopotentials: Pseudopotential[], application, model, elements: string[] }} config - Config with dependencies
+     * @param {{ metaProperties: Pseudopotential[], application, model, elements: string[] }} extraConfig - Config with dependencies
      */
-    initializeData(config = {}) {
-        const { metaProperties: pseudopotentials, application, model, elements } = config;
+    initializeData(extraConfig = {}) {
+        const { metaProperties: pseudopotentials, application, model, elements } = extraConfig;
         if (
             !pseudopotentials ||
             pseudopotentials.length === 0 ||
