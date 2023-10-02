@@ -7,7 +7,7 @@ import { PseudopotentialMethodConfig } from "./default_methods";
 export class Method extends InMemoryEntity {
     constructor(config) {
         super({ data: {}, ...config });
-        this.initializeData(config.extraConfig);
+        if (!config.skipInitialize) this.initializeData(config.extraConfig);
     }
 
     cloneWithoutData() {

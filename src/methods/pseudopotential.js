@@ -136,6 +136,7 @@ export class PseudopotentialMethod extends Method {
     initializeData(extraConfig = {}) {
         const { metaProperties: pseudopotentials, application, model, elements } = extraConfig;
         if (
+            !this.PseudopotentialCls ||
             !pseudopotentials ||
             pseudopotentials.length === 0 ||
             !elements ||
