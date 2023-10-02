@@ -147,7 +147,9 @@ export class PseudopotentialMethod extends Method {
 
         let pseudos = this.filterPseudopotentials(pseudopotentials, application, model, elements);
         pseudos = this.sortPseudopotentials(pseudos);
-        const pseudosPerElement = elements.map((e) => pseudos.find((p) => p.element === e));
+        const pseudosPerElement = elements
+            .map((e) => pseudos.find((p) => p.element === e))
+            .filter(Boolean);
 
         this.setPseudopotentials(pseudosPerElement);
         this.setAllPseudopotentials(pseudos);
