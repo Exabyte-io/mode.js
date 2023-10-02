@@ -8,7 +8,7 @@ export class PseudopotentialMethod extends Method {
     constructor(config) {
         super(config);
         this.PseudopotentialCls = Pseudopotential;
-        this.initialize(config.extraConfig);
+        this.initializeData(config.extraConfig);
     }
 
     // "Unique" or "selected" pseudopotentials - one per element
