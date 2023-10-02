@@ -1,5 +1,6 @@
 import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
+import omit from "lodash/omit";
 
 import { DFTModelConfig } from "./default_models";
 import { Method } from "./method";
@@ -7,10 +8,11 @@ import { MethodFactory } from "./methods/factory";
 import { getTreeByApplicationNameAndVersion, MODEL_TREE, treeSlugToNamedObject } from "./tree";
 
 export class Model extends InMemoryEntity {
-    constructor({ application, ...config }) {
+    constructor({ application, extraConfig, ...config }) {
         super(config);
         this._application = application;
         this._MethodFactory = MethodFactory;
+        this.initializeMethod({ ...config, extraConfig });
     }
 
     get type() {
@@ -123,5 +125,18 @@ export class Model extends InMemoryEntity {
 
     get isUnknown() {
         return this.type === "unknown";
+    }
+
+    initializeMethod(config) {
+        const { extraConfig, ...modelConfig } = config;
+        const methodConfig = modelConfig.method || this.defaultMethodConfig;
+        const method = this._MethodFactory.create({
+            ...methodConfig,
+            extraConfig: {
+                ...extraConfig,
+                model: omit(modelConfig, ["method", "application"]),
+            },
+        });
+        this.setMethod(method);
     }
 }
