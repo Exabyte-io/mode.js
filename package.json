@@ -48,7 +48,7 @@
         "@exabyte-io/code.js": "2023.9.14-1",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@exabyte-io/made.js": "2022.6.15-0",
-        "@exabyte-io/prode.js": "git+https://github.com/Exabyte-io/prode.js.git#6b2e55c442ae5faa990e1db2d89bec4061188cd8",
+        "@exabyte-io/prode.js": "git+https://github.com/Exabyte-io/prode.js.git#8cd197f42029db6ba3c9e76db9ca4699ad2b30c5",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
         "eslint-config-airbnb": "19.0.2",
