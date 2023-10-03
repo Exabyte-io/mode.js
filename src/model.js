@@ -12,7 +12,7 @@ export class Model extends InMemoryEntity {
         super(config);
         this._application = application;
         this._MethodFactory = MethodFactory;
-        this.initializeMethod({ ...config, extraConfig });
+        if (!config.skipInitialize) this.initializeMethod({ ...config, extraConfig });
     }
 
     get type() {
