@@ -8,7 +8,7 @@ export class DFTModel extends Model {
     constructor(config) {
         super(config);
         this._MethodFactory = config.MethodFactory || MethodFactory;
-        this.initializeMethod(config);
+        if (!config.skipInitialize) this.initializeMethod(config);
     }
 
     /**
