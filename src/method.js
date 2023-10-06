@@ -1,6 +1,7 @@
 import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
-import { deepClone } from "@exabyte-io/code.js/dist/utils";
-import lodash from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
+import omit from "lodash/omit";
 
 import { PseudopotentialMethodConfig } from "./default_methods";
 
@@ -57,7 +58,7 @@ export class Method extends InMemoryEntity {
 
     get omitInHashCalculation() {
         const data = this.prop("data");
-        return !data.searchText && lodash.isEmpty(lodash.omit(data, "searchText"));
+        return !data.searchText && isEmpty(omit(data, "searchText"));
     }
 
     // data without client-only fields
@@ -80,6 +81,6 @@ export class Method extends InMemoryEntity {
     // override in child class if needed
     toJSONWithCleanData(fieldsToExclude = []) {
         const json = { ...this._json, data: this.cleanData(fieldsToExclude) };
-        return deepClone(json);
+        return cloneDeep(json);
     }
 }
