@@ -80,7 +80,10 @@ export class Method extends InMemoryEntity {
 
     // override in child class if needed
     toJSONWithCleanData(fieldsToExclude = []) {
-        const json = { ...this._json, data: this.cleanData(fieldsToExclude) };
+        const json = {
+            ...this._json,
+            data: this.cleanData(fieldsToExclude.concat(["extraConfig"])),
+        };
         return cloneDeep(json);
     }
 }
