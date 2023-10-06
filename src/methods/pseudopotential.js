@@ -1,12 +1,14 @@
 import { safeMakeArray } from "@exabyte-io/code.js/dist/utils";
-import _ from "underscore";
+import { Pseudopotential } from "@exabyte-io/prode.js/dist/include/meta_properties/pseudopotential";
+import sortBy from "lodash/sortBy";
 
 import { Method } from "../method";
 
 export class PseudopotentialMethod extends Method {
     constructor(config) {
         super(config);
-        this.PseudopotentialCls = null;
+        this.PseudopotentialCls = Pseudopotential;
+        this.initializeData(config.extraConfig);
     }
 
     // "Unique" or "selected" pseudopotentials - one per element
@@ -71,7 +73,7 @@ export class PseudopotentialMethod extends Method {
         // sort by alphabetical order to ensure elements order consistency in VASP POSCAR/POTCAR
         this.setData({
             ...this.data,
-            pseudo: _.sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
+            pseudo: sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
         });
     }
 
@@ -82,7 +84,7 @@ export class PseudopotentialMethod extends Method {
         // sort by alphabetical order to ensure elements order consistency in VASP POSCAR/POTCAR
         this.setData({
             ...this.data,
-            allPseudo: _.sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
+            allPseudo: sortBy(pseudopotentials, "element").map((x) => x.toJSON()),
         });
     }
 
@@ -95,5 +97,61 @@ export class PseudopotentialMethod extends Method {
                 // 'pseudo' - not cleaning the field to save it in `Job.workflow`
             ]),
         );
+    }
+
+    /**
+     * Filters an array of pseudopotentials according to its dependencies (application, model, method, material).
+     * @param {Pseudopotential[]} pseudopotentials
+     * @param {Application} application
+     * @param {DFTModel} model
+     * @param {string[]} elements - Array of unique elements.
+     * @returns {Pseudopotential[]} - Filtered list of unique pseudopotentials sorted w.r.t. custom hierarchy.
+     */
+    filterPseudopotentials(pseudopotentials, application, model, elements) {
+        const exchangeCorrelation = {
+            approximation: model.subtype || "",
+            functional: model.functional?.slug || model.functional || "",
+        };
+        const pseudoType = this.subtype || "any";
+
+        const pseudos = this.PseudopotentialCls.applyPseudoFilters(pseudopotentials, {
+            elements,
+            appName: application.name,
+            exchangeCorrelation,
+            searchText: this.searchText,
+            type: pseudoType,
+        });
+        return this.PseudopotentialCls.filterUnique(pseudos);
+    }
+
+    sortPseudopotentials(pseudopotentials) {
+        // sorting pseudos, this is very hacky! TODO: find better approach for default pseudos per application
+        const pseudos = this.PseudopotentialCls.sortPseudosByPattern(pseudopotentials, "/gbrv/");
+        return this.PseudopotentialCls.sortByPathVASP(pseudos);
+    }
+
+    /**
+     * @param {{ metaProperties: Pseudopotential[], application, model, elements: string[] }} extraConfig - Config with dependencies
+     */
+    initializeData(extraConfig = {}) {
+        const { metaProperties: pseudopotentials, application, model, elements } = extraConfig;
+        if (
+            !this.PseudopotentialCls ||
+            !pseudopotentials ||
+            pseudopotentials.length === 0 ||
+            !elements ||
+            elements.length === 0
+        ) {
+            return;
+        }
+
+        let pseudos = this.filterPseudopotentials(pseudopotentials, application, model, elements);
+        pseudos = this.sortPseudopotentials(pseudos);
+        const pseudosPerElement = elements
+            .map((e) => pseudos.find((p) => p.element === e))
+            .filter(Boolean);
+
+        this.setPseudopotentials(pseudosPerElement);
+        this.setAllPseudopotentials(pseudos);
     }
 }

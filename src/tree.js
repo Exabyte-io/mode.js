@@ -1,6 +1,5 @@
 import { deepClone, filterEntityList, mergeTerminalNodes } from "@exabyte-io/code.js/dist/utils";
 import lodash from "lodash";
-import _ from "underscore";
 
 import modelMethodMap from "./data/model_method_map";
 
@@ -98,9 +97,9 @@ export const treeSlugToNamedObject = (modelSlug) => {
 // demonstrate how tree can be modified
 // VASP_MODELS_TREE.gga.functionals = _.omit(VASP_MODELS_TREE.gga.functionals);
 
-const VASP_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
-const ESPRESSO_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
-const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
+const VASP_MODELS_TREE = deepClone(lodash.pick(MODEL_TREE, "dft"));
+const ESPRESSO_MODELS_TREE = deepClone(lodash.pick(MODEL_TREE, "dft"));
+const NWCHEM_MODELS_TREE = deepClone(lodash.pick(MODEL_TREE, "dft"));
 
 ["gga", "lda"].forEach((approximation) => {
     // pick "paw" for vasp
@@ -109,8 +108,8 @@ const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
     ].methods.pseudopotential.splice(2, 3);
 });
 
-const UNKNOWN_MODELS_TREE = _.pick(MODEL_TREE, "unknown");
-const ML_MODELS_TREE = _.pick(MODEL_TREE, "ml");
+const UNKNOWN_MODELS_TREE = lodash.pick(MODEL_TREE, "unknown");
+const ML_MODELS_TREE = lodash.pick(MODEL_TREE, "ml");
 
 const MODELS_TREE_CONFIGS_BY_APPLICATION_NAME_VERSION = [
     {

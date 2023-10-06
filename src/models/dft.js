@@ -1,4 +1,4 @@
-import _ from "underscore";
+import pick from "lodash/pick";
 
 import { MethodFactory } from "../methods/factory";
 import { Model } from "../model";
@@ -8,6 +8,7 @@ export class DFTModel extends Model {
     constructor(config) {
         super(config);
         this._MethodFactory = config.MethodFactory || MethodFactory;
+        if (!config.skipInitialize) this.initializeMethod(config);
     }
 
     /**
@@ -80,7 +81,7 @@ export class DFTModel extends Model {
     }
 
     toJSON() {
-        const pickSlugFromObject = (o) => _.pick(o, "slug");
+        const pickSlugFromObject = (o) => pick(o, "slug");
         return {
             ...super.toJSON(),
             functional: pickSlugFromObject(this.functional), // only store slug for `functional`

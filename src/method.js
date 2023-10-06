@@ -1,13 +1,14 @@
 import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
-import { deepClone } from "@exabyte-io/code.js/dist/utils";
-import lodash from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
+import omit from "lodash/omit";
 
 import { PseudopotentialMethodConfig } from "./default_methods";
 
 export class Method extends InMemoryEntity {
     constructor(config) {
-        const data = config.data || {};
-        super({ ...config, data });
+        super({ data: {}, ...config });
+        if (!config.skipInitialize) this.initializeData(config.extraConfig);
     }
 
     cloneWithoutData() {
@@ -57,7 +58,7 @@ export class Method extends InMemoryEntity {
 
     get omitInHashCalculation() {
         const data = this.prop("data");
-        return !data.searchText && lodash.isEmpty(lodash.omit(data, "searchText"));
+        return !data.searchText && isEmpty(omit(data, "searchText"));
     }
 
     // data without client-only fields
@@ -69,9 +70,20 @@ export class Method extends InMemoryEntity {
         return filteredData;
     }
 
+    /** Initialize method data based on its dependencies.
+     * @param {Object} config - Object containing dependencies necessary to update method data.
+     */
+    // eslint-disable-next-line class-methods-use-this,no-unused-vars
+    initializeData(config) {
+        // implement in child classes
+    }
+
     // override in child class if needed
     toJSONWithCleanData(fieldsToExclude = []) {
-        const json = { ...this._json, data: this.cleanData(fieldsToExclude) };
-        return deepClone(json);
+        const json = {
+            ...this._json,
+            data: this.cleanData(fieldsToExclude.concat(["extraConfig"])),
+        };
+        return cloneDeep(json);
     }
 }
