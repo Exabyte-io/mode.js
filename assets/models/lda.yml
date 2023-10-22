@@ -1,7 +1,7 @@
 ldaConfigs: !combine
   name:
     # yamllint disable-line rule:line-length
-    template: 'DFT {{ categories.subtype | upper }} {{ parameters.functional }}{{ "-" + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ "+" + parameters.hubbardType if parameters.hubbardType}}{{ " (SOC)" if parameters.spinOrbitCoupling }}{{ " (" + parameters.spinPolarization + ")" if parameters.spinPolarization }}'
+    template: 'DFT {{ categories.subtype | upper }} {{ parameters.functional }}{{ "-" + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ "+" + parameters.hubbardType if parameters.hubbardType}}{{ " (SOC)" if parameters.spinOrbitCoupling }}{{ " (" + parameters.spinPolarization + ")" if parameters.spinPolarization }}{{" (magn.)" if parameters.magnetization}}'
     substitutions:
       pz: PZ
       dft-d3: D3
@@ -28,9 +28,14 @@ ldaConfigs: !combine
       values: !esse 'model/mixins/enum-options#/spinPolarization/enum'
       exclude: '^non-collinear'
       isOptional: true
+    - !parameter
+      key: parameters.magnetization
+      values: [true]
+      isOptional: true
   exclusions:
     - [parameters.spinPolarization, parameters.spinOrbitCoupling]
     - [parameters.hubbardType, parameters.dispersionCorrection]
+    - [parameters.hubbardType, parameters.magnetization]
   config:
     categories:
       tier1: pb

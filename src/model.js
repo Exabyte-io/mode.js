@@ -1,4 +1,4 @@
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
 
 import { DFTModelConfig } from "./default_models";
@@ -6,7 +6,7 @@ import { Method } from "./method";
 import { MethodFactory } from "./methods/factory";
 import { getTreeByApplicationNameAndVersion, MODEL_TREE, treeSlugToNamedObject } from "./tree";
 
-export class Model extends InMemoryEntity {
+export class Model extends DefaultableInMemoryEntity {
     constructor({ application, ...config }) {
         super(config);
         this._application = application;
