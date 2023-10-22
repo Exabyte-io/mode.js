@@ -11,12 +11,13 @@ pb:
   qm:
     abin:
       gw:
-        - path: '/qm/wf/none/pw/none'
-        - regex: \/qm\/wf\/none\/psp\/.*
-        - regex: \/qm\/wf\/none\/smearing\/.*
-        - regex: \/qm\/wf\/none\/tetrahedron\/.*
-        - path: '/opt/diff/ordern/cg/none'
-        - path: '/linalg/diag/none/davidson/none'
+        g0w0:
+          - path: '/qm/wf/none/pw/none'
+          - regex: \/qm\/wf\/none\/psp\/.*
+          - regex: \/qm\/wf\/none\/smearing\/.*
+          - regex: \/qm\/wf\/none\/tetrahedron\/.*
+          - path: '/opt/diff/ordern/cg/none'
+          - path: '/linalg/diag/none/davidson/none'
     dft:
       ksdft:
         lda:
