@@ -58,6 +58,7 @@
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.22.5",
+        "@exabyte-io/application-flavors.js": "2023.9.20-0",
         "@exabyte-io/code.js": "2023.9.14-1",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
         "@exabyte-io/made.js": "2022.6.15-0",
@@ -83,6 +84,7 @@
     },
     "peerDependencies": {
         "@exabyte-io/ade.js": "*",
+        "@exabyte-io/application-flavors.js": "*",
         "@exabyte-io/code.js": "*",
         "@exabyte-io/made.js": "*"
     },
