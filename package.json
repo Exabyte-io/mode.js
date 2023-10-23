@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "description": "MOdel and method DEfinitions",
     "scripts": {
-        "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
+        "test": "mocha",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "build:assets": "node build_entities.js && node build_filter.js",
