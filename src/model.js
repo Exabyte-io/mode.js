@@ -14,7 +14,7 @@ export class Model extends DefaultableInMemoryEntity {
         super(config);
         this._application = application;
         this._MethodFactory = MethodFactory;
-        this._defaultCategorized = this.getDefaultCategorized();
+        this._defaultCategorized = this.getDefaultCategorizedModel();
     }
 
     get type() {
@@ -59,7 +59,8 @@ export class Model extends DefaultableInMemoryEntity {
         return PseudopotentialMethodConfig;
     }
 
-    getDefaultCategorized() {
+    getCategorizedModels() {
+        if (!this._application) return categorizedModelList;
         const filteredModels = filterModelsByApplicationParameters({
             modelList: categorizedModelList,
             appName: this._application?.name,
@@ -67,7 +68,11 @@ export class Model extends DefaultableInMemoryEntity {
             build: this._application?.build,
         });
 
-        return filteredModels[0];
+        return filteredModels;
+    }
+
+    getDefaultCategorizedModel() {
+        return this.getCategorizedModels()[0];
     }
 
     get defaultConfig() {
