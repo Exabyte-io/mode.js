@@ -1,4 +1,5 @@
 import { filterEntityList } from "@exabyte-io/code.js/dist/utils";
+
 import { MethodFactory } from "../methods/factory";
 import { Model } from "../model";
 import { safelyGetSlug, stringToSlugifiedEntry } from "../utils/slugifiedEntry";
@@ -28,7 +29,8 @@ export class DFTModel extends Model {
     }
 
     get defaultFunctional() {
-        return treeSlugToNamedObject(this.treeBranchForSubType.functionals[0]);
+        const functional = safelyGetSlug(this.defaultConfig?.functional) || "pbe";
+        return stringToSlugifiedEntry(functional);
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -51,6 +53,18 @@ export class DFTModel extends Model {
 
     get modifiers() {
         return this.prop("modifiers", this.defaultModifiers);
+    }
+
+    getDefaultCategorizedModel() {
+        const subtype = this.subtype || "gga";
+        const filterObj = {
+            regex: "\\/pb\\/qm\\/dft\\/ksdft\\/" + subtype + "\\?functional=([A-Za-z0-9_-]+)",
+        };
+        const filtered = filterEntityList({
+            entitiesOrPaths: this.getCategorizedModels(),
+            filterObjects: [filterObj],
+        });
+        return filtered[0];
     }
 
     setSubtype(subtype) {
