@@ -59,6 +59,9 @@ export class Model extends DefaultableInMemoryEntity {
         return PseudopotentialMethodConfig;
     }
 
+    /**
+     * @returns {{ path: string }[]} - Array of categorized models
+     */
     getCategorizedModels() {
         if (!this._application) return categorizedModelList;
         const filteredModels = filterModelsByApplicationParameters({
