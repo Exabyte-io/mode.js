@@ -4,13 +4,9 @@ import {
 } from "@exabyte-io/code.js/dist/types";
 
 import { allModels as categorizedModelList } from "../data/model_list";
-import { treeSlugToNamedObject } from "../tree";
+import { safelyGetSlug, stringToSlugifiedEntry } from "./slugifiedEntry";
 
 type SimpleModel = Omit<BaseModel, "method">;
-
-export function safelyGetSlug(slugObj: { slug: string } | string): string {
-    return typeof slugObj === "string" ? slugObj : slugObj.slug;
-}
 
 /**
  * The model interface converts between the legacy model data structure (type, subtype, functional)
@@ -39,7 +35,7 @@ export class ModelInterface {
         return {
             type: "dft",
             subtype,
-            functional: treeSlugToNamedObject(functional),
+            functional: stringToSlugifiedEntry(functional),
         };
     }
 
