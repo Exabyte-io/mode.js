@@ -1,4 +1,4 @@
-import { filterModelsByApplicationParameters } from "@exabyte-io/application-flavors.js/src/js/models";
+import { filterModelsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/models";
 import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
 
