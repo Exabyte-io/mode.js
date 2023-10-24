@@ -1,8 +1,10 @@
-import { categorizedModelList, tree } from "../index";
-
-import { 
+import {
     BaseModel,
-    CategorizedBaseModel as CategorizedModel } from "@exabyte-io/code.js/dist/types";
+    CategorizedBaseModel as CategorizedModel,
+} from "@exabyte-io/code.js/dist/types";
+
+import { allModels as categorizedModelList } from "../data/model_list";
+import { treeSlugToNamedObject } from "../tree";
 
 type SimpleModel = Omit<BaseModel, "method">;
 
@@ -37,7 +39,7 @@ export class ModelInterface {
         return {
             type: "dft",
             subtype,
-            functional: tree.treeSlugToNamedObject(functional),
+            functional: treeSlugToNamedObject(functional),
         };
     }
 
