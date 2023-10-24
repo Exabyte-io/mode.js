@@ -1,10 +1,10 @@
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import { deepClone } from "@exabyte-io/code.js/dist/utils";
 import lodash from "lodash";
 
 import { PseudopotentialMethodConfig } from "./default_methods";
 
-export class Method extends InMemoryEntity {
+export class Method extends DefaultableInMemoryEntity {
     constructor(config) {
         const data = config.data || {};
         super({ ...config, data });
