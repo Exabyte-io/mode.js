@@ -32,5 +32,6 @@ describe("DFTModel", () => {
         // @ts-ignore
         expect(model.functional?.slug).to.be.equal("pbe");
         expect(model._json.otherProperty).to.be.equal(42);
+        expect(model.method.type).to.be.equal("pseudopotential");
     });
 });
