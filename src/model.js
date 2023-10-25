@@ -1,12 +1,15 @@
+import { filterMethodsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/methods";
 import { filterModelsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/models";
 import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
 
+import { allMethods as categorizedMethodList } from "./data/method_list";
 import { allModels as categorizedModelList } from "./data/model_list";
-import { PseudopotentialMethodConfig } from "./default_methods";
 import { DFTModelConfig } from "./default_models";
 import { Method } from "./method";
 import { MethodFactory } from "./methods/factory";
+import { filterMethodsByModel } from "./tree";
+import { MethodInterface } from "./utils/method_interface";
 import { ModelInterface } from "./utils/model_interface";
 
 export class Model extends DefaultableInMemoryEntity {
@@ -54,9 +57,27 @@ export class Model extends DefaultableInMemoryEntity {
         this._method = method;
     }
 
-    // eslint-disable-next-line class-methods-use-this
+    getCategorizedMethods() {
+        const catModel = ModelInterface.convertToCategorized(this._json);
+        let filteredMethods = filterMethodsByModel({
+            methodList: categorizedMethodList,
+            // model: ModelInterface.convertToCategorized(this._json),
+            model: catModel,
+        });
+        if (this._application) {
+            filteredMethods = filterMethodsByApplicationParameters({
+                methodList: filteredMethods,
+                appName: this._application?.name,
+                version: this._application?.version,
+                build: this._application?.build,
+            });
+        }
+        return filteredMethods;
+    }
+
     get defaultMethodConfig() {
-        return PseudopotentialMethodConfig;
+        const [defaultCategorizedMethod] = this.getCategorizedMethods();
+        return MethodInterface.convertToSimple(defaultCategorizedMethod);
     }
 
     /**
