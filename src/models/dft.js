@@ -101,28 +101,4 @@ export class DFTModel extends Model {
             modifiers: this.modifiers,
         };
     }
-
-    /**
-     * Get all functionals in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of functional objects
-     */
-    get allFunctionals() {
-        return this.treeBranchForSubType.functionals.map((x) => stringToSlugifiedEntry(x));
-    }
-
-    /**
-     * Get all refiners in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of refiner objects
-     */
-    get allRefiners() {
-        return this.treeBranchForSubType.refiners.map((x) => stringToSlugifiedEntry(x));
-    }
-
-    /**
-     * Get all modifiers in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of modifier objects
-     */
-    get allModifiers() {
-        return this.treeBranchForSubType.modifiers.map((x) => stringToSlugifiedEntry(x));
-    }
 }
