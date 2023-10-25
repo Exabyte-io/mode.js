@@ -1,7 +1,4 @@
-import {
-    BaseModel,
-    CategorizedBaseModel as CategorizedModel,
-} from "@exabyte-io/code.js/dist/types";
+import { BaseModel, CategorizedModel } from "@exabyte-io/code.js/dist/types";
 
 import { allModels as categorizedModelList } from "../data/model_list";
 import { safelyGetSlug, stringToSlugifiedEntry } from "./slugifiedEntry";
