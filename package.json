@@ -49,7 +49,7 @@
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.22.5",
-        "@exabyte-io/application-flavors.js": "2023.9.20-0",
+        "@exabyte-io/application-flavors.js": "git+https://github.com/Exabyte-io/application-flavors.git#7abfb0ca49faa8ea3227ed2272c50aaf80a59388",
         "@exabyte-io/code.js": "2023.10.24-0",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
         "@exabyte-io/made.js": "2022.6.15-0",
