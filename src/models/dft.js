@@ -29,7 +29,7 @@ export class DFTModel extends Model {
     }
 
     get defaultFunctional() {
-        const functional = safelyGetSlug(this.defaultConfig?.functional) || "pbe";
+        const functional = safelyGetSlug(this._defaultConfig?.functional) || "pbe";
         return stringToSlugifiedEntry(functional);
     }
 
@@ -56,7 +56,8 @@ export class DFTModel extends Model {
     }
 
     getDefaultCategorizedModel() {
-        const subtype = this.subtype || "gga";
+        const subtype = this.prop("subtype", "gga");
+
         const filterObj = {
             regex: "\\/pb\\/qm\\/dft\\/ksdft\\/" + subtype + "\\?functional=([A-Za-z0-9_-]+)",
         };
