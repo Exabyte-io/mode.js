@@ -31,11 +31,11 @@ export class Model extends DefaultableInMemoryEntity {
     }
 
     get defaultType() {
-        return this.defaultConfig.type;
+        return this._defaultConfig.type;
     }
 
     get defaultSubtype() {
-        return this.defaultConfig.subtype;
+        return this._defaultConfig.subtype;
     }
 
     get groupSlug() {
@@ -78,13 +78,22 @@ export class Model extends DefaultableInMemoryEntity {
         return this.getCategorizedModels()[0];
     }
 
-    get defaultConfig() {
-        const defaultModel = !this._defaultCategorized
-            ? DFTModelConfig
-            : ModelInterface.convertToSimple(this._defaultCategorized);
+    static get defaultConfig() {
+        return {
+            ...DFTModelConfig,
+            method: Method.defaultConfig,
+        };
+    }
+
+    /**
+     * Instance method for default config.
+     * This is used to obtain default properties such as type/subtype.
+     */
+    get _defaultConfig() {
+        // TODO: Add suitable method, given application/model
+        const defaultModel = ModelInterface.convertToSimple(this._defaultCategorized);
         return {
             ...defaultModel,
-            method: Method.defaultConfig,
         };
     }
 
