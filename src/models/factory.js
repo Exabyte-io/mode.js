@@ -2,6 +2,7 @@ import { filterModelsByApplicationParameters } from "@exabyte-io/application-fla
 
 import { allModels as categorizedModelList } from "../data/model_list";
 import { Model } from "../model";
+import { ModelInterface } from "../utils/model_interface";
 import { DFTModel } from "./dft";
 
 export class ModelFactory {
@@ -19,14 +20,14 @@ export class ModelFactory {
     }
 
     static getDefaultModelForApplication(application) {
-        if (application) return categorizedModelList[0];
+        if (!application) return categorizedModelList[0];
         const filteredModels = filterModelsByApplicationParameters({
             modelList: categorizedModelList,
-            appName: this._application?.name,
-            version: this._application?.version,
-            build: this._application?.build,
+            appName: application?.name,
+            version: application?.version,
+            build: application?.build,
         });
-        return filteredModels[0];
+        return ModelInterface.convertToSimple(filteredModels[0]);
     }
 
     static createFromApplication(config) {
