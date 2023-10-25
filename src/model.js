@@ -61,7 +61,6 @@ export class Model extends DefaultableInMemoryEntity {
         const catModel = ModelInterface.convertToCategorized(this._json);
         let filteredMethods = filterMethodsByModel({
             methodList: categorizedMethodList,
-            // model: ModelInterface.convertToCategorized(this._json),
             model: catModel,
         });
         if (this._application) {
