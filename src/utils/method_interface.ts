@@ -114,14 +114,13 @@ export class MethodInterface {
         return method;
     }
 
-    static filterCategorizedMethods({
-        model,
-        application,
-    }: {
+    static filterCategorizedMethods(params?: {
         model?: CategorizedModel;
         application?: ApplicationSchemaBase;
     }): CategorizedMethod[] {
         let filteredMethods = categorizedMethodList;
+        if (!params) return filteredMethods;
+        const { model, application } = params;
         if (model) {
             // @ts-ignore todo: sort out types of filter function
             filteredMethods = filterMethodsByModel({
@@ -142,14 +141,13 @@ export class MethodInterface {
         return filteredMethods;
     }
 
-    static filterLegacyMethods({
-        model,
-        application,
-    }: {
+    static filterLegacyMethods(params?: {
         model?: CategorizedModel;
         application?: ApplicationSchemaBase;
     }): BaseMethod[] {
-        const categorizedMethods = this.filterCategorizedMethods({ application, model });
+        let _params = params;
+        if (!params) _params = {};
+        const categorizedMethods = this.filterCategorizedMethods(params);
         return categorizedMethods.map((cm) => this.convertToSimple(cm));
     }
 }
