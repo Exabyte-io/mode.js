@@ -23,7 +23,8 @@
         "/src",
         ".babelrc",
         "build_entities.js",
-        "build_filter.js"
+        "build_filter.js",
+        "tsconfig.json"
     ],
     "author": "Exabyte Inc.",
     "bugs": {
