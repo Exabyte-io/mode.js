@@ -1,12 +1,25 @@
 import { expect } from "chai";
 
-import { getAvailableDFTFunctionals, getPseudopotentialTypes } from "../src/tree";
+import {
+    getDFTApproximations,
+    getDFTFunctionalsByApproximation,
+    getPseudopotentialTypes,
+} from "../src/tree";
 
 describe("tree", () => {
     it("can get a list of available DFT functionals", () => {
-        const functionals = getAvailableDFTFunctionals();
-        const supportedFunctionals = ["pbe", "hse06", "b3lyp", "pz"];
-        expect(functionals).to.have.members(supportedFunctionals);
+        const approximations = getDFTApproximations();
+        const supportedApproximations = ["lda", "gga", "hybrid"];
+        expect(approximations).to.have.members(supportedApproximations);
+    });
+
+    it("can get a list of functions by approximation", () => {
+        const ldaFunctionals = getDFTFunctionalsByApproximation("lda");
+        expect(ldaFunctionals).to.include("pz");
+        const ggaFunctionals = getDFTFunctionalsByApproximation("gga");
+        expect(ggaFunctionals).to.include("pbe");
+        const hybridFunctionals = getDFTFunctionalsByApproximation("hybrid");
+        expect(hybridFunctionals).to.include("hse06");
     });
 
     it("can get a list of pseudopotential types", () => {
