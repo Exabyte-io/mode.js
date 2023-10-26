@@ -16,6 +16,7 @@ import { allModels as categorizedModelList } from "../data/model_list";
 import { safelyGetSlug, stringToSlugifiedEntry } from "./slugifiedEntry";
 
 type SimpleModel = Omit<BaseModel, "method">;
+type CategorizedModel_ = Omit<CategorizedModel, "method">;
 type CategorizedDftModel =
     | Omit<ModelLocalDensityApproximation, "method">
     | Omit<ModelGeneralizedGradientApproximation, "method">
@@ -26,7 +27,7 @@ type CategorizedDftModel =
  * and the categorized model data structure (tier1, tier2, ...).
  */
 export class ModelInterface {
-    static convertToSimple(cm?: CategorizedModel): SimpleModel {
+    static convertToSimple(cm?: CategorizedModel_): SimpleModel {
         if (!cm) return this.convertUnknownToSimple();
 
         switch (cm.categories.tier3) {
@@ -76,7 +77,7 @@ export class ModelInterface {
         };
     }
 
-    static convertToCategorized(sm?: SimpleModel): Omit<CategorizedModel, "method"> | undefined {
+    static convertToCategorized(sm?: SimpleModel): CategorizedModel_ | undefined {
         switch (sm?.type) {
             case "dft":
                 return this.convertDftToCategorized(sm as LegacyModelDensityFunctionalTheory);
@@ -109,7 +110,7 @@ export class ModelInterface {
         return categorizedModelList.find((cm) => cm.path === path);
     }
 
-    static filterCategorizedModels(application?: ApplicationSchemaBase): CategorizedModel[] {
+    static filterCategorizedModels(application?: ApplicationSchemaBase): CategorizedModel_[] {
         // @ts-ignore todo: adjust type of model list
         if (!application) return categorizedModelList;
         const filteredModels = filterModelsByApplicationParameters({
