@@ -1,12 +1,7 @@
-import { filterMethodsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/methods";
-import { filterModelsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/models";
 import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
 
-import { allMethods as categorizedMethodList } from "./data/method_list";
-import { allModels as categorizedModelList } from "./data/model_list";
 import { DFTModelConfig } from "./default_models";
-import { filterMethodsByModel } from "./filter";
 import { Method } from "./method";
 import { MethodFactory } from "./methods/factory";
 import { MethodInterface } from "./utils/method_interface";
@@ -59,19 +54,10 @@ export class Model extends DefaultableInMemoryEntity {
 
     getCategorizedMethods() {
         const catModel = ModelInterface.convertToCategorized(this._json);
-        let filteredMethods = filterMethodsByModel({
-            methodList: categorizedMethodList,
+        return MethodInterface.filterCategorizedMethods({
+            application: this._application,
             model: catModel,
         });
-        if (this._application) {
-            filteredMethods = filterMethodsByApplicationParameters({
-                methodList: filteredMethods,
-                appName: this._application?.name,
-                version: this._application?.version,
-                build: this._application?.build,
-            });
-        }
-        return filteredMethods;
     }
 
     get defaultMethodConfig() {
@@ -83,15 +69,7 @@ export class Model extends DefaultableInMemoryEntity {
      * @returns {{ path: string }[]} - Array of categorized models
      */
     getCategorizedModels() {
-        if (!this._application) return categorizedModelList;
-        const filteredModels = filterModelsByApplicationParameters({
-            modelList: categorizedModelList,
-            appName: this._application?.name,
-            version: this._application?.version,
-            build: this._application?.build,
-        });
-
-        return filteredModels;
+        return ModelInterface.filterCategorizedModels(this._application);
     }
 
     getDefaultCategorizedModel() {
