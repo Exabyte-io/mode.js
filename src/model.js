@@ -73,6 +73,7 @@ export class Model extends DefaultableInMemoryEntity {
     }
 
     getDefaultCategorizedModel() {
+        if (this.type === "unknown") return undefined;
         return this.getCategorizedModels()[0];
     }
 
