@@ -14,7 +14,7 @@ import {
 
 import { allMethods as categorizedMethodList } from "../data/method_list";
 import { LocalOrbitalMethodConfig, UnknownMethodConfig } from "../default_methods";
-import { filterMethodsByModel } from "../tree";
+import { filterMethodsByModel } from "../filter";
 import { safelyGetSlug } from "./slugifiedEntry";
 
 /**

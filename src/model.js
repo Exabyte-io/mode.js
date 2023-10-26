@@ -6,9 +6,9 @@ import lodash from "lodash";
 import { allMethods as categorizedMethodList } from "./data/method_list";
 import { allModels as categorizedModelList } from "./data/model_list";
 import { DFTModelConfig } from "./default_models";
+import { filterMethodsByModel } from "./filter";
 import { Method } from "./method";
 import { MethodFactory } from "./methods/factory";
-import { filterMethodsByModel } from "./tree";
 import { MethodInterface } from "./utils/method_interface";
 import { ModelInterface } from "./utils/model_interface";
 
