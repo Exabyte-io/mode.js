@@ -1,7 +1,7 @@
 declare module "@exabyte-io/application-flavors.js/lib/js/methods" {
     // TODO: add TS to application-flavors
 
-    interface FilterProps {
+    interface FilterPropsMethod {
         methodList: object[];
         appName?: string;
         version?: string;
@@ -18,4 +18,24 @@ declare module "@exabyte-io/application-flavors.js/lib/js/methods" {
         executable,
         flavor,
     }: FilterProps): object[];
+}
+
+declare module "@exabyte-io/application-flavors.js/lib/js/models" {
+    interface FilterPropsModel {
+        modelList: object[];
+        appName?: string;
+        version?: string;
+        build?: string;
+        executable?: string;
+        flavor?: string;
+    }
+
+    export function filterModelsByApplicationParameters({
+        modelList,
+        appName,
+        version,
+        build,
+        executable,
+        flavor,
+    }: FilterPropsModel): object[];
 }

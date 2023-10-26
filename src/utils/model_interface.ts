@@ -1,5 +1,6 @@
-// import { BaseModel, CategorizedModel } from "@exabyte-io/code.js/dist/types";
+import { filterModelsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/models";
 import {
+    ApplicationSchemaBase,
     BaseModel,
     CategorizedModel,
     LegacyModelDensityFunctionalTheory,
@@ -106,5 +107,19 @@ export class ModelInterface {
         const path = "/st/det/ml/re/none";
         // @ts-ignore todo: adjust ESSE schemas
         return categorizedModelList.find((cm) => cm.path === path);
+    }
+
+    static filterCategorizedModels(application?: ApplicationSchemaBase): CategorizedModel[] {
+        // @ts-ignore todo: adjust type of model list
+        if (!application) return categorizedModelList;
+        const filteredModels = filterModelsByApplicationParameters({
+            modelList: categorizedModelList,
+            appName: application?.name,
+            version: application?.version,
+            build: application?.build,
+        });
+
+        // @ts-ignore todo: adjust type of model list
+        return filteredModels;
     }
 }
