@@ -16,4 +16,12 @@ describe("Model", () => {
         const model = ModelFactory.create(obj);
         expect(model.type).to.be.equal("dft");
     });
+
+    it("should have 'unknown' model as default if type is 'unknown'", () => {
+        const config = { type: "unknown" };
+        const model = ModelFactory.create(config);
+        expect(model.type).to.be.equal("unknown");
+        expect(model.subtype).to.be.equal("unknown");
+        expect(model._defaultCategorized).to.be.undefined;
+    });
 });
