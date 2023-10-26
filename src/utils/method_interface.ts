@@ -1,6 +1,9 @@
+import { filterMethodsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/methods";
 import {
+    ApplicationSchemaBase,
     BaseMethod,
     CategorizedMethod,
+    CategorizedModel,
     LegacyMethodLocalorbital,
     LegacyMethodPseudopotential,
     LegacyMethodRegression,
@@ -11,6 +14,7 @@ import {
 
 import { allMethods as categorizedMethodList } from "../data/method_list";
 import { LocalOrbitalMethodConfig, UnknownMethodConfig } from "../default_methods";
+import { filterMethodsByModel } from "../tree";
 import { safelyGetSlug } from "./slugifiedEntry";
 
 /**
@@ -108,5 +112,44 @@ export class MethodInterface {
         const method = categorizedMethodList.find((cm) => cm.path === path) as CategorizedMethod;
         Object.assign(method.units[0], { precision, data });
         return method;
+    }
+
+    static filterCategorizedMethods({
+        model,
+        application,
+    }: {
+        model?: CategorizedModel;
+        application?: ApplicationSchemaBase;
+    }): CategorizedMethod[] {
+        let filteredMethods = categorizedMethodList;
+        if (model) {
+            // @ts-ignore todo: sort out types of filter function
+            filteredMethods = filterMethodsByModel({
+                // @ts-ignore
+                methodList: filteredMethods,
+                model,
+            });
+        }
+        if (application) {
+            // @ts-ignore todo: sort out types of filter function
+            filteredMethods = filterMethodsByApplicationParameters({
+                methodList: filteredMethods,
+                appName: application?.name,
+                version: application?.version,
+                build: application?.build,
+            });
+        }
+        return filteredMethods;
+    }
+
+    static filterLegacyMethods({
+        model,
+        application,
+    }: {
+        model?: CategorizedModel;
+        application?: ApplicationSchemaBase;
+    }): BaseMethod[] {
+        const categorizedMethods = this.filterCategorizedMethods({ application, model });
+        return categorizedMethods.map((cm) => this.convertToSimple(cm));
     }
 }
