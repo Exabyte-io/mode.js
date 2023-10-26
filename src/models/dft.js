@@ -29,7 +29,9 @@ export class DFTModel extends Model {
     }
 
     get defaultFunctional() {
-        const functional = safelyGetSlug(this._defaultConfig?.functional) || "pbe";
+        const functional = this._defaultConfig?.functional
+            ? safelyGetSlug(this._defaultConfig?.functional)
+            : "pbe";
         return stringToSlugifiedEntry(functional);
     }
 
