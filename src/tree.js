@@ -18,9 +18,19 @@ export const MODEL_NAMES = {
     re: "regression",
 };
 
-export function getAvailableDFTFunctionals() {
+export function getDFTApproximations() {
+    const approximations = ModelInterface.filterCategorizedModels().reduce((accumulator, item) => {
+        if (item.categories.type === "ksdft") {
+            accumulator.push(item.categories.subtype);
+        }
+        return accumulator;
+    }, []);
+    return [...new Set(approximations)];
+}
+
+export function getDFTFunctionalsByApproximation(approximation) {
     const functionals = ModelInterface.filterCategorizedModels().reduce((accumulator, item) => {
-        if (item.parameters?.functional) {
+        if (item.categories.subtype === approximation && item.parameters?.functional) {
             accumulator.push(item.parameters.functional);
         }
         return accumulator;
