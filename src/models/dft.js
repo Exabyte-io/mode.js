@@ -46,7 +46,8 @@ export class DFTModel extends Model {
     }
 
     get functional() {
-        return this.prop("functional", this.defaultFunctional);
+        const functional = this.prop("functional", this.defaultFunctional);
+        return typeof functional === "string" ? stringToSlugifiedEntry(functional) : functional;
     }
 
     get refiners() {
