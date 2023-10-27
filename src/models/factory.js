@@ -20,7 +20,7 @@ export class ModelFactory {
     }
 
     static getDefaultModelForApplication(application) {
-        if (!application) return categorizedModelList[0];
+        if (!application) return ModelInterface.convertToSimple(categorizedModelList[0]);
         const filteredModels = filterModelsByApplicationParameters({
             modelList: categorizedModelList,
             appName: application?.name,
