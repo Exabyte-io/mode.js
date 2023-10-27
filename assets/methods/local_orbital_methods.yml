@@ -1,6 +1,6 @@
 !combine
 name:
-  template: '{{ units[0]["name"] }}'
+  template: "{{ units[0]['name'] }}"
 forEach:
   - key: units
     action: push

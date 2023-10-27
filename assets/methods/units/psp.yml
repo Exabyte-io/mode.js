@@ -3,7 +3,7 @@
 #
 !combine
 name:
-  template: '{{ categories.subtype }} Pseudopotential'
+  template: "{{ categories.subtype }} Pseudopotential"
   substitutions:
     us: Ultra-soft
     nc: Norm-conserving
@@ -11,8 +11,8 @@ name:
 forEach:
   - !parameter
     key: categories.subtype
-    values: !esse 'methods-category/physical/qm/wf/enum-options#/pseudoSubtypes/enum'
-    exclude: '^coulomb'
+    values: !esse "methods-category/physical/qm/wf/enum-options#/pseudoSubtypes/enum"
+    exclude: "^coulomb"
 config:
   categories:
     tier1: qm
@@ -20,4 +20,4 @@ config:
     type: psp
   tags:
     - pseudopotential
-  schema: !esse 'methods-directory/physical/psp'
+  schema: !esse "methods-directory/physical/psp"

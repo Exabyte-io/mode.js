@@ -4,7 +4,7 @@
 #
 !combine
 name:
-  template: '{{ categories.type | title }} {{ categories.subtype }} regression'
+  template: "{{ categories.type | title }} {{ categories.subtype }} regression"
   substitutions:
     kernel_ridge: kernel ridge
     least_squares: least squares
@@ -19,10 +19,10 @@ config:
     - exabyteML
   # need to use base schema here as regression schema requires data and
   # precision properties (not available here)
-  schema: !esse 'method/unit-method'
+  schema: !esse "method/unit-method"
 extraConfigs: !combine
   name:
-    template: '{{ categories.type | title }} {{ categories.subtype }} regression'
+    template: "{{ categories.type | title }} {{ categories.subtype }} regression"
     substitutions:
       kernel_ridge: kernel ridge
       least_squares: least squares
@@ -34,5 +34,5 @@ extraConfigs: !combine
       - exabyteML
     # need to use base schema here as regression schema requires data and
     # precision properties (not available here)
-    schema: !esse 'method/unit-method'
+    schema: !esse "method/unit-method"
 
