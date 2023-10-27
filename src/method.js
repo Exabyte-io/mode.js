@@ -1,10 +1,11 @@
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import { deepClone } from "@exabyte-io/code.js/dist/utils";
-import lodash from "lodash";
+import isEmpty from "lodash/isEmpty";
+import omit from "lodash/omit";
 
 import { PseudopotentialMethodConfig } from "./default_methods";
 
-export class Method extends InMemoryEntity {
+export class Method extends DefaultableInMemoryEntity {
     constructor(config) {
         const data = config.data || {};
         super({ ...config, data });
@@ -57,7 +58,7 @@ export class Method extends InMemoryEntity {
 
     get omitInHashCalculation() {
         const data = this.prop("data");
-        return !data.searchText && lodash.isEmpty(lodash.omit(data, "searchText"));
+        return !data.searchText && isEmpty(omit(data, "searchText"));
     }
 
     // data without client-only fields

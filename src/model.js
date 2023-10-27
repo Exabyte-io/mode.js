@@ -1,16 +1,18 @@
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
+import { DefaultableInMemoryEntity } from "@exabyte-io/code.js/dist/entity";
 import lodash from "lodash";
 
 import { DFTModelConfig } from "./default_models";
 import { Method } from "./method";
 import { MethodFactory } from "./methods/factory";
-import { getTreeByApplicationNameAndVersion, MODEL_TREE, treeSlugToNamedObject } from "./tree";
+import { MethodInterface } from "./utils/method_interface";
+import { ModelInterface } from "./utils/model_interface";
 
-export class Model extends InMemoryEntity {
+export class Model extends DefaultableInMemoryEntity {
     constructor({ application, ...config }) {
         super(config);
         this._application = application;
         this._MethodFactory = MethodFactory;
+        this._defaultCategorized = this.getDefaultCategorizedModel();
     }
 
     get type() {
@@ -26,37 +28,12 @@ export class Model extends InMemoryEntity {
         this.setMethod(this._MethodFactory.create(this.defaultMethodConfig));
     }
 
-    get allowedTypes() {
-        return Object.keys(this.tree).map((modelSlug) => treeSlugToNamedObject(modelSlug));
-    }
-
-    get allowedSubtypes() {
-        return Object.keys(this.treeBranchForType).map((slug) => treeSlugToNamedObject(slug));
-    }
-
     get defaultType() {
-        return this.allowedTypes[0]?.slug;
+        return this._defaultConfig.type;
     }
 
     get defaultSubtype() {
-        return this.allowedSubtypes[0]?.slug;
-    }
-
-    get tree() {
-        return (this._application && this.treeByApplicationNameAndVersion) || MODEL_TREE;
-    }
-
-    get treeBranchForType() {
-        return this.tree[this.type] || {};
-    }
-
-    get treeBranchForSubType() {
-        return this.treeBranchForType[this.subtype] || {};
-    }
-
-    get treeByApplicationNameAndVersion() {
-        const [name, version] = [this._application.name, this._application.version];
-        return getTreeByApplicationNameAndVersion({ name, version });
+        return this._defaultConfig.subtype;
     }
 
     get groupSlug() {
@@ -75,23 +52,29 @@ export class Model extends InMemoryEntity {
         this._method = method;
     }
 
-    // Consider moving the below to `Method`
-    get methodsFromTree() {
-        return this.treeBranchForSubType.methods || {};
-    }
-
-    get methodTypes() {
-        return Object.keys(this.methodsFromTree).map((m) => treeSlugToNamedObject(m));
-    }
-
-    get methodSubtypes() {
-        return this.methodsFromTree[this.method.type].map((m) => treeSlugToNamedObject(m)) || [];
+    getCategorizedMethods() {
+        const catModel = ModelInterface.convertToCategorized(this._json);
+        return MethodInterface.filterCategorizedMethods({
+            application: this._application,
+            model: catModel,
+        });
     }
 
     get defaultMethodConfig() {
-        const type = Object.keys(this.methodsFromTree)[0];
-        const subtype = (this.methodsFromTree[type] || [])[0];
-        return { type, subtype };
+        const [defaultCategorizedMethod] = this.getCategorizedMethods();
+        return MethodInterface.convertToSimple(defaultCategorizedMethod);
+    }
+
+    /**
+     * @returns {{ path: string }[]} - Array of categorized models
+     */
+    getCategorizedModels() {
+        return ModelInterface.filterCategorizedModels(this._application);
+    }
+
+    getDefaultCategorizedModel() {
+        if (this.type === "unknown") return undefined;
+        return this.getCategorizedModels()[0];
     }
 
     static get defaultConfig() {
@@ -101,8 +84,16 @@ export class Model extends InMemoryEntity {
         };
     }
 
-    static get allTypes() {
-        return Object.keys(this.tree).map((modelSlug) => treeSlugToNamedObject(modelSlug));
+    /**
+     * Instance method for default config.
+     * This is used to obtain default properties such as type/subtype.
+     */
+    get _defaultConfig() {
+        // TODO: Add suitable method, given application/model
+        const defaultModel = ModelInterface.convertToSimple(this._defaultCategorized);
+        return {
+            ...defaultModel,
+        };
     }
 
     toJSON() {

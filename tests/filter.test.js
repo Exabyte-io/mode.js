@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { filterMethodsByModel } from "../src/tree";
+import { filterMethodsByModel } from "../src/filter";
 
 describe("model-method filter", () => {
     const methodConfigs = [
