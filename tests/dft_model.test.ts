@@ -12,6 +12,14 @@ describe("DFTModel", () => {
     });
 
     it("can be created from the factory", () => {
+        const config = { type: "dft", subtype: "lda", functional: "pz" };
+        const model = ModelFactory.create(config) as DFTModel;
+        expect(model.type).to.be.equal("dft");
+        expect(model.subtype).to.be.equal("lda");
+        expect(model.functional?.slug).to.be.equal("pz");
+    });
+
+    it("can be created from the factory with incomplete config", () => {
         const config = { type: "dft" };
         const model = ModelFactory.create(config) as DFTModel;
         expect(model.functional?.slug).to.be.equal("pbe");
