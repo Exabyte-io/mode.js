@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-const { getFilesInDirectory, JsYamlAllSchemas } = require("@exabyte-io/code.js/dist/utils");
+const utils = require("@exabyte-io/code.js/dist/utils");
 const Ajv = require("ajv");
 const fs = require("fs");
 const yaml = require("js-yaml");
@@ -65,7 +65,7 @@ function encodeDataAsURLPath(data) {
  */
 function createModelConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
-    const parsed = yaml.load(testContent, { schema: JsYamlAllSchemas });
+    const parsed = yaml.load(testContent, { schema: utils.JsYamlAllSchemas });
 
     // Assume either array of configs or object with array of configs as values
     const configs = lodash.isPlainObject(parsed) ? Object.values(parsed).flat() : parsed.flat();
@@ -88,7 +88,7 @@ function createModelConfigs(assetPath, debug = false) {
  */
 function createMethodConfigs(assetPath, debug = false) {
     const testContent = fs.readFileSync(assetPath, "utf-8");
-    const parsed = yaml.load(testContent, { schema: JsYamlAllSchemas });
+    const parsed = yaml.load(testContent, { schema: utils.JsYamlAllSchemas });
 
     // Iterate over groups of configs and set config-based values
     parsed.forEach((config) => {
@@ -108,16 +108,16 @@ function createMethodConfigs(assetPath, debug = false) {
 
 // Build and write MODEL configs
 try {
-    const modelAssetFiles = getFilesInDirectory(MODEL_ASSETS_PATH, [".yml", ".yaml"], true);
+    const modelAssetFiles = utils.getFilesInDirectory(MODEL_ASSETS_PATH, [".yml", ".yaml"], true);
     const modelConfigs = modelAssetFiles.flatMap((asset) =>
         createModelConfigs(asset, LOG_CONFIG_NAMES),
     );
-    const ignore = "/* eslint-disable */\n";
-    fs.writeFileSync(
-        "./src/data/model_list.js",
-        ignore + "module.exports = {allModels: " + JSON.stringify(modelConfigs) + "}",
-        "utf8",
-    );
+    utils.buildJSAssetFromConfig({
+        config: modelConfigs,
+        targetPath: "./src/data/model_list.js",
+        dataKey: "allModels",
+        debug: false,
+    });
     console.log(`Created ${modelConfigs.length} model configs.`);
 } catch (e) {
     console.error(e);
@@ -125,16 +125,16 @@ try {
 
 // Build and write METHOD configs
 try {
-    const methodAssetFiles = getFilesInDirectory(METHOD_ASSETS_PATH, [".yml", ".yaml"], true);
+    const methodAssetFiles = utils.getFilesInDirectory(METHOD_ASSETS_PATH, [".yml", ".yaml"], true);
     const methodConfigs = methodAssetFiles.flatMap((asset) =>
         createMethodConfigs(asset, LOG_CONFIG_NAMES),
     );
-    const ignore = "/* eslint-disable */\n";
-    fs.writeFileSync(
-        "./src/data/method_list.js",
-        ignore + "module.exports = {allMethods: " + JSON.stringify(methodConfigs) + "}",
-        "utf8",
-    );
+    utils.buildJSAssetFromConfig({
+        config: methodConfigs,
+        targetPath: "./src/data/method_list.js",
+        dataKey: "allMethods",
+        debug: false,
+    });
     console.log(`Created ${methodConfigs.length} method configs.`);
 } catch (e) {
     console.error(e);
