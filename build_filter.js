@@ -1,18 +1,14 @@
-const { JsYamlAllSchemas } = require("@exabyte-io/code.js/dist/utils");
-const fs = require("fs");
-const yaml = require("js-yaml");
+const utils = require("@exabyte-io/code.js/dist/utils");
 
-const FILTER_ASSET = "assets/filters/model_method.yml";
+const FILTER_ASSET = "./assets/filters/model_method.yml";
+const JS_OUTPUT = "./src/data/model_method_map.js";
 
 try {
-    const fileContent = fs.readFileSync(FILTER_ASSET, "utf-8");
-    const modelMethodMap = yaml.load(fileContent, { schema: JsYamlAllSchemas });
-    const ignore = "/* eslint-disable */\n";
-    fs.writeFileSync(
-        "./src/data/model_method_map.js",
-        ignore + `module.exports = ${JSON.stringify(modelMethodMap)}`,
-        "utf8",
-    );
+    utils.buildJsAssetFromYaml({
+        assetPath: FILTER_ASSET,
+        targetPath: JS_OUTPUT,
+        debug: false,
+    });
     console.log("Created model-method filter.");
 } catch (e) {
     console.log(e);

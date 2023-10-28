@@ -1,5 +1,5 @@
 - !combine
-  name: 'Regression'
+  name: "Regression"
   config:
     categories:
       tier1: st
@@ -7,4 +7,4 @@
       tier3: ml
       type: re
     parameters: {}
-    schema: !esse 'models-directory/re'
+    schema: !esse "models-directory/re"
