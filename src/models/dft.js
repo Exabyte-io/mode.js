@@ -1,8 +1,8 @@
-import _ from "underscore";
+import { filterEntityList } from "@exabyte-io/code.js/dist/utils";
 
 import { MethodFactory } from "../methods/factory";
 import { Model } from "../model";
-import { treeSlugToNamedObject } from "../tree";
+import { safelyGetSlug, stringToSlugifiedEntry } from "../utils/slugifiedEntry";
 
 export class DFTModel extends Model {
     constructor(config) {
@@ -29,7 +29,10 @@ export class DFTModel extends Model {
     }
 
     get defaultFunctional() {
-        return treeSlugToNamedObject(this.treeBranchForSubType.functionals[0]);
+        const functional = this._defaultConfig?.functional
+            ? safelyGetSlug(this._defaultConfig?.functional)
+            : "pbe";
+        return stringToSlugifiedEntry(functional);
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -43,7 +46,8 @@ export class DFTModel extends Model {
     }
 
     get functional() {
-        return this.prop("functional", this.defaultFunctional);
+        const functional = this.prop("functional", this.defaultFunctional);
+        return typeof functional === "string" ? stringToSlugifiedEntry(functional) : functional;
     }
 
     get refiners() {
@@ -54,19 +58,32 @@ export class DFTModel extends Model {
         return this.prop("modifiers", this.defaultModifiers);
     }
 
+    getDefaultCategorizedModel() {
+        const subtype = this.prop("subtype", "gga");
+
+        const filterObj = {
+            regex: "\\/pb\\/qm\\/dft\\/ksdft\\/" + subtype + "\\?functional=([A-Za-z0-9_-]+)",
+        };
+        const filtered = filterEntityList({
+            entitiesOrPaths: this.getCategorizedModels(),
+            filterObjects: [filterObj],
+        });
+        return filtered[0];
+    }
+
     setSubtype(subtype) {
         this.setProp("subtype", subtype);
         this.setFunctional(this.defaultFunctional);
     }
 
     setFunctional(functional) {
-        this.setProp("functional", this._stringToSlugifiedObject(functional));
+        this.setProp("functional", stringToSlugifiedEntry(functional));
         this.setMethod(this._MethodFactory.create(this.defaultMethodConfig));
     }
 
     _setArrayProp(name, data) {
         // eslint-disable-next-line no-param-reassign, no-undef
-        data = safeMakeArray(data).map((r) => this._stringToSlugifiedObject(r));
+        data = safeMakeArray(data).map((r) => stringToSlugifiedEntry(r));
         this.setProp(name, data);
         this[`_${name}`] = data;
     }
@@ -80,36 +97,12 @@ export class DFTModel extends Model {
     }
 
     toJSON() {
-        const pickSlugFromObject = (o) => _.pick(o, "slug");
+        const functional = safelyGetSlug(this.functional);
         return {
             ...super.toJSON(),
-            functional: pickSlugFromObject(this.functional), // only store slug for `functional`
+            functional,
             refiners: this.refiners,
             modifiers: this.modifiers,
         };
-    }
-
-    /**
-     * Get all functionals in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of functional objects
-     */
-    get allFunctionals() {
-        return this.treeBranchForSubType.functionals.map((x) => treeSlugToNamedObject(x));
-    }
-
-    /**
-     * Get all refiners in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of refiner objects
-     */
-    get allRefiners() {
-        return this.treeBranchForSubType.refiners.map((x) => treeSlugToNamedObject(x));
-    }
-
-    /**
-     * Get all modifiers in the form of {name: ..., slug: ...} for further use in UI
-     * @returns {Object.<string, string>[]} - List of modifier objects
-     */
-    get allModifiers() {
-        return this.treeBranchForSubType.modifiers.map((x) => treeSlugToNamedObject(x));
     }
 }

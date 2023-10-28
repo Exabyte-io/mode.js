@@ -1,5 +1,8 @@
+import { filterModelsByApplicationParameters } from "@exabyte-io/application-flavors.js/lib/js/models";
+
+import { allModels as categorizedModelList } from "../data/model_list";
 import { Model } from "../model";
-import { getDefaultModelTypeForApplication } from "../tree";
+import { ModelInterface } from "../utils/model_interface";
 import { DFTModel } from "./dft";
 
 export class ModelFactory {
@@ -16,13 +19,20 @@ export class ModelFactory {
         }
     }
 
+    static getDefaultModelForApplication(application) {
+        if (!application) return ModelInterface.convertToSimple(categorizedModelList[0]);
+        const filteredModels = filterModelsByApplicationParameters({
+            modelList: categorizedModelList,
+            appName: application?.name,
+            version: application?.version,
+            build: application?.build,
+        });
+        return ModelInterface.convertToSimple(filteredModels[0]);
+    }
+
     static createFromApplication(config) {
         const { application } = config;
-        const type = application && getDefaultModelTypeForApplication(application);
-        if (!type)
-            throw new Error(
-                `ModelFactory.createFromApplication: cannot determine model type: ${type}`,
-            );
-        return this.create({ ...config, type });
+        const defaultModel = this.getDefaultModelForApplication(application);
+        return this.create({ ...config, ...defaultModel });
     }
 }
