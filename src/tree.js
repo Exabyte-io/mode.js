@@ -145,6 +145,10 @@ const MODELS_TREE_CONFIGS_BY_APPLICATION_NAME_VERSION = [
         name: "nwchem",
         tree: NWCHEM_MODELS_TREE,
     },
+    {
+        name: "deepmd",
+        tree: UNKNOWN_MODELS_TREE,
+    },
 ];
 
 export const getTreeByApplicationNameAndVersion = ({
