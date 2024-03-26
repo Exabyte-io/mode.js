@@ -1,4 +1,4 @@
-const { JsYamlAllSchemas } = require("@exabyte-io/code.js/dist/utils");
+const { JsYamlAllSchemas } = require("@mat3ra/code/dist/js/utils");
 const fs = require("fs");
 const yaml = require("js-yaml");
 
