@@ -1,5 +1,5 @@
-import { InMemoryEntity } from "@exabyte-io/code.js/dist/entity";
-import { deepClone } from "@exabyte-io/code.js/dist/utils";
+import { InMemoryEntity } from "@mat3ra/code/dist/js/entity";
+import { deepClone } from "@mat3ra/code/dist/js/utils";
 import lodash from "lodash";
 
 import { PseudopotentialMethodConfig } from "./default_methods";

@@ -1,4 +1,4 @@
-import { deepClone, filterEntityList, mergeTerminalNodes } from "@exabyte-io/code.js/dist/utils";
+import { deepClone, filterEntityList, mergeTerminalNodes } from "@mat3ra/code/dist/js/utils";
 import lodash from "lodash";
 import _ from "underscore";
 
