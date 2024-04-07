@@ -7,6 +7,7 @@ name:
   substitutions:
     us: Ultra-soft
     nc: Norm-conserving
+    nc-fr: Norm-conserving full-relativistic
     paw: Projector-augmented wave
 forEach:
   - !parameter
