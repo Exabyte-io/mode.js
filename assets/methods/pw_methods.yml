@@ -7,7 +7,7 @@ name:
   substitutions:
     pw: Plane-wave
     nc: Norm-conserving
-    nc-fr: Norm-conserving full-relativistic
+    nc-fr: Norm-conserving Fully-relativistic
     paw: Projector-augmented Wave
     us: Ultra-soft
 forEach:
