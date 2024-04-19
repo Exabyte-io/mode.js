@@ -40,7 +40,7 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "ajv": "4.1.7",
+        "ajv": "^8.12.0",
         "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
         "mixwith": "^0.1.1",
@@ -49,7 +49,7 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@mat3ra/esse": "2024.3.25-6",
+        "@mat3ra/esse": "2024.4.19-1",
         "@mat3ra/code": "2024.3.25-3",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
