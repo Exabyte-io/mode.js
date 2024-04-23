@@ -10,7 +10,8 @@
         "transpile": "babel --out-dir dist src",
         "postinstall": "npm run transpile",
         "prettier": "prettier --check src tests",
-        "prepare": "husky install || exit 0"
+        "prepare": "husky install || exit 0",
+        "prepublishOnly": "rm -rf dist; npm run transpile; npm run build:assets"
     },
     "repository": {
         "type": "git",
