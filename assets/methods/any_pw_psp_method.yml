@@ -1,6 +1,6 @@
 !combine
 name:
-  template: 'Any {{ units[3]["categories"]["type"] }} Pseudopotential Method'
+  template: 'Any {{ units[4]["categories"]["type"] }} Pseudopotential Method'
   substitutions:
     pw: Plane-wave
 config:
