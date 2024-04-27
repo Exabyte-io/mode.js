@@ -13,7 +13,7 @@ export const METHODS = {
 };
 
 const methods = {
-    [METHODS.pseudopotential]: ["paw", "nc", "us"],
+    [METHODS.pseudopotential]: ["paw", "nc", "nc-fr", "us"],
     // TODO: Add additional basis set options, once user choice of specific (i.e 3-21G vs cc-pVDZ) is implemented.
     [METHODS.localorbital]: ["pople"],
     [METHODS.unknown]: ["unknown"],
