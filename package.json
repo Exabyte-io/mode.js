@@ -50,7 +50,7 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@mat3ra/esse": "2024.4.19-1",
+        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#06052d7af9118d55112cb39fc2fe9335cbdaede8",
         "@mat3ra/code": "2024.3.25-3",
         "chai": "^4.3.4",
         "eslint": "7.32.0",
