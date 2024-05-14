@@ -7,6 +7,8 @@ ggaConfigs: !combine
       pbesol: PBESOL
       dft-d3: D3
       u: U
+      u+v: U+V
+      u+j: U+J
   forEach:
     - !parameter
       key: parameters.functional
@@ -30,8 +32,7 @@ ggaConfigs: !combine
       exclude: '^non-collinear'
       isOptional: true
   exclusions:
-    - [parameters.spinPolarization, parameters.spinOrbitCoupling]
-    - [parameters.hubbardType, parameters.dispersionCorrection]
+    - [parameters.dispersionCorrection]
   config:
     categories:
       tier1: pb
