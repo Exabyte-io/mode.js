@@ -114,7 +114,7 @@ const NWCHEM_MODELS_TREE = deepClone(_.pick(MODEL_TREE, "dft"));
 });
 
 const UNKNOWN_MODELS_TREE = _.pick(MODEL_TREE, "unknown");
-const ML_MODELS_TREE = _.pick(MODEL_TREE, "ml");
+// const ML_MODELS_TREE = _.pick(MODEL_TREE, "ml");
 
 const MODELS_TREE_CONFIGS_BY_APPLICATION_NAME_VERSION = [
     {
@@ -132,10 +132,6 @@ const MODELS_TREE_CONFIGS_BY_APPLICATION_NAME_VERSION = [
     {
         name: "shell",
         tree: UNKNOWN_MODELS_TREE,
-    },
-    {
-        name: "exabyteml",
-        tree: ML_MODELS_TREE,
     },
     {
         name: "jupyterLab",
